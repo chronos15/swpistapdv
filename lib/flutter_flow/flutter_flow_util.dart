@@ -14,6 +14,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../main.dart';
 
 
+export 'keep_alive_wrapper.dart';
 export 'package:ff_commons/flutter_flow/lat_lng.dart';
 export 'package:ff_commons/flutter_flow/place.dart';
 export 'package:ff_commons/flutter_flow/uploaded_file.dart';
@@ -315,6 +316,19 @@ extension FFStringExt on String {
       maxChars != null && length > maxChars
           ? replaceRange(maxChars, null, replacement)
           : this;
+
+  String toCapitalization(TextCapitalization textCapitalization) {
+    switch (textCapitalization) {
+      case TextCapitalization.none:
+        return this;
+      case TextCapitalization.words:
+        return split(' ').map(toBeginningOfSentenceCase).join(' ');
+      case TextCapitalization.sentences:
+        return toBeginningOfSentenceCase(this);
+      case TextCapitalization.characters:
+        return toUpperCase();
+    }
+  }
 }
 
 extension ListFilterExt<T> on Iterable<T?> {
@@ -368,8 +382,6 @@ extension StatefulWidgetExtensions on State<StatefulWidget> {
     }
   }
 }
-
-String getCORSProxyUrl(String path) => kIsWeb ? '/$path' : path;
 
 // For iOS 16 and below, set the status bar color to match the app's theme.
 // https://github.com/flutter/flutter/issues/41067

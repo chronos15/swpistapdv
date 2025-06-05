@@ -21,27 +21,97 @@ class AutentificacaoCall {
     String? usuario = '',
     String? senha = '',
   }) async {
-    return ApiManager.instance.makeApiCall(
-      callName: 'Autentificacao',
-      apiUrl: '${ip}/services/Autentificacao',
-      callType: ApiCallType.GET,
-      headers: {
-        'Authorization': 'Bearer ${token}',
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-      },
-      params: {
-        'Usuario': usuario,
-        'Senha': senha,
-      },
-      returnBody: true,
-      encodeBodyUtf8: false,
-      decodeUtf8: true,
-      cache: false,
-      isStreamingApi: false,
-      alwaysAllowBody: false,
+    return FFApiInterceptor.makeApiCall(
+      // ignore: prefer_const_constructors - can be mutated by interceptors
+      ApiCallOptions(
+        callName: 'Autentificacao',
+        apiUrl: '${ip}/services/Autentificacao',
+        callType: ApiCallType.GET,
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        headers: {
+          'Authorization': 'Bearer ${token}',
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+        },
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        params: {
+          'Usuario': usuario,
+          'Senha': senha,
+        },
+
+        returnBody: true,
+        encodeBodyUtf8: false,
+        decodeUtf8: true,
+        cache: false,
+        isStreamingApi: false,
+        alwaysAllowBody: false,
+      ),
+
+      interceptors,
     );
   }
+
+  static final interceptors = [
+    m_s_framework_flutter_p5iajh_api_interceptors.InterceptorVerificaToken(),
+  ];
+
+  static UsuarioDataTypeStruct? usuario(dynamic response) =>
+      UsuarioDataTypeStruct.maybeFromMap(getJsonField(
+        response,
+        r'''$.Usuario''',
+      ));
+  static bool? result(dynamic response) => castToType<bool>(getJsonField(
+        response,
+        r'''$.result''',
+      ));
+  static String? message(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.message''',
+      ));
+}
+
+class VerificaTerminalCall {
+  static Future<ApiCallResponse> call({
+    String? ip = '',
+    String? token = '',
+    int? id,
+    String? dispositivo = '',
+    String? serial = '',
+  }) async {
+    return FFApiInterceptor.makeApiCall(
+      // ignore: prefer_const_constructors - can be mutated by interceptors
+      ApiCallOptions(
+        callName: 'VerificaTerminal',
+        apiUrl: '${ip}/services/VerificaTerminal',
+        callType: ApiCallType.GET,
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        headers: {
+          'Authorization': 'Bearer ${token}',
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+        },
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        params: {
+          'id': id,
+          'dispositivo': dispositivo,
+          'serial': serial,
+        },
+
+        returnBody: true,
+        encodeBodyUtf8: false,
+        decodeUtf8: true,
+        cache: false,
+        isStreamingApi: false,
+        alwaysAllowBody: false,
+      ),
+
+      interceptors,
+    );
+  }
+
+  static final interceptors = [
+    m_s_framework_flutter_p5iajh_api_interceptors.InterceptorVerificaToken(),
+  ];
 
   static UsuarioDataTypeStruct? usuario(dynamic response) =>
       UsuarioDataTypeStruct.maybeFromMap(getJsonField(
@@ -97,6 +167,7 @@ class AbastecimentosCall {
 
   static final interceptors = [
     m_s_framework_flutter_p5iajh_api_interceptors.InterceptorVerificaToken(),
+    AddTimerOnRequest(),
   ];
 
   static List<int>? idabastecimento(dynamic response) => (getJsonField(
@@ -314,6 +385,52 @@ class ListaAbastecimentosCall {
           .toList();
 }
 
+class AbastecimentoUnicoCall {
+  static Future<ApiCallResponse> call({
+    String? ip = '',
+    String? token = '',
+    int? id,
+  }) async {
+    return FFApiInterceptor.makeApiCall(
+      // ignore: prefer_const_constructors - can be mutated by interceptors
+      ApiCallOptions(
+        callName: 'AbastecimentoUnico',
+        apiUrl:
+            '${ip}/entities/ABASTECIMENTO?\$filter=(COD_ABASTECIMENTO EQ \'${id}\')&\$orderby=DATAHORA desc&\$top=1&\$skip=0',
+        callType: ApiCallType.GET,
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Authorization': 'Bearer ${token}',
+        },
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        params: {},
+
+        returnBody: true,
+        encodeBodyUtf8: false,
+        decodeUtf8: false,
+        cache: false,
+        isStreamingApi: false,
+        alwaysAllowBody: false,
+      ),
+
+      interceptors,
+    );
+  }
+
+  static final interceptors = [
+    m_s_framework_flutter_p5iajh_api_interceptors.InterceptorVerificaToken(),
+    AddTimerOnRequest(),
+  ];
+
+  static List? abastecimento(dynamic response) => getJsonField(
+        response,
+        r'''$.value[0]''',
+        true,
+      ) as List?;
+}
+
 class UsuariosCall {
   static Future<ApiCallResponse> call({
     String? ip = '',
@@ -321,24 +438,36 @@ class UsuariosCall {
     String? path = '',
     String? token = '',
   }) async {
-    return ApiManager.instance.makeApiCall(
-      callName: 'Usuarios',
-      apiUrl: 'http://${ip}:${porta}/${path}/entities/USUARIO',
-      callType: ApiCallType.GET,
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Authorization': 'Bearer ${token}',
-      },
-      params: {},
-      returnBody: true,
-      encodeBodyUtf8: false,
-      decodeUtf8: false,
-      cache: false,
-      isStreamingApi: false,
-      alwaysAllowBody: false,
+    return FFApiInterceptor.makeApiCall(
+      // ignore: prefer_const_constructors - can be mutated by interceptors
+      ApiCallOptions(
+        callName: 'Usuarios',
+        apiUrl: 'http://${ip}:${porta}/${path}/entities/USUARIO',
+        callType: ApiCallType.GET,
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Authorization': 'Bearer ${token}',
+        },
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        params: {},
+
+        returnBody: true,
+        encodeBodyUtf8: false,
+        decodeUtf8: false,
+        cache: false,
+        isStreamingApi: false,
+        alwaysAllowBody: false,
+      ),
+
+      interceptors,
     );
   }
+
+  static final interceptors = [
+    m_s_framework_flutter_p5iajh_api_interceptors.InterceptorVerificaToken(),
+  ];
 
   static String? senha(dynamic response) => castToType<String>(getJsonField(
         response,
@@ -364,24 +493,37 @@ class FrentistasCall {
     String? token = '',
     String? filtro = '',
   }) async {
-    return ApiManager.instance.makeApiCall(
-      callName: 'Frentistas',
-      apiUrl: '${ip}/entities/FRENTISTA?${filtro}',
-      callType: ApiCallType.GET,
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Authorization': 'Bearer ${token}',
-      },
-      params: {},
-      returnBody: true,
-      encodeBodyUtf8: false,
-      decodeUtf8: false,
-      cache: false,
-      isStreamingApi: false,
-      alwaysAllowBody: false,
+    return FFApiInterceptor.makeApiCall(
+      // ignore: prefer_const_constructors - can be mutated by interceptors
+      ApiCallOptions(
+        callName: 'Frentistas',
+        apiUrl: '${ip}/entities/FRENTISTA?${filtro}&\$orderby=NOME_FRENTISTA',
+        callType: ApiCallType.GET,
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Authorization': 'Bearer ${token}',
+        },
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        params: {},
+
+        returnBody: true,
+        encodeBodyUtf8: false,
+        decodeUtf8: false,
+        cache: false,
+        isStreamingApi: false,
+        alwaysAllowBody: false,
+      ),
+
+      interceptors,
     );
   }
+
+  static final interceptors = [
+    m_s_framework_flutter_p5iajh_api_interceptors.InterceptorVerificaToken(),
+    AddTimerOnRequest(),
+  ];
 
   static List<String>? nome(dynamic response) => (getJsonField(
         response,
@@ -457,6 +599,7 @@ class CidadesCall {
 
   static final interceptors = [
     m_s_framework_flutter_p5iajh_api_interceptors.InterceptorVerificaToken(),
+    AddTimerOnRequest(),
   ];
 
   static List<CidadesDataTypeStruct>? frentistas(dynamic response) =>
@@ -476,24 +619,37 @@ class ConfiguracaoCall {
     String? ip = '',
     String? token = '',
   }) async {
-    return ApiManager.instance.makeApiCall(
-      callName: 'Configuracao',
-      apiUrl: '${ip}/entities/CONFIGURACAO_PDVPST',
-      callType: ApiCallType.GET,
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Authorization': 'Bearer ${token}',
-      },
-      params: {},
-      returnBody: true,
-      encodeBodyUtf8: false,
-      decodeUtf8: false,
-      cache: false,
-      isStreamingApi: false,
-      alwaysAllowBody: false,
+    return FFApiInterceptor.makeApiCall(
+      // ignore: prefer_const_constructors - can be mutated by interceptors
+      ApiCallOptions(
+        callName: 'Configuracao',
+        apiUrl: '${ip}/entities/CONFIGURACAO_PDVPST',
+        callType: ApiCallType.GET,
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Authorization': 'Bearer ${token}',
+        },
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        params: {},
+
+        returnBody: true,
+        encodeBodyUtf8: false,
+        decodeUtf8: false,
+        cache: false,
+        isStreamingApi: false,
+        alwaysAllowBody: false,
+      ),
+
+      interceptors,
     );
   }
+
+  static final interceptors = [
+    m_s_framework_flutter_p5iajh_api_interceptors.InterceptorVerificaToken(),
+    AddTimerOnRequest(),
+  ];
 
   static List<ConfiguracaoDataTypeStruct>? configuracao(dynamic response) =>
       (getJsonField(
@@ -516,25 +672,38 @@ class ClientesCall {
     int? skip,
     String? orderby = '',
   }) async {
-    return ApiManager.instance.makeApiCall(
-      callName: 'Clientes',
-      apiUrl:
-          '${ip}/entities/CLIENTELISTA?${pesquisa}&\$orderby=${orderby}&\$top=${demmand}&\$skip=${skip}',
-      callType: ApiCallType.GET,
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Authorization': 'Bearer ${token}',
-      },
-      params: {},
-      returnBody: true,
-      encodeBodyUtf8: false,
-      decodeUtf8: false,
-      cache: false,
-      isStreamingApi: false,
-      alwaysAllowBody: false,
+    return FFApiInterceptor.makeApiCall(
+      // ignore: prefer_const_constructors - can be mutated by interceptors
+      ApiCallOptions(
+        callName: 'Clientes',
+        apiUrl:
+            '${ip}/entities/CLIENTELISTA?${pesquisa}&\$orderby=${orderby}&\$top=${demmand}&\$skip=${skip}',
+        callType: ApiCallType.GET,
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Authorization': 'Bearer ${token}',
+        },
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        params: {},
+
+        returnBody: true,
+        encodeBodyUtf8: false,
+        decodeUtf8: false,
+        cache: false,
+        isStreamingApi: false,
+        alwaysAllowBody: false,
+      ),
+
+      interceptors,
     );
   }
+
+  static final interceptors = [
+    m_s_framework_flutter_p5iajh_api_interceptors.InterceptorVerificaToken(),
+    AddTimerOnRequest(),
+  ];
 
   static List<ClienteListaDataTypeStruct>? value(dynamic response) =>
       (getJsonField(
@@ -544,6 +713,114 @@ class ClientesCall {
       ) as List?)
           ?.withoutNulls
           .map((x) => ClienteListaDataTypeStruct.maybeFromMap(x))
+          .withoutNulls
+          .toList();
+}
+
+class ValeCombustivelCall {
+  static Future<ApiCallResponse> call({
+    String? ip = '',
+    String? token = '',
+    String? pesquisa = '',
+    int? demmand,
+    int? skip,
+    String? orderby = '',
+  }) async {
+    return FFApiInterceptor.makeApiCall(
+      // ignore: prefer_const_constructors - can be mutated by interceptors
+      ApiCallOptions(
+        callName: 'ValeCombustivel',
+        apiUrl:
+            '${ip}/entities/VALECOMBUSTIVEL?${pesquisa}&\$orderby=${orderby}&\$top=${demmand}&\$skip=${skip}',
+        callType: ApiCallType.GET,
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Authorization': 'Bearer ${token}',
+        },
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        params: {},
+
+        returnBody: true,
+        encodeBodyUtf8: false,
+        decodeUtf8: false,
+        cache: false,
+        isStreamingApi: false,
+        alwaysAllowBody: false,
+      ),
+
+      interceptors,
+    );
+  }
+
+  static final interceptors = [
+    m_s_framework_flutter_p5iajh_api_interceptors.InterceptorVerificaToken(),
+    AddTimerOnRequest(),
+  ];
+
+  static List<ValeCombustivelDataTypeStruct>? value(dynamic response) =>
+      (getJsonField(
+        response,
+        r'''$.value''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => ValeCombustivelDataTypeStruct.maybeFromMap(x))
+          .withoutNulls
+          .toList();
+}
+
+class ValeCombustivelListaCall {
+  static Future<ApiCallResponse> call({
+    String? ip = '',
+    String? token = '',
+    String? pesquisa = '',
+    int? demmand,
+    int? skip,
+    String? orderby = '',
+  }) async {
+    return FFApiInterceptor.makeApiCall(
+      // ignore: prefer_const_constructors - can be mutated by interceptors
+      ApiCallOptions(
+        callName: 'ValeCombustivelLista',
+        apiUrl:
+            '${ip}/entities/VALECOMBUSTIVELLISTA?${pesquisa}&\$orderby=${orderby}&\$top=${demmand}&\$skip=${skip}',
+        callType: ApiCallType.GET,
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Authorization': 'Bearer ${token}',
+        },
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        params: {},
+
+        returnBody: true,
+        encodeBodyUtf8: false,
+        decodeUtf8: false,
+        cache: false,
+        isStreamingApi: false,
+        alwaysAllowBody: false,
+      ),
+
+      interceptors,
+    );
+  }
+
+  static final interceptors = [
+    m_s_framework_flutter_p5iajh_api_interceptors.InterceptorVerificaToken(),
+    AddTimerOnRequest(),
+  ];
+
+  static List<ValeCombustivelDataTypeStruct>? value(dynamic response) =>
+      (getJsonField(
+        response,
+        r'''$.value''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => ValeCombustivelDataTypeStruct.maybeFromMap(x))
           .withoutNulls
           .toList();
 }
@@ -615,24 +892,37 @@ class CombustiveisCall {
     String? ip = '',
     String? token = '',
   }) async {
-    return ApiManager.instance.makeApiCall(
-      callName: 'Combustiveis',
-      apiUrl: '${ip}/entities/COMBUSTIVEL',
-      callType: ApiCallType.GET,
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Authorization': 'Bearer ${token}',
-      },
-      params: {},
-      returnBody: true,
-      encodeBodyUtf8: false,
-      decodeUtf8: false,
-      cache: false,
-      isStreamingApi: false,
-      alwaysAllowBody: false,
+    return FFApiInterceptor.makeApiCall(
+      // ignore: prefer_const_constructors - can be mutated by interceptors
+      ApiCallOptions(
+        callName: 'Combustiveis',
+        apiUrl: '${ip}/entities/COMBUSTIVEL',
+        callType: ApiCallType.GET,
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Authorization': 'Bearer ${token}',
+        },
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        params: {},
+
+        returnBody: true,
+        encodeBodyUtf8: false,
+        decodeUtf8: false,
+        cache: false,
+        isStreamingApi: false,
+        alwaysAllowBody: false,
+      ),
+
+      interceptors,
     );
   }
+
+  static final interceptors = [
+    m_s_framework_flutter_p5iajh_api_interceptors.InterceptorVerificaToken(),
+    AddTimerOnRequest(),
+  ];
 
   static List<CombustiveisDataTypeStruct>? combustiveis(dynamic response) =>
       (getJsonField(
@@ -664,30 +954,109 @@ class CombustiveisCall {
           .toList();
 }
 
+class GruposCall {
+  static Future<ApiCallResponse> call({
+    String? ip = '',
+    String? token = '',
+  }) async {
+    return FFApiInterceptor.makeApiCall(
+      // ignore: prefer_const_constructors - can be mutated by interceptors
+      ApiCallOptions(
+        callName: 'Grupos',
+        apiUrl: '${ip}/entities/GRUPO',
+        callType: ApiCallType.GET,
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Authorization': 'Bearer ${token}',
+        },
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        params: {},
+
+        returnBody: true,
+        encodeBodyUtf8: false,
+        decodeUtf8: false,
+        cache: false,
+        isStreamingApi: false,
+        alwaysAllowBody: false,
+      ),
+
+      interceptors,
+    );
+  }
+
+  static final interceptors = [
+    m_s_framework_flutter_p5iajh_api_interceptors.InterceptorVerificaToken(),
+    AddTimerOnRequest(),
+  ];
+
+  static List<GrupoDataTypeStruct>? grupos(dynamic response) => (getJsonField(
+        response,
+        r'''$.value''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => GrupoDataTypeStruct.maybeFromMap(x))
+          .withoutNulls
+          .toList();
+  static List<String>? descricao(dynamic response) => (getJsonField(
+        response,
+        r'''$.value[:].DESCRICAO''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  static List<int>? id(dynamic response) => (getJsonField(
+        response,
+        r'''$.value[:].ID_CODIGO''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<int>(x))
+          .withoutNulls
+          .toList();
+}
+
 class BicosCall {
   static Future<ApiCallResponse> call({
     String? ip = '',
     String? token = '',
     String? filtro = '',
   }) async {
-    return ApiManager.instance.makeApiCall(
-      callName: 'Bicos',
-      apiUrl: '${ip}/entities/BICOS?${filtro}',
-      callType: ApiCallType.GET,
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Authorization': 'Bearer ${token}',
-      },
-      params: {},
-      returnBody: true,
-      encodeBodyUtf8: false,
-      decodeUtf8: false,
-      cache: false,
-      isStreamingApi: false,
-      alwaysAllowBody: false,
+    return FFApiInterceptor.makeApiCall(
+      // ignore: prefer_const_constructors - can be mutated by interceptors
+      ApiCallOptions(
+        callName: 'Bicos',
+        apiUrl: '${ip}/entities/BICOS?${filtro}',
+        callType: ApiCallType.GET,
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Authorization': 'Bearer ${token}',
+        },
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        params: {},
+
+        returnBody: true,
+        encodeBodyUtf8: false,
+        decodeUtf8: false,
+        cache: false,
+        isStreamingApi: false,
+        alwaysAllowBody: false,
+      ),
+
+      interceptors,
     );
   }
+
+  static final interceptors = [
+    m_s_framework_flutter_p5iajh_api_interceptors.InterceptorVerificaToken(),
+    AddTimerOnRequest(),
+  ];
 
   static List<BicosDataTypeStruct>? bicos(dynamic response) => (getJsonField(
         response,
@@ -703,30 +1072,39 @@ class BicosCall {
 class CondPagamentosCall {
   static Future<ApiCallResponse> call({
     String? ip = '',
-    int? porta,
-    String? path = '',
-    String? token = '',
     String? pesquisa = '',
+    String? token = '',
   }) async {
-    return ApiManager.instance.makeApiCall(
-      callName: 'CondPagamentos',
-      apiUrl:
-          'http://${ip}:${porta}/${path}/entities/CONDPAGAMENTO?${pesquisa}',
-      callType: ApiCallType.GET,
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Authorization': 'Bearer ${token}',
-      },
-      params: {},
-      returnBody: true,
-      encodeBodyUtf8: false,
-      decodeUtf8: false,
-      cache: false,
-      isStreamingApi: false,
-      alwaysAllowBody: false,
+    return FFApiInterceptor.makeApiCall(
+      // ignore: prefer_const_constructors - can be mutated by interceptors
+      ApiCallOptions(
+        callName: 'CondPagamentos',
+        apiUrl: '${ip}/entities/CONDPAGAMENTO?${pesquisa}',
+        callType: ApiCallType.GET,
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Authorization': 'Bearer ${token}',
+        },
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        params: {},
+
+        returnBody: true,
+        encodeBodyUtf8: false,
+        decodeUtf8: false,
+        cache: false,
+        isStreamingApi: false,
+        alwaysAllowBody: false,
+      ),
+
+      interceptors,
     );
   }
+
+  static final interceptors = [
+    m_s_framework_flutter_p5iajh_api_interceptors.InterceptorVerificaToken(),
+  ];
 
   static List<String>? descricao(dynamic response) => (getJsonField(
         response,
@@ -737,11 +1115,16 @@ class CondPagamentosCall {
           .map((x) => castToType<String>(x))
           .withoutNulls
           .toList();
-  static List? value(dynamic response) => getJsonField(
+  static List<CondPagamentoDataTypeStruct>? value(dynamic response) =>
+      (getJsonField(
         response,
         r'''$.value''',
         true,
-      ) as List?;
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => CondPagamentoDataTypeStruct.maybeFromMap(x))
+          .withoutNulls
+          .toList();
   static List<int>? id(dynamic response) => (getJsonField(
         response,
         r'''$.value[:].ID_CODIGO''',
@@ -753,6 +1136,44 @@ class CondPagamentosCall {
           .toList();
 }
 
+class BuscaNFeCall {
+  static Future<ApiCallResponse> call({
+    String? ip = '',
+    int? idVenda,
+    String? token = '',
+  }) async {
+    return FFApiInterceptor.makeApiCall(
+      // ignore: prefer_const_constructors - can be mutated by interceptors
+      ApiCallOptions(
+        callName: 'BuscaNFe',
+        apiUrl: '${ip}/entities/VENDANFE(${idVenda})/IMAGEM_NFE',
+        callType: ApiCallType.GET,
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Authorization': 'Bearer ${token}',
+        },
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        params: {},
+
+        returnBody: true,
+        encodeBodyUtf8: false,
+        decodeUtf8: false,
+        cache: false,
+        isStreamingApi: false,
+        alwaysAllowBody: false,
+      ),
+
+      interceptors,
+    );
+  }
+
+  static final interceptors = [
+    m_s_framework_flutter_p5iajh_api_interceptors.InterceptorVerificaToken(),
+  ];
+}
+
 class VendasCall {
   static Future<ApiCallResponse> call({
     String? ip = '',
@@ -762,25 +1183,37 @@ class VendasCall {
     int? demmand,
     int? skip,
   }) async {
-    return ApiManager.instance.makeApiCall(
-      callName: 'Vendas',
-      apiUrl:
-          '${ip}/entities/VENDA_REM?${pesquisa}&\$orderby=${orderby}&\$top=${demmand}&\$skip=${skip}',
-      callType: ApiCallType.GET,
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Authorization': 'Bearer ${token}',
-      },
-      params: {},
-      returnBody: true,
-      encodeBodyUtf8: false,
-      decodeUtf8: true,
-      cache: false,
-      isStreamingApi: false,
-      alwaysAllowBody: false,
+    return FFApiInterceptor.makeApiCall(
+      // ignore: prefer_const_constructors - can be mutated by interceptors
+      ApiCallOptions(
+        callName: 'Vendas',
+        apiUrl:
+            '${ip}/entities/VENDA_REM?${pesquisa}&\$orderby=${orderby}&\$top=${demmand}&\$skip=${skip}',
+        callType: ApiCallType.GET,
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Authorization': 'Bearer ${token}',
+        },
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        params: {},
+
+        returnBody: true,
+        encodeBodyUtf8: false,
+        decodeUtf8: true,
+        cache: false,
+        isStreamingApi: false,
+        alwaysAllowBody: false,
+      ),
+
+      interceptors,
     );
   }
+
+  static final interceptors = [
+    m_s_framework_flutter_p5iajh_api_interceptors.InterceptorVerificaToken(),
+  ];
 
   static List? value(dynamic response) => getJsonField(
         response,
@@ -850,40 +1283,252 @@ class VendaCall {
     final vendajson = _serializeJson(vendajsonJson);
     final ffApiRequestBody = '''
 ${vendajson}''';
-    return ApiManager.instance.makeApiCall(
-      callName: 'Venda',
-      apiUrl: '${ip}/entities/VENDA_REM',
-      callType: ApiCallType.POST,
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Authorization': 'Bearer ${token}',
-      },
-      params: {},
-      body: ffApiRequestBody,
-      bodyType: BodyType.JSON,
-      returnBody: true,
-      encodeBodyUtf8: false,
-      decodeUtf8: false,
-      cache: false,
-      isStreamingApi: false,
-      alwaysAllowBody: false,
+    return FFApiInterceptor.makeApiCall(
+      // ignore: prefer_const_constructors - can be mutated by interceptors
+      ApiCallOptions(
+        callName: 'Venda',
+        apiUrl: '${ip}/Services/EnviaVenda',
+        callType: ApiCallType.POST,
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Authorization': 'Bearer ${token}',
+          'xdata-expand-level': '3',
+        },
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        params: {},
+        body: ffApiRequestBody,
+        bodyType: BodyType.JSON,
+        returnBody: true,
+        encodeBodyUtf8: false,
+        decodeUtf8: false,
+        cache: false,
+        isStreamingApi: false,
+        alwaysAllowBody: false,
+      ),
+
+      interceptors,
     );
   }
 
-  static String? senha(dynamic response) => castToType<String>(getJsonField(
+  static final interceptors = [
+    m_s_framework_flutter_p5iajh_api_interceptors.InterceptorVerificaToken(),
+    AddTimerOnRequest(),
+  ];
+
+  static dynamic value(dynamic response) => getJsonField(
         response,
-        r'''$.value[:].SENHA''',
-      ));
-  static String? nomefantasia(dynamic response) =>
-      castToType<String>(getJsonField(
+        r'''$''',
+      );
+  static bool? result(dynamic response) => castToType<bool>(getJsonField(
         response,
-        r'''$.value[:].NOME_FANTASIA''',
+        r'''$.result''',
       ));
-  static String? cnpj(dynamic response) => castToType<String>(getJsonField(
+  static String? message(dynamic response) => castToType<String>(getJsonField(
         response,
-        r'''$.value[:].CNPJ''',
+        r'''$.message''',
       ));
+  static int? idretorno(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.id_key''',
+      ));
+  static String? status(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.status''',
+      ));
+  static dynamic vendaRem(dynamic response) => getJsonField(
+        response,
+        r'''$.Venda''',
+      );
+  static String? error(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.error''',
+      ));
+  static int? novodoc(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.novodoc''',
+      ));
+}
+
+class GetStatusNFeCall {
+  static Future<ApiCallResponse> call({
+    String? ip = '',
+    String? token = '',
+    int? idVenda,
+  }) async {
+    final ffApiRequestBody = '''
+{
+  "IdVenda": ${idVenda}
+}''';
+    return FFApiInterceptor.makeApiCall(
+      // ignore: prefer_const_constructors - can be mutated by interceptors
+      ApiCallOptions(
+        callName: 'GetStatusNFe',
+        apiUrl: '${ip}/Services/GetResponseNFe',
+        callType: ApiCallType.POST,
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Authorization': 'Bearer ${token}',
+        },
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        params: {},
+        body: ffApiRequestBody,
+        bodyType: BodyType.JSON,
+        returnBody: true,
+        encodeBodyUtf8: false,
+        decodeUtf8: false,
+        cache: false,
+        isStreamingApi: false,
+        alwaysAllowBody: false,
+      ),
+
+      interceptors,
+    );
+  }
+
+  static final interceptors = [
+    m_s_framework_flutter_p5iajh_api_interceptors.InterceptorVerificaToken(),
+    AddTimerOnRequest(),
+  ];
+
+  static String? status(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.value''',
+      ));
+}
+
+class AddListaAbastecimentoCall {
+  static Future<ApiCallResponse> call({
+    String? ip = '',
+    String? token = '',
+    dynamic listaAbastecimentoJson,
+  }) async {
+    final listaAbastecimento = _serializeJson(listaAbastecimentoJson, true);
+    final ffApiRequestBody = '''
+${listaAbastecimento}''';
+    return FFApiInterceptor.makeApiCall(
+      // ignore: prefer_const_constructors - can be mutated by interceptors
+      ApiCallOptions(
+        callName: 'AddListaAbastecimento',
+        apiUrl: '${ip}/Services/AdicionaListaAbastecimento',
+        callType: ApiCallType.POST,
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Authorization': 'Bearer ${token}',
+        },
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        params: {},
+        body: ffApiRequestBody,
+        bodyType: BodyType.JSON,
+        returnBody: true,
+        encodeBodyUtf8: false,
+        decodeUtf8: false,
+        cache: false,
+        isStreamingApi: false,
+        alwaysAllowBody: false,
+      ),
+
+      interceptors,
+    );
+  }
+
+  static final interceptors = [
+    m_s_framework_flutter_p5iajh_api_interceptors.InterceptorVerificaToken(),
+  ];
+
+  static bool? resultCall(dynamic response) => castToType<bool>(getJsonField(
+        response,
+        r'''$.result''',
+      ));
+}
+
+class AddAbastecimentoCall {
+  static Future<ApiCallResponse> call({
+    String? ip = '',
+    String? token = '',
+    dynamic listaAbastecimentoJson,
+  }) async {
+    final listaAbastecimento = _serializeJson(listaAbastecimentoJson);
+    final ffApiRequestBody = '''
+${listaAbastecimento}''';
+    return FFApiInterceptor.makeApiCall(
+      // ignore: prefer_const_constructors - can be mutated by interceptors
+      ApiCallOptions(
+        callName: 'AddAbastecimento',
+        apiUrl: '${ip}/Services/AdicionaAbastecimento',
+        callType: ApiCallType.POST,
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Authorization': 'Bearer ${token}',
+        },
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        params: {},
+        body: ffApiRequestBody,
+        bodyType: BodyType.JSON,
+        returnBody: true,
+        encodeBodyUtf8: false,
+        decodeUtf8: false,
+        cache: false,
+        isStreamingApi: false,
+        alwaysAllowBody: false,
+      ),
+
+      interceptors,
+    );
+  }
+
+  static final interceptors = [
+    m_s_framework_flutter_p5iajh_api_interceptors.InterceptorVerificaToken(),
+  ];
+
+  static bool? resultCall(dynamic response) => castToType<bool>(getJsonField(
+        response,
+        r'''$.result''',
+      ));
+  static int? returnID(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.value''',
+      ));
+}
+
+class TestConnectAppCall {
+  static Future<ApiCallResponse> call({
+    String? ip = '',
+  }) async {
+    return FFApiInterceptor.makeApiCall(
+      // ignore: prefer_const_constructors - can be mutated by interceptors
+      ApiCallOptions(
+        callName: 'TestConnectApp',
+        apiUrl: '${ip}/auth/testconnection',
+        callType: ApiCallType.POST,
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        headers: {},
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        params: {},
+
+        bodyType: BodyType.NONE,
+        returnBody: true,
+        encodeBodyUtf8: false,
+        decodeUtf8: false,
+        cache: false,
+        isStreamingApi: true,
+        alwaysAllowBody: false,
+      ),
+
+      interceptors,
+    );
+  }
+
+  static final interceptors = [
+    m_s_framework_flutter_p5iajh_api_interceptors.InterceptorVerificaToken(),
+  ];
 }
 
 String _toEncodable(dynamic item) {

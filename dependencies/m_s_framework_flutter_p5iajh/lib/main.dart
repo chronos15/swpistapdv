@@ -6,6 +6,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'flutter_flow/flutter_flow_util.dart';
+import 'flutter_flow/internationalization.dart';
 import 'flutter_flow/nav/nav.dart';
 import 'index.dart';
 
@@ -32,7 +33,17 @@ class MyApp extends StatefulWidget {
       context.findAncestorStateOfType<_MyAppState>()!;
 }
 
+class MyAppScrollBehavior extends MaterialScrollBehavior {
+  @override
+  Set<PointerDeviceKind> get dragDevices => {
+        PointerDeviceKind.touch,
+        PointerDeviceKind.mouse,
+      };
+}
+
 class _MyAppState extends State<MyApp> {
+  Locale? _locale;
+
   ThemeMode _themeMode = ThemeMode.system;
 
   late AppStateNotifier _appStateNotifier;
@@ -64,6 +75,10 @@ class _MyAppState extends State<MyApp> {
         () => safeSetState(() => _appStateNotifier.stopShowingSplashImage()));
   }
 
+  void setLocale(String language) {
+    safeSetState(() => _locale = createLocale(language));
+  }
+
   void setThemeMode(ThemeMode mode) => safeSetState(() {
         _themeMode = mode;
       });
@@ -71,20 +86,26 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
       title: 'MSFrameworkFlutter',
+      scrollBehavior: MyAppScrollBehavior(),
       localizationsDelegates: [
+        FFLocalizationsDelegate(),
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
+        FallbackMaterialLocalizationDelegate(),
+        FallbackCupertinoLocalizationDelegate(),
       ],
-      supportedLocales: const [Locale('en', '')],
+      locale: _locale,
+      supportedLocales: const [
+        Locale('pt'),
+      ],
       theme: ThemeData(
         brightness: Brightness.light,
-        useMaterial3: false,
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
-        useMaterial3: false,
       ),
       themeMode: _themeMode,
       routerConfig: _router,

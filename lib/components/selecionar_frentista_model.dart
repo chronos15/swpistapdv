@@ -18,6 +18,8 @@ class SelecionarFrentistaModel
   FocusNode? textFieldFocusNode;
   TextEditingController? textController;
   String? Function(BuildContext, String?)? textControllerValidator;
+  // Stores action output result for [Alert Dialog - Custom Dialog] action in Container widget.
+  bool? actFrentistaSelected;
 
   @override
   void initState(BuildContext context) {}

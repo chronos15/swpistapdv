@@ -1,6 +1,7 @@
 // Automatic FlutterFlow imports
 import '/backend/schema/structs/index.dart';
 import '/backend/schema/enums/enums.dart';
+import '/actions/actions.dart' as action_blocks;
 import "package:m_s_framework_flutter_p5iajh/backend/schema/structs/index.dart"
     as m_s_framework_flutter_p5iajh_data_schema;
 import "package:m_s_framework_flutter_p5iajh/backend/schema/enums/enums.dart"
@@ -15,55 +16,65 @@ import 'package:flutter/material.dart';
 
 import 'package:getnet_payments/getnet_payments.dart';
 import 'package:uuid/uuid.dart';
+import 'package:flutter/foundation.dart';
 
-import 'dart:async';
+Future<dynamic> getNetRealizaPagamento(
+    double amountValue, TpPagamento enumTypePay, int parcelas) async {
+  PaymentTypeEnum? paymentType;
 
-Completer<void> _paymentCompleter = Completer<void>();
+  // Printando o tipo de pagamento escolhido para depuração
+  debugPrint("Iniciando pagamento. Tipo: $enumTypePay");
 
-Future<void> getNetRealizaPagamento(double amountValue, int idTypePay) async {
-  if (_paymentCompleter.isCompleted) {
-    debugPrint("Pagamento já em andamento. Ignorando chamada duplicada.");
-    return;
-  }
-
-  _paymentCompleter = Completer<void>();
-
-  PaymentTypeEnum paymentType;
-
-  switch (idTypePay) {
-    case 1:
+  switch (enumTypePay) {
+    case TpPagamento.CARTAO_CREDITO:
       paymentType = PaymentTypeEnum.credit;
       break;
-    case 2:
+    case TpPagamento.CARTAO_DEBITO:
       paymentType = PaymentTypeEnum.debit;
       break;
-    case 3:
-      paymentType = PaymentTypeEnum.voucher;
-      break;
-    case 4:
+    case TpPagamento.PIX:
       paymentType = PaymentTypeEnum.pix;
       break;
+    case TpPagamento.VOUCHER:
+      paymentType = PaymentTypeEnum.voucher;
+      break;
     default:
-      print("Tipo de pagamento inválido.");
-      return;
+      debugPrint("Tipo de pagamento inválido.");
+      return null;
   }
 
   try {
+    debugPrint(
+        "Realizando pagamento de $amountValue com o tipo $paymentType e $parcelas parcelas.");
+
+    // Verificando o resultado da transação de forma mais detalhada
     final transaction = await GetnetPayments.deeplink.payment(
       amount: amountValue,
-      paymentType: PaymentTypeEnum.credit,
+      paymentType: paymentType,
       callerId: Uuid().v4(),
-      installments: 1,
+      installments: parcelas,
     );
 
-    if (transaction != null && transaction.result == "0") {
-      debugPrint("Pagamento realizado com sucesso!");
-    } else {
-      debugPrint("Pagamento cancelado ou falhou.");
+    if (transaction == null) {
+      debugPrint("Transação retornou nula.");
+      return null;
     }
-  } catch (e) {
+
+    // Printando a resposta da transação
+    debugPrint("Resultado da transação: ${transaction.result}");
+
+    final resultado = transaction.result == "0"; // Assuming "0" means success
+    debugPrint("Pagamento realizado com sucesso: $resultado");
+    //debugPrint(transaction.toJson());
+
+    return jsonDecode(transaction.toJson());
+  } catch (e, stack) {
+    // Tratamento de exceção aprimorado com detalhes
     debugPrint("Erro ao processar pagamento: $e");
-  } finally {
-    _paymentCompleter.complete();
+    debugPrint("Stack Trace: $stack");
+
+    // Aqui você pode salvar o erro em um arquivo, enviar para um servidor de log, etc.
+
+    return false;
   }
 }

@@ -5,22 +5,125 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 
+import 'auth/custom_auth/auth_util.dart';
 import 'auth/custom_auth/custom_auth_user_provider.dart';
 
 import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'flutter_flow/flutter_flow_util.dart';
 import 'flutter_flow/internationalization.dart';
+import 'package:m_s_framework_flutter_p5iajh/flutter_flow/internationalization.dart'
+    as m_s_framework_flutter_p5iajh_internationalization;
 
 import 'package:m_s_framework_flutter_p5iajh/app_state.dart'
     as m_s_framework_flutter_p5iajh_app_state;
+import 'package:m_s_framework_flutter_p5iajh/custom_code/actions/index.dart'
+    as m_s_framework_flutter_p5iajh_actions;
+
+
+
+
+
+
+//import para o registro de log interno.
+import 'dart:async';
+import 'custom_code/actions/logger_register.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   GoRouter.optionURLReflectsImperativeAPIs = true;
   usePathUrlStrategy();
 
+  await authManager.initialize();
+
+  runZonedGuarded(() {
+    // Captura erros de widgets Flutter
+    FlutterError.onError = (FlutterErrorDetails details) {
+      final exceptionStr = details.exceptionAsString();
+      final stackStr = details.stack?.toString() ?? '';
+
+      // Padrões de erro irrelevantes
+      final ignoredMessages = [
+        'A RenderFlex overflowed',
+        'setState() called after dispose',
+        'Invalid argument(s)',
+        'Bad state: Future already completed',
+        'LateInitializationError',
+        'NoSuchMethodError',
+      ];
+
+      final ignoredStackParts = [
+        'package:flutter/src/widgets/',
+        'package:flutter/src/rendering/',
+        'package:flutter/src/scheduler/',
+      ];
+
+      final shouldIgnore = ignoredMessages.any(exceptionStr.contains) ||
+          ignoredStackParts.any(stackStr.contains);
+
+      if (shouldIgnore) return;
+
+      // Classificação do erro
+      final isAssertionError = details.exception is AssertionError;
+      final isTypeError = details.exception is TypeError;
+      final isFormatError = details.exception is FormatException;
+
+      int logLevel = 3; // ERROR padrão
+      if (isAssertionError) logLevel = 4; // CRITICAL
+      if (isTypeError) logLevel = 2; // WARNING
+      if (isFormatError) logLevel = 1; // INFO
+
+      loggerRegister(
+        exceptionStr,
+        stackStr,
+        logLevel,
+      );
+    };
+
+    runApp(MyApp());
+  }, (error, stack) {
+    final exceptionStr = error.toString();
+    final stackStr = stack.toString();
+
+    // Mesmos filtros aplicados à zona assíncrona
+    final ignoredMessages = [
+      'A RenderFlex overflowed',
+      'setState() called after dispose',
+      'Invalid argument(s)',
+      'Bad state: Future already completed',
+      'LateInitializationError',
+      'NoSuchMethodError',
+    ];
+
+    final ignoredStackParts = [
+      'package:flutter/src/widgets/',
+      'package:flutter/src/rendering/',
+      'package:flutter/src/scheduler/',
+    ];
+
+    final shouldIgnore = ignoredMessages.any(exceptionStr.contains) ||
+        ignoredStackParts.any(stackStr.contains);
+
+    if (shouldIgnore) return;
+
+    final isAssertionError = error is AssertionError;
+    final isTypeError = error is TypeError;
+    final isFormatError = error is FormatException;
+
+    int logLevel = 3; // ERROR padrão
+    if (isAssertionError) logLevel = 4; // CRITICAL
+    if (isTypeError) logLevel = 2; // WARNING
+    if (isFormatError) logLevel = 1; // INFO
+
+    loggerRegister(
+      exceptionStr,
+      stackStr,
+      logLevel,
+    );
+  });
+
   // Start initial custom actions code
   await actions.portraitAction();
+  await m_s_framework_flutter_p5iajh_actions.defineTransparentBar();
   // End initial custom actions code
 
   await FlutterFlowTheme.initialize();
@@ -31,6 +134,7 @@ void main() async {
   final m_s_framework_flutter_p5iajhAppState =
       m_s_framework_flutter_p5iajh_app_state.FFAppState();
   await m_s_framework_flutter_p5iajhAppState.initializePersistedState();
+  //await m_s_framework_flutter_p5iajh_actions.testConnectionServer();
 
   runApp(MultiProvider(
     providers: [
@@ -75,7 +179,7 @@ class _MyAppState extends State<MyApp> {
           .map((e) => getRoute(e))
           .toList();
 
-  late Stream<SOFTWORKPostoAuthUser> userStream;
+  late Stream<SoftworkAuthUser> userStream;
 
   @override
   void initState() {
@@ -83,13 +187,13 @@ class _MyAppState extends State<MyApp> {
 
     _appStateNotifier = AppStateNotifier.instance;
     _router = createRouter(_appStateNotifier);
-    userStream = sOFTWORKPostoAuthUserStream()
+    userStream = softworkAuthUserStream()
       ..listen((user) {
         _appStateNotifier.update(user);
       });
 
     Future.delayed(
-      Duration(milliseconds: 3000),
+      Duration(milliseconds: 1000),
       () => _appStateNotifier.stopShowingSplashImage(),
     );
   }
@@ -106,9 +210,12 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: 'SOFTWORK Fuel',
+      debugShowCheckedModeBanner: false,
+      title: 'SOFTWORK',
       localizationsDelegates: [
         FFLocalizationsDelegate(),
+        m_s_framework_flutter_p5iajh_internationalization
+            .FFLocalizationsDelegate(),
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
@@ -128,12 +235,12 @@ class _MyAppState extends State<MyApp> {
           radius: Radius.circular(20.0),
           thumbColor: WidgetStateProperty.resolveWith((states) {
             if (states.contains(WidgetState.dragged)) {
-              return Color(4278215917);
+              return Color(1509975277);
             }
             if (states.contains(WidgetState.hovered)) {
-              return Color(4278215917);
+              return Color(1509975277);
             }
-            return Color(4278215917);
+            return Color(1509975277);
           }),
         ),
       ),
@@ -146,12 +253,12 @@ class _MyAppState extends State<MyApp> {
           radius: Radius.circular(20.0),
           thumbColor: WidgetStateProperty.resolveWith((states) {
             if (states.contains(WidgetState.dragged)) {
-              return Color(4278215917);
+              return Color(1509975277);
             }
             if (states.contains(WidgetState.hovered)) {
-              return Color(4278215917);
+              return Color(1509975277);
             }
-            return Color(4278215917);
+            return Color(1509975277);
           }),
         ),
       ),

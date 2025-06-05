@@ -1,6 +1,7 @@
 // Automatic FlutterFlow imports
 import '/backend/schema/structs/index.dart';
 import '/backend/schema/enums/enums.dart';
+import '/actions/actions.dart' as action_blocks;
 import "package:m_s_framework_flutter_p5iajh/backend/schema/structs/index.dart"
     as m_s_framework_flutter_p5iajh_data_schema;
 import "package:m_s_framework_flutter_p5iajh/backend/schema/enums/enums.dart"
@@ -44,6 +45,9 @@ Future<List<ListaAbastecimentoDataTypeStruct>> produtoDTUpdateCart(
       vlrtotal: productValue.pravista * valueQuantidade,
       dateDefault: DateTime.now(),
       quantidade: valueQuantidade,
+      precoUnit: productValue.pravista,
+      frentista: FFAppState().FrentistaSelecionado.nomeFrentista,
+      idFrentista: FFAppState().FrentistaSelecionado.idRefcartao,
       produtoDT: productValue,
     ));
   }

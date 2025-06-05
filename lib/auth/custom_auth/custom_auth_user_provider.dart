@@ -3,8 +3,8 @@ import 'package:rxdart/rxdart.dart';
 import '/backend/schema/structs/index.dart';
 import 'custom_auth_manager.dart';
 
-class SOFTWORKPostoAuthUser {
-  SOFTWORKPostoAuthUser({
+class SoftworkAuthUser {
+  SoftworkAuthUser({
     required this.loggedIn,
     this.uid,
     this.userData,
@@ -16,9 +16,8 @@ class SOFTWORKPostoAuthUser {
 }
 
 /// Generates a stream of the authenticated user.
-BehaviorSubject<SOFTWORKPostoAuthUser> sOFTWORKPostoAuthUserSubject =
-    BehaviorSubject.seeded(SOFTWORKPostoAuthUser(loggedIn: false));
-Stream<SOFTWORKPostoAuthUser> sOFTWORKPostoAuthUserStream() =>
-    sOFTWORKPostoAuthUserSubject
-        .asBroadcastStream()
-        .map((user) => currentUser = user);
+BehaviorSubject<SoftworkAuthUser> softworkAuthUserSubject =
+    BehaviorSubject.seeded(SoftworkAuthUser(loggedIn: false));
+Stream<SoftworkAuthUser> softworkAuthUserStream() => softworkAuthUserSubject
+    .asBroadcastStream()
+    .map((user) => currentUser = user);

@@ -12,10 +12,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:ini/ini.dart';
 
-Future<List<String>> loadIniFileFromAssets() async {
+Future<List<String>> loadIniFileFromAssets(String sIniName) async {
   try {
     // Carrega o arquivo do diretório de assets
-    final content = await rootBundle.loadString('assets/SOFTWORKEasy.ini');
+    final content = await rootBundle.loadString('assets/$sIniName.ini');
     final config = Config.fromString(content);
 
     // Extrai os valores do arquivo .ini

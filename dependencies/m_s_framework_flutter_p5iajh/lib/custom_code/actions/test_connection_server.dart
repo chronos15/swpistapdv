@@ -9,20 +9,21 @@ import 'package:flutter/material.dart';
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
+import 'index.dart'; // Imports other custom actions
+
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'dart:async';
+import 'dart:io';
 
 Future<bool> testConnectionServer() async {
-  // Add your function code here!
   String? newHost = FFAppState()
       .ConfigGlobaisServer
       .host
-      ?.replaceFirst('${FFAppState().ConfigGlobaisServer.viacomunicao}://', '')
+      .replaceFirst('${FFAppState().ConfigGlobaisServer.viacomunicao}://', '')
       .replaceFirst(
           ':${FFAppState().ConfigGlobaisServer.porta}/${FFAppState().ConfigGlobaisServer.path}',
           '');
-
-  //print('$newHost');
 
   List<String?> hosts = [
     newHost,
@@ -32,20 +33,16 @@ Future<bool> testConnectionServer() async {
   ];
 
   for (var i = 0; i < hosts.length; i++) {
-    // Constrói o `currentHost` de forma segura usando o operador `?`
     String? baseHost = hosts[i];
     if (baseHost == null || baseHost.isEmpty) {
-      //print('Host IP inválido para a tentativa ${i + 1}');
       continue;
     }
 
     String currentHost = '${FFAppState().ConfigGlobaisServer.viacomunicao}://'
-        '$baseHost:${FFAppState().ConfigGlobaisServer.porta.toString()}'
+        '$baseHost:${FFAppState().ConfigGlobaisServer.porta}'
         '/${FFAppState().ConfigGlobaisServer.path}/auth/testconnection';
 
     try {
-      //print(
-      //'Tentando conectar com o servidor: $currentHost (tentativa ${i + 1})');
       final response = await http
           .post(
             Uri.parse(currentHost),
@@ -55,37 +52,31 @@ Future<bool> testConnectionServer() async {
             },
             body: json.encode({}),
           )
-          .timeout(Duration(milliseconds: 700));
-
-      //print('Resposta recebida com código: ${response.statusCode}');
+          .timeout(const Duration(milliseconds: 700));
 
       if (response.statusCode == 200) {
         final responseBody = json.decode(response.body);
-        //print('Corpo da resposta: $responseBody');
 
         if (responseBody is Map<String, dynamic> &&
             responseBody['value'] is bool) {
-          //print('Valor booleano encontrado: ${responseBody['value']}');
-
-          // Define o host correto no FFAppState
+          // Atualiza o host no estado global
           FFAppState().ConfigGlobaisServer.host =
               '${FFAppState().ConfigGlobaisServer.viacomunicao}://'
-              '$baseHost:${FFAppState().ConfigGlobaisServer.porta.toString()}'
+              '$baseHost:${FFAppState().ConfigGlobaisServer.porta}'
               '/${FFAppState().ConfigGlobaisServer.path}';
-          //print('Host correto configurado: $currentHost tentativa ${i + 1}');
 
           return responseBody['value'];
-        } else {
-          //print('Campo "value" não encontrado ou não é booleano');
         }
-      } else {
-        //print('Falha na requisição. Status code: ${response.statusCode}');
       }
+    } on TimeoutException {
+      print('Timeout ao tentar conectar com $currentHost');
+    } on SocketException {
+      print('Erro de rede ao tentar conectar com $currentHost');
     } catch (e) {
-      //print('Erro na conexão ou timeout: $e');
+      print('Erro inesperado ao conectar com $currentHost: $e');
     }
   }
 
-  //print('Retornando false após falhas nas três tentativas de conexão');
+  print('Falha ao conectar com todos os servidores disponíveis.');
   return false;
 }

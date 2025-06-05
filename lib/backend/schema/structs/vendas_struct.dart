@@ -6,21 +6,20 @@ import '/flutter_flow/flutter_flow_util.dart';
 
 class VendasStruct extends BaseStruct {
   VendasStruct({
+    int? idCodigo,
     int? idCliente,
     String? datavenda,
     String? hora,
     int? idVendedor,
-    int? percDesc,
-    int? desconto,
-    int? entrada,
-    int? idFormapgto,
-    String? descrtpvenda,
+    double? percDesc,
+    double? desconto,
+    double? entrada,
     String? usuario,
     String? numterminal,
     String? situacaoNfe,
     int? modeloDocf,
     String? chaveNfeVinc,
-    String? numdocVinc,
+    int? numdocVinc,
     String? mobile,
     List<VendaitemStruct>? vendaitemRem,
     int? numeroitens,
@@ -32,15 +31,27 @@ class VendasStruct extends BaseStruct {
     double? totalvenda,
     String? nomeCliente,
     String? cpfcnpj,
-  })  : _idCliente = idCliente,
+    String? endereco,
+    String? complemento,
+    String? bairro,
+    String? cidade,
+    String? uf,
+    String? cep,
+    int? codcid,
+    String? codmunibge,
+    List<PaymentDataTypeStruct>? pagamentos,
+    String? descrtpvenda,
+    int? tipovenda,
+    int? idFormapgto,
+    List<ListaAbastecimentoDataTypeStruct>? abastecimentos,
+  })  : _idCodigo = idCodigo,
+        _idCliente = idCliente,
         _datavenda = datavenda,
         _hora = hora,
         _idVendedor = idVendedor,
         _percDesc = percDesc,
         _desconto = desconto,
         _entrada = entrada,
-        _idFormapgto = idFormapgto,
-        _descrtpvenda = descrtpvenda,
         _usuario = usuario,
         _numterminal = numterminal,
         _situacaoNfe = situacaoNfe,
@@ -57,7 +68,29 @@ class VendasStruct extends BaseStruct {
         _totalprodutos = totalprodutos,
         _totalvenda = totalvenda,
         _nomeCliente = nomeCliente,
-        _cpfcnpj = cpfcnpj;
+        _cpfcnpj = cpfcnpj,
+        _endereco = endereco,
+        _complemento = complemento,
+        _bairro = bairro,
+        _cidade = cidade,
+        _uf = uf,
+        _cep = cep,
+        _codcid = codcid,
+        _codmunibge = codmunibge,
+        _pagamentos = pagamentos,
+        _descrtpvenda = descrtpvenda,
+        _tipovenda = tipovenda,
+        _idFormapgto = idFormapgto,
+        _abastecimentos = abastecimentos;
+
+  // "ID_CODIGO" field.
+  int? _idCodigo;
+  int get idCodigo => _idCodigo ?? 0;
+  set idCodigo(int? val) => _idCodigo = val;
+
+  void incrementIdCodigo(int amount) => idCodigo = idCodigo + amount;
+
+  bool hasIdCodigo() => _idCodigo != null;
 
   // "ID_CLIENTE" field.
   int? _idCliente;
@@ -92,47 +125,31 @@ class VendasStruct extends BaseStruct {
   bool hasIdVendedor() => _idVendedor != null;
 
   // "PERC_DESC" field.
-  int? _percDesc;
-  int get percDesc => _percDesc ?? 0;
-  set percDesc(int? val) => _percDesc = val;
+  double? _percDesc;
+  double get percDesc => _percDesc ?? 0.0;
+  set percDesc(double? val) => _percDesc = val;
 
-  void incrementPercDesc(int amount) => percDesc = percDesc + amount;
+  void incrementPercDesc(double amount) => percDesc = percDesc + amount;
 
   bool hasPercDesc() => _percDesc != null;
 
   // "DESCONTO" field.
-  int? _desconto;
-  int get desconto => _desconto ?? 0;
-  set desconto(int? val) => _desconto = val;
+  double? _desconto;
+  double get desconto => _desconto ?? 0.0;
+  set desconto(double? val) => _desconto = val;
 
-  void incrementDesconto(int amount) => desconto = desconto + amount;
+  void incrementDesconto(double amount) => desconto = desconto + amount;
 
   bool hasDesconto() => _desconto != null;
 
   // "ENTRADA" field.
-  int? _entrada;
-  int get entrada => _entrada ?? 0;
-  set entrada(int? val) => _entrada = val;
+  double? _entrada;
+  double get entrada => _entrada ?? 0.0;
+  set entrada(double? val) => _entrada = val;
 
-  void incrementEntrada(int amount) => entrada = entrada + amount;
+  void incrementEntrada(double amount) => entrada = entrada + amount;
 
   bool hasEntrada() => _entrada != null;
-
-  // "ID_FORMAPGTO" field.
-  int? _idFormapgto;
-  int get idFormapgto => _idFormapgto ?? 0;
-  set idFormapgto(int? val) => _idFormapgto = val;
-
-  void incrementIdFormapgto(int amount) => idFormapgto = idFormapgto + amount;
-
-  bool hasIdFormapgto() => _idFormapgto != null;
-
-  // "DESCRTPVENDA" field.
-  String? _descrtpvenda;
-  String get descrtpvenda => _descrtpvenda ?? '';
-  set descrtpvenda(String? val) => _descrtpvenda = val;
-
-  bool hasDescrtpvenda() => _descrtpvenda != null;
 
   // "USUARIO" field.
   String? _usuario;
@@ -172,9 +189,11 @@ class VendasStruct extends BaseStruct {
   bool hasChaveNfeVinc() => _chaveNfeVinc != null;
 
   // "NUMDOC_VINC" field.
-  String? _numdocVinc;
-  String get numdocVinc => _numdocVinc ?? '';
-  set numdocVinc(String? val) => _numdocVinc = val;
+  int? _numdocVinc;
+  int get numdocVinc => _numdocVinc ?? 0;
+  set numdocVinc(int? val) => _numdocVinc = val;
+
+  void incrementNumdocVinc(int amount) => numdocVinc = numdocVinc + amount;
 
   bool hasNumdocVinc() => _numdocVinc != null;
 
@@ -275,22 +294,129 @@ class VendasStruct extends BaseStruct {
 
   bool hasCpfcnpj() => _cpfcnpj != null;
 
+  // "ENDERECO" field.
+  String? _endereco;
+  String get endereco => _endereco ?? '';
+  set endereco(String? val) => _endereco = val;
+
+  bool hasEndereco() => _endereco != null;
+
+  // "COMPLEMENTO" field.
+  String? _complemento;
+  String get complemento => _complemento ?? '';
+  set complemento(String? val) => _complemento = val;
+
+  bool hasComplemento() => _complemento != null;
+
+  // "BAIRRO" field.
+  String? _bairro;
+  String get bairro => _bairro ?? '';
+  set bairro(String? val) => _bairro = val;
+
+  bool hasBairro() => _bairro != null;
+
+  // "CIDADE" field.
+  String? _cidade;
+  String get cidade => _cidade ?? '';
+  set cidade(String? val) => _cidade = val;
+
+  bool hasCidade() => _cidade != null;
+
+  // "UF" field.
+  String? _uf;
+  String get uf => _uf ?? '';
+  set uf(String? val) => _uf = val;
+
+  bool hasUf() => _uf != null;
+
+  // "CEP" field.
+  String? _cep;
+  String get cep => _cep ?? '';
+  set cep(String? val) => _cep = val;
+
+  bool hasCep() => _cep != null;
+
+  // "CODCID" field.
+  int? _codcid;
+  int get codcid => _codcid ?? 0;
+  set codcid(int? val) => _codcid = val;
+
+  void incrementCodcid(int amount) => codcid = codcid + amount;
+
+  bool hasCodcid() => _codcid != null;
+
+  // "CODMUNIBGE" field.
+  String? _codmunibge;
+  String get codmunibge => _codmunibge ?? '';
+  set codmunibge(String? val) => _codmunibge = val;
+
+  bool hasCodmunibge() => _codmunibge != null;
+
+  // "PAGAMENTOS" field.
+  List<PaymentDataTypeStruct>? _pagamentos;
+  List<PaymentDataTypeStruct> get pagamentos => _pagamentos ?? const [];
+  set pagamentos(List<PaymentDataTypeStruct>? val) => _pagamentos = val;
+
+  void updatePagamentos(Function(List<PaymentDataTypeStruct>) updateFn) {
+    updateFn(_pagamentos ??= []);
+  }
+
+  bool hasPagamentos() => _pagamentos != null;
+
+  // "DESCRTPVENDA" field.
+  String? _descrtpvenda;
+  String get descrtpvenda => _descrtpvenda ?? '';
+  set descrtpvenda(String? val) => _descrtpvenda = val;
+
+  bool hasDescrtpvenda() => _descrtpvenda != null;
+
+  // "TIPOVENDA" field.
+  int? _tipovenda;
+  int get tipovenda => _tipovenda ?? 0;
+  set tipovenda(int? val) => _tipovenda = val;
+
+  void incrementTipovenda(int amount) => tipovenda = tipovenda + amount;
+
+  bool hasTipovenda() => _tipovenda != null;
+
+  // "ID_FORMAPGTO" field.
+  int? _idFormapgto;
+  int get idFormapgto => _idFormapgto ?? 0;
+  set idFormapgto(int? val) => _idFormapgto = val;
+
+  void incrementIdFormapgto(int amount) => idFormapgto = idFormapgto + amount;
+
+  bool hasIdFormapgto() => _idFormapgto != null;
+
+  // "ABASTECIMENTOS" field.
+  List<ListaAbastecimentoDataTypeStruct>? _abastecimentos;
+  List<ListaAbastecimentoDataTypeStruct> get abastecimentos =>
+      _abastecimentos ?? const [];
+  set abastecimentos(List<ListaAbastecimentoDataTypeStruct>? val) =>
+      _abastecimentos = val;
+
+  void updateAbastecimentos(
+      Function(List<ListaAbastecimentoDataTypeStruct>) updateFn) {
+    updateFn(_abastecimentos ??= []);
+  }
+
+  bool hasAbastecimentos() => _abastecimentos != null;
+
   static VendasStruct fromMap(Map<String, dynamic> data) => VendasStruct(
+        idCodigo: castToType<int>(data['ID_CODIGO']),
         idCliente: castToType<int>(data['ID_CLIENTE']),
         datavenda: data['DATAVENDA'] as String?,
         hora: data['HORA'] as String?,
         idVendedor: castToType<int>(data['ID_VENDEDOR']),
-        percDesc: castToType<int>(data['PERC_DESC']),
-        desconto: castToType<int>(data['DESCONTO']),
-        entrada: castToType<int>(data['ENTRADA']),
-        idFormapgto: castToType<int>(data['ID_FORMAPGTO']),
-        descrtpvenda: data['DESCRTPVENDA'] as String?,
+        percDesc: castToType<double>(data['PERC_DESC']),
+        desconto: castToType<double>(data['DESCONTO']),
+        entrada: castToType<double>(data['ENTRADA']),
         usuario: data['USUARIO'] as String?,
         numterminal: data['NUMTERMINAL'] as String?,
         situacaoNfe: data['SITUACAO_NFE'] as String?,
         modeloDocf: castToType<int>(data['MODELO_DOCF']),
         chaveNfeVinc: data['CHAVE_NFE_VINC'] as String?,
-        numdocVinc: data['NUMDOC_VINC'] as String?,
+        numdocVinc: castToType<int>(data['NUMDOC_VINC']),
         mobile: data['MOBILE'] as String?,
         vendaitemRem: getStructList(
           data['VENDAITEM_REM'],
@@ -305,12 +431,32 @@ class VendasStruct extends BaseStruct {
         totalvenda: castToType<double>(data['TOTALVENDA']),
         nomeCliente: data['NOME_CLIENTE'] as String?,
         cpfcnpj: data['CPFCNPJ'] as String?,
+        endereco: data['ENDERECO'] as String?,
+        complemento: data['COMPLEMENTO'] as String?,
+        bairro: data['BAIRRO'] as String?,
+        cidade: data['CIDADE'] as String?,
+        uf: data['UF'] as String?,
+        cep: data['CEP'] as String?,
+        codcid: castToType<int>(data['CODCID']),
+        codmunibge: data['CODMUNIBGE'] as String?,
+        pagamentos: getStructList(
+          data['PAGAMENTOS'],
+          PaymentDataTypeStruct.fromMap,
+        ),
+        descrtpvenda: data['DESCRTPVENDA'] as String?,
+        tipovenda: castToType<int>(data['TIPOVENDA']),
+        idFormapgto: castToType<int>(data['ID_FORMAPGTO']),
+        abastecimentos: getStructList(
+          data['ABASTECIMENTOS'],
+          ListaAbastecimentoDataTypeStruct.fromMap,
+        ),
       );
 
   static VendasStruct? maybeFromMap(dynamic data) =>
       data is Map ? VendasStruct.fromMap(data.cast<String, dynamic>()) : null;
 
   Map<String, dynamic> toMap() => {
+        'ID_CODIGO': _idCodigo,
         'ID_CLIENTE': _idCliente,
         'DATAVENDA': _datavenda,
         'HORA': _hora,
@@ -318,8 +464,6 @@ class VendasStruct extends BaseStruct {
         'PERC_DESC': _percDesc,
         'DESCONTO': _desconto,
         'ENTRADA': _entrada,
-        'ID_FORMAPGTO': _idFormapgto,
-        'DESCRTPVENDA': _descrtpvenda,
         'USUARIO': _usuario,
         'NUMTERMINAL': _numterminal,
         'SITUACAO_NFE': _situacaoNfe,
@@ -337,10 +481,27 @@ class VendasStruct extends BaseStruct {
         'TOTALVENDA': _totalvenda,
         'NOME_CLIENTE': _nomeCliente,
         'CPFCNPJ': _cpfcnpj,
+        'ENDERECO': _endereco,
+        'COMPLEMENTO': _complemento,
+        'BAIRRO': _bairro,
+        'CIDADE': _cidade,
+        'UF': _uf,
+        'CEP': _cep,
+        'CODCID': _codcid,
+        'CODMUNIBGE': _codmunibge,
+        'PAGAMENTOS': _pagamentos?.map((e) => e.toMap()).toList(),
+        'DESCRTPVENDA': _descrtpvenda,
+        'TIPOVENDA': _tipovenda,
+        'ID_FORMAPGTO': _idFormapgto,
+        'ABASTECIMENTOS': _abastecimentos?.map((e) => e.toMap()).toList(),
       }.withoutNulls;
 
   @override
   Map<String, dynamic> toSerializableMap() => {
+        'ID_CODIGO': serializeParam(
+          _idCodigo,
+          ParamType.int,
+        ),
         'ID_CLIENTE': serializeParam(
           _idCliente,
           ParamType.int,
@@ -359,23 +520,15 @@ class VendasStruct extends BaseStruct {
         ),
         'PERC_DESC': serializeParam(
           _percDesc,
-          ParamType.int,
+          ParamType.double,
         ),
         'DESCONTO': serializeParam(
           _desconto,
-          ParamType.int,
+          ParamType.double,
         ),
         'ENTRADA': serializeParam(
           _entrada,
-          ParamType.int,
-        ),
-        'ID_FORMAPGTO': serializeParam(
-          _idFormapgto,
-          ParamType.int,
-        ),
-        'DESCRTPVENDA': serializeParam(
-          _descrtpvenda,
-          ParamType.String,
+          ParamType.double,
         ),
         'USUARIO': serializeParam(
           _usuario,
@@ -399,7 +552,7 @@ class VendasStruct extends BaseStruct {
         ),
         'NUMDOC_VINC': serializeParam(
           _numdocVinc,
-          ParamType.String,
+          ParamType.int,
         ),
         'MOBILE': serializeParam(
           _mobile,
@@ -446,10 +599,69 @@ class VendasStruct extends BaseStruct {
           _cpfcnpj,
           ParamType.String,
         ),
+        'ENDERECO': serializeParam(
+          _endereco,
+          ParamType.String,
+        ),
+        'COMPLEMENTO': serializeParam(
+          _complemento,
+          ParamType.String,
+        ),
+        'BAIRRO': serializeParam(
+          _bairro,
+          ParamType.String,
+        ),
+        'CIDADE': serializeParam(
+          _cidade,
+          ParamType.String,
+        ),
+        'UF': serializeParam(
+          _uf,
+          ParamType.String,
+        ),
+        'CEP': serializeParam(
+          _cep,
+          ParamType.String,
+        ),
+        'CODCID': serializeParam(
+          _codcid,
+          ParamType.int,
+        ),
+        'CODMUNIBGE': serializeParam(
+          _codmunibge,
+          ParamType.String,
+        ),
+        'PAGAMENTOS': serializeParam(
+          _pagamentos,
+          ParamType.DataStruct,
+          isList: true,
+        ),
+        'DESCRTPVENDA': serializeParam(
+          _descrtpvenda,
+          ParamType.String,
+        ),
+        'TIPOVENDA': serializeParam(
+          _tipovenda,
+          ParamType.int,
+        ),
+        'ID_FORMAPGTO': serializeParam(
+          _idFormapgto,
+          ParamType.int,
+        ),
+        'ABASTECIMENTOS': serializeParam(
+          _abastecimentos,
+          ParamType.DataStruct,
+          isList: true,
+        ),
       }.withoutNulls;
 
   static VendasStruct fromSerializableMap(Map<String, dynamic> data) =>
       VendasStruct(
+        idCodigo: deserializeParam(
+          data['ID_CODIGO'],
+          ParamType.int,
+          false,
+        ),
         idCliente: deserializeParam(
           data['ID_CLIENTE'],
           ParamType.int,
@@ -472,27 +684,17 @@ class VendasStruct extends BaseStruct {
         ),
         percDesc: deserializeParam(
           data['PERC_DESC'],
-          ParamType.int,
+          ParamType.double,
           false,
         ),
         desconto: deserializeParam(
           data['DESCONTO'],
-          ParamType.int,
+          ParamType.double,
           false,
         ),
         entrada: deserializeParam(
           data['ENTRADA'],
-          ParamType.int,
-          false,
-        ),
-        idFormapgto: deserializeParam(
-          data['ID_FORMAPGTO'],
-          ParamType.int,
-          false,
-        ),
-        descrtpvenda: deserializeParam(
-          data['DESCRTPVENDA'],
-          ParamType.String,
+          ParamType.double,
           false,
         ),
         usuario: deserializeParam(
@@ -522,7 +724,7 @@ class VendasStruct extends BaseStruct {
         ),
         numdocVinc: deserializeParam(
           data['NUMDOC_VINC'],
-          ParamType.String,
+          ParamType.int,
           false,
         ),
         mobile: deserializeParam(
@@ -581,6 +783,74 @@ class VendasStruct extends BaseStruct {
           ParamType.String,
           false,
         ),
+        endereco: deserializeParam(
+          data['ENDERECO'],
+          ParamType.String,
+          false,
+        ),
+        complemento: deserializeParam(
+          data['COMPLEMENTO'],
+          ParamType.String,
+          false,
+        ),
+        bairro: deserializeParam(
+          data['BAIRRO'],
+          ParamType.String,
+          false,
+        ),
+        cidade: deserializeParam(
+          data['CIDADE'],
+          ParamType.String,
+          false,
+        ),
+        uf: deserializeParam(
+          data['UF'],
+          ParamType.String,
+          false,
+        ),
+        cep: deserializeParam(
+          data['CEP'],
+          ParamType.String,
+          false,
+        ),
+        codcid: deserializeParam(
+          data['CODCID'],
+          ParamType.int,
+          false,
+        ),
+        codmunibge: deserializeParam(
+          data['CODMUNIBGE'],
+          ParamType.String,
+          false,
+        ),
+        pagamentos: deserializeStructParam<PaymentDataTypeStruct>(
+          data['PAGAMENTOS'],
+          ParamType.DataStruct,
+          true,
+          structBuilder: PaymentDataTypeStruct.fromSerializableMap,
+        ),
+        descrtpvenda: deserializeParam(
+          data['DESCRTPVENDA'],
+          ParamType.String,
+          false,
+        ),
+        tipovenda: deserializeParam(
+          data['TIPOVENDA'],
+          ParamType.int,
+          false,
+        ),
+        idFormapgto: deserializeParam(
+          data['ID_FORMAPGTO'],
+          ParamType.int,
+          false,
+        ),
+        abastecimentos:
+            deserializeStructParam<ListaAbastecimentoDataTypeStruct>(
+          data['ABASTECIMENTOS'],
+          ParamType.DataStruct,
+          true,
+          structBuilder: ListaAbastecimentoDataTypeStruct.fromSerializableMap,
+        ),
       );
 
   @override
@@ -590,6 +860,7 @@ class VendasStruct extends BaseStruct {
   bool operator ==(Object other) {
     const listEquality = ListEquality();
     return other is VendasStruct &&
+        idCodigo == other.idCodigo &&
         idCliente == other.idCliente &&
         datavenda == other.datavenda &&
         hora == other.hora &&
@@ -597,8 +868,6 @@ class VendasStruct extends BaseStruct {
         percDesc == other.percDesc &&
         desconto == other.desconto &&
         entrada == other.entrada &&
-        idFormapgto == other.idFormapgto &&
-        descrtpvenda == other.descrtpvenda &&
         usuario == other.usuario &&
         numterminal == other.numterminal &&
         situacaoNfe == other.situacaoNfe &&
@@ -615,11 +884,25 @@ class VendasStruct extends BaseStruct {
         totalprodutos == other.totalprodutos &&
         totalvenda == other.totalvenda &&
         nomeCliente == other.nomeCliente &&
-        cpfcnpj == other.cpfcnpj;
+        cpfcnpj == other.cpfcnpj &&
+        endereco == other.endereco &&
+        complemento == other.complemento &&
+        bairro == other.bairro &&
+        cidade == other.cidade &&
+        uf == other.uf &&
+        cep == other.cep &&
+        codcid == other.codcid &&
+        codmunibge == other.codmunibge &&
+        listEquality.equals(pagamentos, other.pagamentos) &&
+        descrtpvenda == other.descrtpvenda &&
+        tipovenda == other.tipovenda &&
+        idFormapgto == other.idFormapgto &&
+        listEquality.equals(abastecimentos, other.abastecimentos);
   }
 
   @override
   int get hashCode => const ListEquality().hash([
+        idCodigo,
         idCliente,
         datavenda,
         hora,
@@ -627,8 +910,6 @@ class VendasStruct extends BaseStruct {
         percDesc,
         desconto,
         entrada,
-        idFormapgto,
-        descrtpvenda,
         usuario,
         numterminal,
         situacaoNfe,
@@ -645,26 +926,38 @@ class VendasStruct extends BaseStruct {
         totalprodutos,
         totalvenda,
         nomeCliente,
-        cpfcnpj
+        cpfcnpj,
+        endereco,
+        complemento,
+        bairro,
+        cidade,
+        uf,
+        cep,
+        codcid,
+        codmunibge,
+        pagamentos,
+        descrtpvenda,
+        tipovenda,
+        idFormapgto,
+        abastecimentos
       ]);
 }
 
 VendasStruct createVendasStruct({
+  int? idCodigo,
   int? idCliente,
   String? datavenda,
   String? hora,
   int? idVendedor,
-  int? percDesc,
-  int? desconto,
-  int? entrada,
-  int? idFormapgto,
-  String? descrtpvenda,
+  double? percDesc,
+  double? desconto,
+  double? entrada,
   String? usuario,
   String? numterminal,
   String? situacaoNfe,
   int? modeloDocf,
   String? chaveNfeVinc,
-  String? numdocVinc,
+  int? numdocVinc,
   String? mobile,
   int? numeroitens,
   int? numparcelas,
@@ -675,8 +968,20 @@ VendasStruct createVendasStruct({
   double? totalvenda,
   String? nomeCliente,
   String? cpfcnpj,
+  String? endereco,
+  String? complemento,
+  String? bairro,
+  String? cidade,
+  String? uf,
+  String? cep,
+  int? codcid,
+  String? codmunibge,
+  String? descrtpvenda,
+  int? tipovenda,
+  int? idFormapgto,
 }) =>
     VendasStruct(
+      idCodigo: idCodigo,
       idCliente: idCliente,
       datavenda: datavenda,
       hora: hora,
@@ -684,8 +989,6 @@ VendasStruct createVendasStruct({
       percDesc: percDesc,
       desconto: desconto,
       entrada: entrada,
-      idFormapgto: idFormapgto,
-      descrtpvenda: descrtpvenda,
       usuario: usuario,
       numterminal: numterminal,
       situacaoNfe: situacaoNfe,
@@ -702,4 +1005,15 @@ VendasStruct createVendasStruct({
       totalvenda: totalvenda,
       nomeCliente: nomeCliente,
       cpfcnpj: cpfcnpj,
+      endereco: endereco,
+      complemento: complemento,
+      bairro: bairro,
+      cidade: cidade,
+      uf: uf,
+      cep: cep,
+      codcid: codcid,
+      codmunibge: codmunibge,
+      descrtpvenda: descrtpvenda,
+      tipovenda: tipovenda,
+      idFormapgto: idFormapgto,
     );

@@ -2,6 +2,7 @@ import '/backend/api_requests/api_calls.dart';
 import '/backend/schema/structs/index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'dart:async';
+import '/actions/actions.dart' as action_blocks;
 import '/index.dart';
 import 'login_widget.dart' show LoginWidget;
 import 'package:m_s_framework_flutter_p5iajh/app_state.dart'
@@ -12,8 +13,6 @@ import 'package:m_s_framework_flutter_p5iajh/components/un_view_m_s_frame_messag
     as m_s_framework_flutter_p5iajh;
 import 'package:m_s_framework_flutter_p5iajh/components/un_view_ms_windows_bar_widget.dart'
     as m_s_framework_flutter_p5iajh;
-import 'package:m_s_framework_flutter_p5iajh/custom_code/actions/index.dart'
-    as m_s_framework_flutter_p5iajh_actions;
 import 'package:m_s_framework_flutter_p5iajh/flutter_flow/custom_functions.dart'
     as m_s_framework_flutter_p5iajh_functions;
 import 'package:m_s_framework_flutter_p5iajh/flutter_flow/flutter_flow_util.dart'
@@ -38,6 +37,8 @@ class LoginModel extends FlutterFlowModel<LoginWidget> {
   bool? actBlockServer;
   // Stores action output result for [Backend Call - API (GetToken)] action in Login widget.
   m_s_framework_flutter_p5iajh_api_calls_util.ApiCallResponse? getToken;
+  // Stores action output result for [Action Block - VerificaTerminal] action in Login widget.
+  bool? actReturnTerminal;
   // State field(s) for EmailAddressField widget.
   FocusNode? emailAddressFieldFocusNode;
   TextEditingController? emailAddressFieldTextController;
@@ -84,10 +85,12 @@ class LoginModel extends FlutterFlowModel<LoginWidget> {
 
   // Stores action output result for [Action Block - LoginActBlock] action in PasswordField widget.
   UsuarioDataTypeStruct? loginBlockCopy;
-  // State field(s) for CheckboxListTile widget.
-  bool? checkboxListTileValue;
+  // State field(s) for ckbLembraUsuario widget.
+  bool? ckbLembraUsuarioValue;
   // Stores action output result for [Action Block - LoginActBlock] action in LogInButton widget.
   UsuarioDataTypeStruct? loginBlock;
+  // Stores action output result for [Alert Dialog - Custom Dialog] action in Button widget.
+  bool? actReturnSenha;
   // Model for unViewMsWindowsBar component.
   late m_s_framework_flutter_p5iajh.UnViewMsWindowsBarModel
       unViewMsWindowsBarModel;
@@ -117,8 +120,8 @@ class LoginModel extends FlutterFlowModel<LoginWidget> {
   /// Action blocks.
   Future<UsuarioDataTypeStruct?> loginActBlock(BuildContext context) async {
     ApiCallResponse? autResult;
-    ApiCallResponse? apiResultCofig;
-    ApiCallResponse? apiResultEmpresa;
+    bool? empresasucess;
+    bool? pagsucess;
 
     autResult = await AutentificacaoCall.call(
       ip: m_s_framework_flutter_p5iajh_app_state.FFAppState()
@@ -136,32 +139,11 @@ class LoginModel extends FlutterFlowModel<LoginWidget> {
         (e) => e
           ..usuario = emailAddressFieldTextController.text
           ..senha = passwordFieldTextController.text
-          ..lembrarUsuario = checkboxListTileValue,
+          ..lembrarUsuario = ckbLembraUsuarioValue,
       );
-      apiResultCofig = await ConfiguracaoCall.call(
-        ip: m_s_framework_flutter_p5iajh_app_state.FFAppState()
-            .ConfigGlobaisServer
-            .host,
-        token: m_s_framework_flutter_p5iajh_app_state.FFAppState().Token,
-      );
-
-      apiResultEmpresa = await EmpresaCall.call(
-        ip: m_s_framework_flutter_p5iajh_app_state.FFAppState()
-            .ConfigGlobaisServer
-            .host,
-        token: m_s_framework_flutter_p5iajh_app_state.FFAppState().Token,
-      );
-
-      if ((apiResultEmpresa.succeeded ?? true) &&
-          (apiResultCofig.succeeded ?? true)) {
-        FFAppState().Empresa = EmpresaCall.empresa(
-          (apiResultEmpresa.jsonBody ?? ''),
-        )!;
-        FFAppState().ConfigRemota = ConfiguracaoCall.configuracao(
-          (apiResultCofig.jsonBody ?? ''),
-        )!
-            .firstOrNull!;
-        FFAppState().FrentistaSelecionado = FrentistasDataTypeStruct();
+      empresasucess = await action_blocks.buscaEmpresaConfig(context);
+      pagsucess = await action_blocks.buscaCondPagamento(context);
+      if (empresasucess! && pagsucess!) {
         FFAppState().updateEmpresaStruct(
           (e) => e
             ..logo = valueOrDefault<String>(
@@ -175,16 +157,6 @@ class LoginModel extends FlutterFlowModel<LoginWidget> {
           (autResult.jsonBody ?? ''),
         );
       } else {
-        await m_s_framework_flutter_p5iajh_actions.elegantNotificationError(
-          context,
-          'Falha',
-          'Erro ao realizar conexão com recursos!',
-          FlutterFlowTheme.of(context).primaryText,
-          FlutterFlowTheme.of(context).secondaryBackground,
-          350.0,
-          'bottomcenter',
-          'frombottom',
-        );
         return null;
       }
     } else {
@@ -203,17 +175,20 @@ class LoginModel extends FlutterFlowModel<LoginWidget> {
                 FocusManager.instance.primaryFocus?.unfocus();
               },
               child: Container(
-                height: 200.0,
-                width: 340.0,
+                height: 171.0,
+                width: MediaQuery.sizeOf(context).width * 0.95,
                 child:
                     m_s_framework_flutter_p5iajh.UnViewMSFrameMessageBoxWidget(
                   sTitulo: 'Falha',
                   sText: AutentificacaoCall.message(
                     (autResult?.jsonBody ?? ''),
                   )!,
-                  colorConfirm: FlutterFlowTheme.of(context).error,
+                  colorConfirm:
+                      FlutterFlowTheme.of(context).secondaryBackground,
                   colorCancel: Color(0x00000000),
                   enableCancel: false,
+                  colorTextButtonConfirm: FlutterFlowTheme.of(context).error,
+                  sTextoConfirm: 'Ok',
                   actConfirm: () async {},
                   actCancel: () async {},
                 ),

@@ -49,6 +49,7 @@ class InterceptorVerificaToken extends FFApiInterceptor {
   Future<ApiCallOptions> onRequest({
     required ApiCallOptions options,
   }) async {
+    testConnectionServer;
     final token = FFAppState().Token;
     //final novoToken = await renovarToken();
 

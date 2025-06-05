@@ -3,6 +3,7 @@ import '/custom_code/widgets/index.dart' as custom_widgets;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'cards_one_model.dart';
 export 'cards_one_model.dart';
 
@@ -41,8 +42,6 @@ class _CardsOneWidgetState extends State<CardsOneWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => CardsOneModel());
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -139,11 +138,18 @@ class _CardsOneWidgetState extends State<CardsOneWidget> {
                     maxLines: 1,
                     minFontSize: 12.0,
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
-                          fontFamily: 'Outfit',
+                          font: GoogleFonts.outfit(
+                            fontWeight: FontWeight.normal,
+                            fontStyle: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .fontStyle,
+                          ),
                           color: FlutterFlowTheme.of(context).primaryBackground,
                           fontSize: 20.0,
                           letterSpacing: 0.0,
                           fontWeight: FontWeight.normal,
+                          fontStyle:
+                              FlutterFlowTheme.of(context).bodyMedium.fontStyle,
                         ),
                   ),
                 ),
@@ -158,11 +164,17 @@ class _CardsOneWidgetState extends State<CardsOneWidget> {
                   maxLines: 1,
                   minFontSize: 10.0,
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
-                        fontFamily: 'Outfit',
+                        font: GoogleFonts.outfit(
+                          fontWeight: FontWeight.normal,
+                          fontStyle:
+                              FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                        ),
                         color: FlutterFlowTheme.of(context).primaryBackground,
                         fontSize: 18.0,
                         letterSpacing: 0.0,
                         fontWeight: FontWeight.normal,
+                        fontStyle:
+                            FlutterFlowTheme.of(context).bodyMedium.fontStyle,
                       ),
                 ),
               ),

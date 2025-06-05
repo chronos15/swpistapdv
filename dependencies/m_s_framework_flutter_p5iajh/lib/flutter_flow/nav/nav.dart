@@ -48,12 +48,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context) => Container(
                 color: FlutterFlowTheme.of(context).secondaryBackground,
                 child: Image.asset(
-                  'dependencies/m_s_framework_flutter_p5iajh/assets/images/universal-universal@20x.png',
+                  'packages/m_s_framework_flutter_p5iajh/assets/images/universal-universal@20x.png',
                   fit: BoxFit.scaleDown,
                 ),
               ),
             )
-          : HomePageWidget(),
+          : HomeWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
@@ -63,27 +63,27 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                   builder: (context) => Container(
                     color: FlutterFlowTheme.of(context).secondaryBackground,
                     child: Image.asset(
-                      'dependencies/m_s_framework_flutter_p5iajh/assets/images/universal-universal@20x.png',
+                      'packages/m_s_framework_flutter_p5iajh/assets/images/universal-universal@20x.png',
                       fit: BoxFit.scaleDown,
                     ),
                   ),
                 )
-              : HomePageWidget(),
+              : HomeWidget(),
         ),
         FFRoute(
-          name: HomePageWidget.routeName,
-          path: HomePageWidget.routePath,
-          builder: (context, params) => HomePageWidget(),
+          name: HomeWidget.routeName,
+          path: HomeWidget.routePath,
+          builder: (context, params) => HomeWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
 
 void initializeRoutes({
-  String? homePageWidgetName,
-  String? homePageWidgetPath,
+  String? homeWidgetName,
+  String? homeWidgetPath,
 }) {
-  HomePageWidget.maybeSetRouteName(homePageWidgetName);
-  HomePageWidget.maybeSetRoutePath(homePageWidgetPath);
+  HomeWidget.maybeSetRouteName(homeWidgetName);
+  HomeWidget.maybeSetRoutePath(homeWidgetPath);
 }
 
 extension NavParamExtensions on Map<String, String?> {

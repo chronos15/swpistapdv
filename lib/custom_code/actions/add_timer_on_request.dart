@@ -1,6 +1,7 @@
 // Automatic FlutterFlow imports
 import '/backend/schema/structs/index.dart';
 import '/backend/schema/enums/enums.dart';
+import '/actions/actions.dart' as action_blocks;
 import "package:m_s_framework_flutter_p5iajh/backend/schema/structs/index.dart"
     as m_s_framework_flutter_p5iajh_data_schema;
 import "package:m_s_framework_flutter_p5iajh/backend/schema/enums/enums.dart"
@@ -17,7 +18,7 @@ import 'package:ff_commons/api_requests/api_interceptor.dart';
 import 'dart:async';
 
 class AddTimerOnRequest extends FFApiInterceptor {
-  static const int _minimumResponseTimeInMillis = 500;
+  static const int _minimumResponseTimeInMillis = 700;
 
   @override
   Future<ApiCallOptions> onRequest({
@@ -45,6 +46,17 @@ class AddTimerOnRequest extends FFApiInterceptor {
     if (elapsedTime < _minimumResponseTimeInMillis) {
       await Future.delayed(
           Duration(milliseconds: _minimumResponseTimeInMillis - elapsedTime));
+    }
+
+    // Se jsonBody for null, retorna um ApiCallResponse seguro com dados vazios
+    if (result.jsonBody == null || result.jsonBody is! Map) {
+      return const ApiCallResponse(
+        {
+          'value': []
+        }, // <- sempre retorna um Map com pelo menos uma chave esperada
+        {},
+        0,
+      );
     }
 
     // Retorna a resposta após garantir o tempo mínimo.

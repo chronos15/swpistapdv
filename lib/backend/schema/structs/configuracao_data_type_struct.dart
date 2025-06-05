@@ -9,8 +9,12 @@ class ConfiguracaoDataTypeStruct extends BaseStruct {
   ConfiguracaoDataTypeStruct({
     int? idKey,
     String? solicitaSenha,
+    double? vlrparcMin,
+    String? valecombClicad,
   })  : _idKey = idKey,
-        _solicitaSenha = solicitaSenha;
+        _solicitaSenha = solicitaSenha,
+        _vlrparcMin = vlrparcMin,
+        _valecombClicad = valecombClicad;
 
   // "ID_KEY" field.
   int? _idKey;
@@ -28,10 +32,28 @@ class ConfiguracaoDataTypeStruct extends BaseStruct {
 
   bool hasSolicitaSenha() => _solicitaSenha != null;
 
+  // "VLRPARC_MIN" field.
+  double? _vlrparcMin;
+  double get vlrparcMin => _vlrparcMin ?? 0.0;
+  set vlrparcMin(double? val) => _vlrparcMin = val;
+
+  void incrementVlrparcMin(double amount) => vlrparcMin = vlrparcMin + amount;
+
+  bool hasVlrparcMin() => _vlrparcMin != null;
+
+  // "VALECOMB_CLICAD" field.
+  String? _valecombClicad;
+  String get valecombClicad => _valecombClicad ?? '';
+  set valecombClicad(String? val) => _valecombClicad = val;
+
+  bool hasValecombClicad() => _valecombClicad != null;
+
   static ConfiguracaoDataTypeStruct fromMap(Map<String, dynamic> data) =>
       ConfiguracaoDataTypeStruct(
         idKey: castToType<int>(data['ID_KEY']),
         solicitaSenha: data['SOLICITA_SENHA'] as String?,
+        vlrparcMin: castToType<double>(data['VLRPARC_MIN']),
+        valecombClicad: data['VALECOMB_CLICAD'] as String?,
       );
 
   static ConfiguracaoDataTypeStruct? maybeFromMap(dynamic data) => data is Map
@@ -41,6 +63,8 @@ class ConfiguracaoDataTypeStruct extends BaseStruct {
   Map<String, dynamic> toMap() => {
         'ID_KEY': _idKey,
         'SOLICITA_SENHA': _solicitaSenha,
+        'VLRPARC_MIN': _vlrparcMin,
+        'VALECOMB_CLICAD': _valecombClicad,
       }.withoutNulls;
 
   @override
@@ -51,6 +75,14 @@ class ConfiguracaoDataTypeStruct extends BaseStruct {
         ),
         'SOLICITA_SENHA': serializeParam(
           _solicitaSenha,
+          ParamType.String,
+        ),
+        'VLRPARC_MIN': serializeParam(
+          _vlrparcMin,
+          ParamType.double,
+        ),
+        'VALECOMB_CLICAD': serializeParam(
+          _valecombClicad,
           ParamType.String,
         ),
       }.withoutNulls;
@@ -68,6 +100,16 @@ class ConfiguracaoDataTypeStruct extends BaseStruct {
           ParamType.String,
           false,
         ),
+        vlrparcMin: deserializeParam(
+          data['VLRPARC_MIN'],
+          ParamType.double,
+          false,
+        ),
+        valecombClicad: deserializeParam(
+          data['VALECOMB_CLICAD'],
+          ParamType.String,
+          false,
+        ),
       );
 
   @override
@@ -77,18 +119,25 @@ class ConfiguracaoDataTypeStruct extends BaseStruct {
   bool operator ==(Object other) {
     return other is ConfiguracaoDataTypeStruct &&
         idKey == other.idKey &&
-        solicitaSenha == other.solicitaSenha;
+        solicitaSenha == other.solicitaSenha &&
+        vlrparcMin == other.vlrparcMin &&
+        valecombClicad == other.valecombClicad;
   }
 
   @override
-  int get hashCode => const ListEquality().hash([idKey, solicitaSenha]);
+  int get hashCode => const ListEquality()
+      .hash([idKey, solicitaSenha, vlrparcMin, valecombClicad]);
 }
 
 ConfiguracaoDataTypeStruct createConfiguracaoDataTypeStruct({
   int? idKey,
   String? solicitaSenha,
+  double? vlrparcMin,
+  String? valecombClicad,
 }) =>
     ConfiguracaoDataTypeStruct(
       idKey: idKey,
       solicitaSenha: solicitaSenha,
+      vlrparcMin: vlrparcMin,
+      valecombClicad: valecombClicad,
     );

@@ -3,6 +3,7 @@ import '/components/nav_bar_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'vendas_model.dart';
 export 'vendas_model.dart';
 
@@ -25,8 +26,6 @@ class _VendasWidgetState extends State<VendasWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => VendasModel());
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -47,7 +46,7 @@ class _VendasWidgetState extends State<VendasWidget> {
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
         body: NestedScrollView(
-          floatHeaderSlivers: true,
+          floatHeaderSlivers: false,
           headerSliverBuilder: (context, _) => [
             SliverAppBar(
               pinned: false,
@@ -57,11 +56,18 @@ class _VendasWidgetState extends State<VendasWidget> {
               title: Text(
                 'Vendas',
                 style: FlutterFlowTheme.of(context).headlineMedium.override(
-                      fontFamily: 'Outfit',
+                      font: GoogleFonts.outfit(
+                        fontWeight: FontWeight.normal,
+                        fontStyle: FlutterFlowTheme.of(context)
+                            .headlineMedium
+                            .fontStyle,
+                      ),
                       color: FlutterFlowTheme.of(context).cardAlter,
                       fontSize: 16.0,
                       letterSpacing: 0.0,
                       fontWeight: FontWeight.normal,
+                      fontStyle:
+                          FlutterFlowTheme.of(context).headlineMedium.fontStyle,
                     ),
               ),
               actions: [],
@@ -84,7 +90,7 @@ class _VendasWidgetState extends State<VendasWidget> {
                         updateCallback: () => safeSetState(() {}),
                         updateOnChange: true,
                         child: NavBarWidget(
-                          pageSelected: Pages.Panel,
+                          pageSelected: Pages.Clientes,
                         ),
                       ),
                     ),

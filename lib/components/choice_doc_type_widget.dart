@@ -5,6 +5,7 @@ import '/flutter_flow/form_field_controller.dart';
 import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'choice_doc_type_model.dart';
 export 'choice_doc_type_model.dart';
 
@@ -28,8 +29,6 @@ class _ChoiceDocTypeWidgetState extends State<ChoiceDocTypeWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => ChoiceDocTypeModel());
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -67,11 +66,17 @@ class _ChoiceDocTypeWidgetState extends State<ChoiceDocTypeWidget> {
                 selectedChipStyle: ChipStyle(
                   backgroundColor: FlutterFlowTheme.of(context).secondary,
                   textStyle: FlutterFlowTheme.of(context).bodyMedium.override(
-                        fontFamily: 'Manrope',
+                        font: GoogleFonts.manrope(
+                          fontWeight: FontWeight.normal,
+                          fontStyle:
+                              FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                        ),
                         color: FlutterFlowTheme.of(context).primaryBackground,
                         fontSize: 14.0,
                         letterSpacing: 0.0,
                         fontWeight: FontWeight.normal,
+                        fontStyle:
+                            FlutterFlowTheme.of(context).bodyMedium.fontStyle,
                       ),
                   iconColor: FlutterFlowTheme.of(context).info,
                   iconSize: 18.0,
@@ -83,9 +88,19 @@ class _ChoiceDocTypeWidgetState extends State<ChoiceDocTypeWidget> {
                 unselectedChipStyle: ChipStyle(
                   backgroundColor: FlutterFlowTheme.of(context).alternate,
                   textStyle: FlutterFlowTheme.of(context).bodyMedium.override(
-                        fontFamily: 'Manrope',
+                        font: GoogleFonts.manrope(
+                          fontWeight: FlutterFlowTheme.of(context)
+                              .bodyMedium
+                              .fontWeight,
+                          fontStyle:
+                              FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                        ),
                         color: FlutterFlowTheme.of(context).secondaryText,
                         letterSpacing: 0.0,
+                        fontWeight:
+                            FlutterFlowTheme.of(context).bodyMedium.fontWeight,
+                        fontStyle:
+                            FlutterFlowTheme.of(context).bodyMedium.fontStyle,
                       ),
                   iconColor: FlutterFlowTheme.of(context).secondaryText,
                   iconSize: 18.0,
@@ -125,10 +140,17 @@ class _ChoiceDocTypeWidgetState extends State<ChoiceDocTypeWidget> {
                         EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                     color: FlutterFlowTheme.of(context).primary,
                     textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                          fontFamily: 'Outfit',
+                          font: GoogleFonts.outfit(
+                            fontWeight: FontWeight.w300,
+                            fontStyle: FlutterFlowTheme.of(context)
+                                .titleSmall
+                                .fontStyle,
+                          ),
                           color: FlutterFlowTheme.of(context).info,
                           letterSpacing: 0.0,
                           fontWeight: FontWeight.w300,
+                          fontStyle:
+                              FlutterFlowTheme.of(context).titleSmall.fontStyle,
                         ),
                     elevation: 0.0,
                     borderSide: BorderSide(

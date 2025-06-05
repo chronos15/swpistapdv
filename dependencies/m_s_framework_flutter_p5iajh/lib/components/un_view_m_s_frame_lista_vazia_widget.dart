@@ -62,6 +62,8 @@ class _UnViewMSFrameListaVaziaWidgetState
   void initState() {
     super.initState();
     _model = createModel(context, () => UnViewMSFrameListaVaziaModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -95,7 +97,7 @@ class _UnViewMSFrameListaVaziaWidgetState
                   child: Align(
                     alignment: AlignmentDirectional(0.0, 1.0),
                     child: Image.asset(
-                      'dependencies/m_s_framework_flutter_p5iajh/assets/images/7486744.png',
+                      'packages/m_s_framework_flutter_p5iajh/assets/images/7486744.png',
                       width: double.infinity,
                       height: double.infinity,
                       fit: BoxFit.scaleDown,
@@ -110,11 +112,18 @@ class _UnViewMSFrameListaVaziaWidgetState
                 widget!.sTitulo,
                 textAlign: TextAlign.center,
                 style: FlutterFlowTheme.of(context).headlineSmall.override(
-                      fontFamily: 'Outfit',
+                      font: GoogleFonts.outfit(
+                        fontWeight: FontWeight.w500,
+                        fontStyle: FlutterFlowTheme.of(context)
+                            .headlineSmall
+                            .fontStyle,
+                      ),
                       color: widget!.corTitulo,
                       fontSize: widget!.vSizeTitulo,
                       letterSpacing: 0.0,
                       fontWeight: FontWeight.w500,
+                      fontStyle:
+                          FlutterFlowTheme.of(context).headlineSmall.fontStyle,
                     ),
               ),
             ),
@@ -127,11 +136,17 @@ class _UnViewMSFrameListaVaziaWidgetState
                 ),
                 textAlign: TextAlign.center,
                 style: FlutterFlowTheme.of(context).bodyMedium.override(
-                      fontFamily: 'Readex Pro',
+                      font: GoogleFonts.readexPro(
+                        fontWeight: FontWeight.w300,
+                        fontStyle:
+                            FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                      ),
                       color: widget!.corSubtitulo,
                       fontSize: widget!.vSizeTexto,
                       letterSpacing: 0.0,
                       fontWeight: FontWeight.w300,
+                      fontStyle:
+                          FlutterFlowTheme.of(context).bodyMedium.fontStyle,
                     ),
               ),
             ),
@@ -152,11 +167,18 @@ class _UnViewMSFrameListaVaziaWidgetState
                         EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                     color: widget!.cColorButton,
                     textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                          fontFamily: 'Outfit',
+                          font: GoogleFonts.outfit(
+                            fontWeight: FontWeight.w300,
+                            fontStyle: FlutterFlowTheme.of(context)
+                                .titleSmall
+                                .fontStyle,
+                          ),
                           color: Colors.white,
                           fontSize: widget!.textSize,
                           letterSpacing: 0.0,
                           fontWeight: FontWeight.w300,
+                          fontStyle:
+                              FlutterFlowTheme.of(context).titleSmall.fontStyle,
                         ),
                     elevation: 0.0,
                     borderRadius: BorderRadius.circular(22.0),

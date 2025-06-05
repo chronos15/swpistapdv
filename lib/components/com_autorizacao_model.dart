@@ -4,24 +4,29 @@ import 'com_autorizacao_widget.dart' show ComAutorizacaoWidget;
 import 'package:flutter/material.dart';
 
 class ComAutorizacaoModel extends FlutterFlowModel<ComAutorizacaoWidget> {
+  ///  Local state fields for this component.
+
+  bool bTimeActive = true;
+
   ///  State fields for stateful widgets in this component.
 
-  // State field(s) for PasswordField widget.
-  FocusNode? passwordFieldFocusNode;
-  TextEditingController? passwordFieldTextController;
-  late bool passwordFieldVisibility;
-  String? Function(BuildContext, String?)? passwordFieldTextControllerValidator;
+  // State field(s) for PinCode widget.
+  TextEditingController? pinCodeController;
+  FocusNode? pinCodeFocusNode;
+  String? Function(BuildContext, String?)? pinCodeControllerValidator;
   // Stores action output result for [Backend Call - API (Frentistas)] action in LogInButton widget.
   ApiCallResponse? resultFrentistaAct;
+  // Stores action output result for [Action Block - BuscaCartaoID] action in LogInButton widget.
+  bool? actReturnFrentistaModal;
 
   @override
   void initState(BuildContext context) {
-    passwordFieldVisibility = false;
+    pinCodeController = TextEditingController();
   }
 
   @override
   void dispose() {
-    passwordFieldFocusNode?.dispose();
-    passwordFieldTextController?.dispose();
+    pinCodeFocusNode?.dispose();
+    pinCodeController?.dispose();
   }
 }

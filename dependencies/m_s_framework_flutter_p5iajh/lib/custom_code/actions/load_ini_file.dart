@@ -17,17 +17,18 @@ import 'package:path_provider/path_provider.dart';
 
 //esse nao funciona no web, dart:io da biblioteca importada dá falha de namespace na busca do arquivo :).
 
-Future<List<String>> loadIniFile(bool byFilePicker, bool? bAssets) async {
+Future<List<String>> loadIniFile(
+    bool byFilePicker, bool? bAssets, String sIniName) async {
   try {
     if (!byFilePicker) {
       String directory;
       if (bAssets!) {
         // Tenta carregar dos assets
-        directory = await rootBundle.loadString('assets/SOFTWORKEasy.ini');
+        directory = await rootBundle.loadString('assets/$sIniName.ini');
       } else {
         // Diretório de documentos
         final appDocDir = await getApplicationDocumentsDirectory();
-        directory = '${appDocDir.path}/SOFTWORKEasy.ini';
+        directory = '${appDocDir.path}/$sIniName.ini';
       }
 
       // Lê o arquivo

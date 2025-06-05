@@ -12,16 +12,16 @@ class VendaitemStruct extends BaseStruct {
     String? nomeProduto,
     int? idVendedor,
     String? numref,
-    int? estoqueatual,
-    int? qtdTroca,
+    double? estoqueatual,
+    double? qtdTroca,
     double? valorvenda,
     double? valorvendido,
     double? subtotal,
     String? unidademed,
-    int? percdesc,
+    double? percdesc,
     String? datavenda,
     String? usuario,
-    int? valordesc,
+    double? valordesc,
     String? mobile,
     int? idAbastecimento,
     String? fotoUrl,
@@ -88,21 +88,21 @@ class VendaitemStruct extends BaseStruct {
   bool hasNumref() => _numref != null;
 
   // "ESTOQUEATUAL" field.
-  int? _estoqueatual;
-  int get estoqueatual => _estoqueatual ?? 0;
-  set estoqueatual(int? val) => _estoqueatual = val;
+  double? _estoqueatual;
+  double get estoqueatual => _estoqueatual ?? 0.0;
+  set estoqueatual(double? val) => _estoqueatual = val;
 
-  void incrementEstoqueatual(int amount) =>
+  void incrementEstoqueatual(double amount) =>
       estoqueatual = estoqueatual + amount;
 
   bool hasEstoqueatual() => _estoqueatual != null;
 
   // "QTD_TROCA" field.
-  int? _qtdTroca;
-  int get qtdTroca => _qtdTroca ?? 0;
-  set qtdTroca(int? val) => _qtdTroca = val;
+  double? _qtdTroca;
+  double get qtdTroca => _qtdTroca ?? 0.0;
+  set qtdTroca(double? val) => _qtdTroca = val;
 
-  void incrementQtdTroca(int amount) => qtdTroca = qtdTroca + amount;
+  void incrementQtdTroca(double amount) => qtdTroca = qtdTroca + amount;
 
   bool hasQtdTroca() => _qtdTroca != null;
 
@@ -142,11 +142,11 @@ class VendaitemStruct extends BaseStruct {
   bool hasUnidademed() => _unidademed != null;
 
   // "PERCDESC" field.
-  int? _percdesc;
-  int get percdesc => _percdesc ?? 0;
-  set percdesc(int? val) => _percdesc = val;
+  double? _percdesc;
+  double get percdesc => _percdesc ?? 0.0;
+  set percdesc(double? val) => _percdesc = val;
 
-  void incrementPercdesc(int amount) => percdesc = percdesc + amount;
+  void incrementPercdesc(double amount) => percdesc = percdesc + amount;
 
   bool hasPercdesc() => _percdesc != null;
 
@@ -165,11 +165,11 @@ class VendaitemStruct extends BaseStruct {
   bool hasUsuario() => _usuario != null;
 
   // "VALORDESC" field.
-  int? _valordesc;
-  int get valordesc => _valordesc ?? 0;
-  set valordesc(int? val) => _valordesc = val;
+  double? _valordesc;
+  double get valordesc => _valordesc ?? 0.0;
+  set valordesc(double? val) => _valordesc = val;
 
-  void incrementValordesc(int amount) => valordesc = valordesc + amount;
+  void incrementValordesc(double amount) => valordesc = valordesc + amount;
 
   bool hasValordesc() => _valordesc != null;
 
@@ -212,16 +212,16 @@ class VendaitemStruct extends BaseStruct {
         nomeProduto: data['NOME_PRODUTO'] as String?,
         idVendedor: castToType<int>(data['ID_VENDEDOR']),
         numref: data['NUMREF'] as String?,
-        estoqueatual: castToType<int>(data['ESTOQUEATUAL']),
-        qtdTroca: castToType<int>(data['QTD_TROCA']),
+        estoqueatual: castToType<double>(data['ESTOQUEATUAL']),
+        qtdTroca: castToType<double>(data['QTD_TROCA']),
         valorvenda: castToType<double>(data['VALORVENDA']),
         valorvendido: castToType<double>(data['VALORVENDIDO']),
         subtotal: castToType<double>(data['SUBTOTAL']),
         unidademed: data['UNIDADEMED'] as String?,
-        percdesc: castToType<int>(data['PERCDESC']),
+        percdesc: castToType<double>(data['PERCDESC']),
         datavenda: data['DATAVENDA'] as String?,
         usuario: data['USUARIO'] as String?,
-        valordesc: castToType<int>(data['VALORDESC']),
+        valordesc: castToType<double>(data['VALORDESC']),
         mobile: data['MOBILE'] as String?,
         idAbastecimento: castToType<int>(data['ID_ABASTECIMENTO']),
         fotoUrl: data['FOTO_URL'] as String?,
@@ -278,11 +278,11 @@ class VendaitemStruct extends BaseStruct {
         ),
         'ESTOQUEATUAL': serializeParam(
           _estoqueatual,
-          ParamType.int,
+          ParamType.double,
         ),
         'QTD_TROCA': serializeParam(
           _qtdTroca,
-          ParamType.int,
+          ParamType.double,
         ),
         'VALORVENDA': serializeParam(
           _valorvenda,
@@ -302,7 +302,7 @@ class VendaitemStruct extends BaseStruct {
         ),
         'PERCDESC': serializeParam(
           _percdesc,
-          ParamType.int,
+          ParamType.double,
         ),
         'DATAVENDA': serializeParam(
           _datavenda,
@@ -314,7 +314,7 @@ class VendaitemStruct extends BaseStruct {
         ),
         'VALORDESC': serializeParam(
           _valordesc,
-          ParamType.int,
+          ParamType.double,
         ),
         'MOBILE': serializeParam(
           _mobile,
@@ -363,12 +363,12 @@ class VendaitemStruct extends BaseStruct {
         ),
         estoqueatual: deserializeParam(
           data['ESTOQUEATUAL'],
-          ParamType.int,
+          ParamType.double,
           false,
         ),
         qtdTroca: deserializeParam(
           data['QTD_TROCA'],
-          ParamType.int,
+          ParamType.double,
           false,
         ),
         valorvenda: deserializeParam(
@@ -393,7 +393,7 @@ class VendaitemStruct extends BaseStruct {
         ),
         percdesc: deserializeParam(
           data['PERCDESC'],
-          ParamType.int,
+          ParamType.double,
           false,
         ),
         datavenda: deserializeParam(
@@ -408,7 +408,7 @@ class VendaitemStruct extends BaseStruct {
         ),
         valordesc: deserializeParam(
           data['VALORDESC'],
-          ParamType.int,
+          ParamType.double,
           false,
         ),
         mobile: deserializeParam(
@@ -490,16 +490,16 @@ VendaitemStruct createVendaitemStruct({
   String? nomeProduto,
   int? idVendedor,
   String? numref,
-  int? estoqueatual,
-  int? qtdTroca,
+  double? estoqueatual,
+  double? qtdTroca,
   double? valorvenda,
   double? valorvendido,
   double? subtotal,
   String? unidademed,
-  int? percdesc,
+  double? percdesc,
   String? datavenda,
   String? usuario,
-  int? valordesc,
+  double? valordesc,
   String? mobile,
   int? idAbastecimento,
   String? fotoUrl,

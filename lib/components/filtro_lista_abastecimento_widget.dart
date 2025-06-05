@@ -25,8 +25,6 @@ class _FiltroListaAbastecimentoWidgetState
   void initState() {
     super.initState();
     _model = createModel(context, () => FiltroListaAbastecimentoModel());
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

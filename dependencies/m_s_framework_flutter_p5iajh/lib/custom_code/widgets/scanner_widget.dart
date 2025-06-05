@@ -11,7 +11,6 @@ import 'package:flutter/material.dart';
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
 import 'package:qr_code_scanner_plus/qr_code_scanner_plus.dart';
-import 'dart:async'; // Importa a biblioteca de Timer
 
 class ScannerWidget extends StatefulWidget {
   const ScannerWidget({
@@ -32,36 +31,22 @@ class ScannerWidget extends StatefulWidget {
 class _ScannerWidgetState extends State<ScannerWidget> {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   QRViewController? controller;
-  String? qrCodeResult;
-  bool isFlashOn = false; // Estado do flash
-  bool hasScanned = false; // Para evitar múltiplas chamadas
-
-  @override
-  void reassemble() {
-    super.reassemble();
-    if (controller != null) {
-      controller!.pauseCamera();
-      controller!.resumeCamera();
-    }
-  }
+  bool hasScanned = false;
+  bool isFlashOn = false;
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Container(
-          width: widget.width,
-          height: widget.height,
-          child: QRView(
-            key: qrKey,
-            onQRViewCreated: _onQRViewCreated,
-            overlay: QrScannerOverlayShape(
-              borderColor: Colors.blue,
-              borderRadius: 10,
-              borderLength: 30,
-              borderWidth: 10,
-              cutOutSize: 300,
-            ),
+        QRView(
+          key: qrKey,
+          onQRViewCreated: _onQRViewCreated,
+          overlay: QrScannerOverlayShape(
+            borderColor: Colors.blue,
+            borderRadius: 10,
+            borderLength: 30,
+            borderWidth: 10,
+            cutOutSize: 300,
           ),
         ),
         Positioned(
@@ -70,8 +55,8 @@ class _ScannerWidgetState extends State<ScannerWidget> {
           child: ElevatedButton(
             onPressed: () {
               setState(() {
-                isFlashOn = !isFlashOn; // Alterna o estado do flash
-                controller?.toggleFlash(); // Alterna o flash
+                isFlashOn = !isFlashOn;
+                controller?.toggleFlash();
               });
             },
             child: Text(isFlashOn ? 'Desligar Flash' : 'Ligar Flash'),
@@ -85,29 +70,11 @@ class _ScannerWidgetState extends State<ScannerWidget> {
     this.controller = controller;
     controller.scannedDataStream.listen((scanData) {
       if (!hasScanned) {
-        // Verifica se já foi escaneado um código
-        setState(() {
-          qrCodeResult = scanData.code;
-          hasScanned =
-              true; // Marca como escaneado para evitar múltiplas chamadas
-        });
-
-        // Chama a função actReturn passando o QR Code escaneado
-        if (widget.actReturn != null) {
-          widget.actReturn!(qrCodeResult).then((_) {
-            // Lógica adicional pode ser inserida aqui após a execução de actReturn
-          });
-        }
-
-        // Imprime a mensagem personalizada no console
-        print('Código QR escaneado: $qrCodeResult');
-
-        // Aguarda 2 segundos antes de permitir outro escaneamento
-        Timer(Duration(seconds: 2), () {
-          setState(() {
-            hasScanned =
-                false; // Libera para escanear novamente após 2 segundos
-          });
+        hasScanned = true;
+        widget.actReturn?.call(scanData.code);
+        print('QR code: ${scanData.code}');
+        Future.delayed(Duration(seconds: 2), () {
+          hasScanned = false;
         });
       }
     });

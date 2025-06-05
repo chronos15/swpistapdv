@@ -29,6 +29,8 @@ class _UnViewMSFrameLoadingWidgetState
   void initState() {
     super.initState();
     _model = createModel(context, () => UnViewMSFrameLoadingModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -43,7 +45,7 @@ class _UnViewMSFrameLoadingWidgetState
     return Align(
       alignment: AlignmentDirectional(0.0, 0.0),
       child: Lottie.asset(
-        'dependencies/m_s_framework_flutter_p5iajh/assets/jsons/Animation_-_1730114846312.json',
+        'packages/m_s_framework_flutter_p5iajh/assets/jsons/Animation_-_1730114846312.json',
         width: 80.0,
         height: 80.0,
         fit: BoxFit.cover,

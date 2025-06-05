@@ -30,6 +30,8 @@ class _UnViewMsWindowsBarWidgetState extends State<UnViewMsWindowsBarWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => UnViewMsWindowsBarModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

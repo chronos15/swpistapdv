@@ -13,13 +13,10 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:screenshot/screenshot.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:printing/printing.dart';
-import 'package:pdf/pdf.dart';
-import 'package:pdf/widgets.dart' as pw;
+//import 'package:printing/printing.dart';
 import 'package:share_plus/share_plus.dart';
-import 'dart:typed_data';
 import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:universal_html/html.dart' as html;
+//import 'package:universal_html/html.dart' as html;
 
 class WidgetWrapPrintShareComponent extends StatefulWidget {
   const WidgetWrapPrintShareComponent({
@@ -77,7 +74,7 @@ class _WidgetWrapPrintShareComponentState
         isCapturing = false;
       });
 
-      if (image != null) {
+      /* if (image != null) {
         await Printing.layoutPdf(
           onLayout: (PdfPageFormat format) async {
             final pdf = pw.Document();
@@ -95,7 +92,7 @@ class _WidgetWrapPrintShareComponentState
             return pdf.save();
           },
         );
-      }
+      }*/
 
       if (widget.actionPrint != null) {
         await widget.actionPrint!(
@@ -136,7 +133,7 @@ class _WidgetWrapPrintShareComponentState
         if (kIsWeb) {
           // Flutter Web: Salvar arquivo no navegador
           try {
-            final blob = html.Blob([image], 'image/png');
+            /*final blob = html.Blob([image], 'image/png');
             final url = html.Url.createObjectUrlFromBlob(blob);
 
             final anchor = html.AnchorElement(href: url)
@@ -144,7 +141,7 @@ class _WidgetWrapPrintShareComponentState
               ..download = '${widget.sNameFile}.png'
               ..click();
 
-            html.Url.revokeObjectUrl(url); // Liberar o recurso
+            html.Url.revokeObjectUrl(url);*/ // Liberar o recurso
           } catch (e, stackTrace) {
             if (widget.actionShare != null) {
               await widget.actionShare!(

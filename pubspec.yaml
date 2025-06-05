@@ -1,5 +1,5 @@
-name: s_o_f_t_w_o_r_k_posto
-description: A new Flutter project.
+name: softwork
+description: SOFTWORK Pista PDV
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
@@ -15,7 +15,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.0+1
+version: 1.0.1+80
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
@@ -27,21 +27,26 @@ dependencies:
     sdk: flutter
   flutter_web_plugins:
     sdk: flutter
+  aligned_tooltip: 0.0.1
+  app_links: ^6.4.0
   auto_size_text: 3.0.0
   badges: 2.0.2
   cached_network_image: 3.4.1
   cached_network_image_platform_interface: 4.1.1
   cached_network_image_web: 1.3.1
   collection: 1.19.0
+  data_table_2: 2.5.10
   date_picker_timeline: ^1.2.6
   dropdown_button2: 2.3.9
   easy_debounce: 2.0.1
   equatable: 2.0.5
   expandable: 5.0.1
+  fetch_api: 2.2.0
+  fetch_client: 1.1.2
   ff_commons:
-    path: ./dependencies/ff_commons # 1.0.0+1
+    path: ./dependencies/ff_commons # 1.0.1+80
   ff_theme:
-    path: ./dependencies/ff_theme # 1.0.0+1
+    path: ./dependencies/ff_theme # 1.0.1+80
   flutter_animate: 4.5.0
   flutter_cache_manager: 3.4.1
   flutter_keyboard_visibility: 6.0.0
@@ -56,18 +61,22 @@ dependencies:
   flutter_staggered_grid_view: 0.7.0
   font_awesome_flutter: 10.7.0
   from_css_color: 2.0.0
-  getnet_payments: any
+  getnet_payments: ^1.1.0
   go_router: 12.1.3
   google_fonts: 6.1.0
   http: 1.2.2
+  image: ^4.0.2
   infinite_scroll_pagination: 4.0.0
   intl: 0.19.0
   json_path: 0.7.2
+  liquid_progress_indicator_v2: ^0.5.0
   lottie: 2.7.0
   m_s_framework_flutter_p5iajh:
     path: ./dependencies/m_s_framework_flutter_p5iajh # current
+  mask_text_input_formatter: 2.9.0
   mime_type: 1.0.0
-  open_file: ^3.3.2
+  nfc_manager: ^3.5.0
+  package_info_plus: ^8.3.0
   page_transition: 2.1.0
   path_provider: 2.1.4
   path_provider_android: 2.2.10
@@ -76,8 +85,11 @@ dependencies:
   path_provider_platform_interface: 2.1.2
   path_provider_windows: 2.3.0
   pdf: ^3.10.8
+  pdf_render: ^1.4.12
+  percent_indicator: 4.2.2
+  permission_handler: ^11.3.1
   photo_view: 0.15.0
-  printing: ^5.14.2
+  pin_code_fields: 8.0.1
   provider: 6.1.2
   shared_preferences: 2.3.2
   shared_preferences_android: 2.3.2
@@ -88,6 +100,7 @@ dependencies:
   shared_preferences_windows: 2.4.1
   sqflite: 2.3.3+1
   sqflite_common: 2.5.4+3
+  stop_watch_timer: 3.0.2
   syncfusion_flutter_datepicker: ^27.1.56
   timeago: 3.6.1
   universal_io: 2.2.2
@@ -115,20 +128,18 @@ dependency_overrides:
 dev_dependencies:
   flutter_launcher_icons: 0.13.1
   flutter_lints: 4.0.0
-  image: 4.2.0
   lints: 4.0.0
   flutter_test:
     sdk: flutter
 
 
 flutter_launcher_icons:
-  android: 'launcher_icon'
+  android: true
   ios: true
+  remove_alpha_ios: true
   web:
     generate: true
   image_path: 'assets/images/app_launcher_icon.png'
-  adaptive_icon_background: '#f1f4f8'
-  adaptive_icon_foreground: 'assets/images/adaptive_foreground_icon.png'
 
 
 # For information on the generic Dart part of this file, see the
@@ -151,13 +162,6 @@ flutter:
     - assets/rive_animations/
     - assets/pdfs/
     - assets/jsons/
-    - dependencies/m_s_framework_flutter_p5iajh/assets/fonts/
-    - dependencies/m_s_framework_flutter_p5iajh/assets/images/
-    - dependencies/m_s_framework_flutter_p5iajh/assets/videos/
-    - dependencies/m_s_framework_flutter_p5iajh/assets/audios/
-    - dependencies/m_s_framework_flutter_p5iajh/assets/rive_animations/
-    - dependencies/m_s_framework_flutter_p5iajh/assets/pdfs/
-    - dependencies/m_s_framework_flutter_p5iajh/assets/jsons/
 
   fonts:
     - family: TablerIcons

@@ -14,13 +14,25 @@ class ClienteListaDataTypeStruct extends BaseStruct {
     String? cpfcnpj,
     String? cidade,
     String? estado,
+    String? endereco,
+    String? complemento,
+    String? cep,
+    int? codCidade,
+    String? bairro,
+    String? codibge,
   })  : _idCodigo = idCodigo,
         _nome = nome,
         _denome = denome,
         _tppessoa = tppessoa,
         _cpfcnpj = cpfcnpj,
         _cidade = cidade,
-        _estado = estado;
+        _estado = estado,
+        _endereco = endereco,
+        _complemento = complemento,
+        _cep = cep,
+        _codCidade = codCidade,
+        _bairro = bairro,
+        _codibge = codibge;
 
   // "ID_CODIGO" field.
   int? _idCodigo;
@@ -73,6 +85,50 @@ class ClienteListaDataTypeStruct extends BaseStruct {
 
   bool hasEstado() => _estado != null;
 
+  // "ENDERECO" field.
+  String? _endereco;
+  String get endereco => _endereco ?? '';
+  set endereco(String? val) => _endereco = val;
+
+  bool hasEndereco() => _endereco != null;
+
+  // "COMPLEMENTO" field.
+  String? _complemento;
+  String get complemento => _complemento ?? '';
+  set complemento(String? val) => _complemento = val;
+
+  bool hasComplemento() => _complemento != null;
+
+  // "CEP" field.
+  String? _cep;
+  String get cep => _cep ?? '';
+  set cep(String? val) => _cep = val;
+
+  bool hasCep() => _cep != null;
+
+  // "COD_CIDADE" field.
+  int? _codCidade;
+  int get codCidade => _codCidade ?? 0;
+  set codCidade(int? val) => _codCidade = val;
+
+  void incrementCodCidade(int amount) => codCidade = codCidade + amount;
+
+  bool hasCodCidade() => _codCidade != null;
+
+  // "BAIRRO" field.
+  String? _bairro;
+  String get bairro => _bairro ?? '';
+  set bairro(String? val) => _bairro = val;
+
+  bool hasBairro() => _bairro != null;
+
+  // "CODIBGE" field.
+  String? _codibge;
+  String get codibge => _codibge ?? '';
+  set codibge(String? val) => _codibge = val;
+
+  bool hasCodibge() => _codibge != null;
+
   static ClienteListaDataTypeStruct fromMap(Map<String, dynamic> data) =>
       ClienteListaDataTypeStruct(
         idCodigo: castToType<int>(data['ID_CODIGO']),
@@ -82,6 +138,12 @@ class ClienteListaDataTypeStruct extends BaseStruct {
         cpfcnpj: data['CPFCNPJ'] as String?,
         cidade: data['CIDADE'] as String?,
         estado: data['ESTADO'] as String?,
+        endereco: data['ENDERECO'] as String?,
+        complemento: data['COMPLEMENTO'] as String?,
+        cep: data['CEP'] as String?,
+        codCidade: castToType<int>(data['COD_CIDADE']),
+        bairro: data['BAIRRO'] as String?,
+        codibge: data['CODIBGE'] as String?,
       );
 
   static ClienteListaDataTypeStruct? maybeFromMap(dynamic data) => data is Map
@@ -96,6 +158,12 @@ class ClienteListaDataTypeStruct extends BaseStruct {
         'CPFCNPJ': _cpfcnpj,
         'CIDADE': _cidade,
         'ESTADO': _estado,
+        'ENDERECO': _endereco,
+        'COMPLEMENTO': _complemento,
+        'CEP': _cep,
+        'COD_CIDADE': _codCidade,
+        'BAIRRO': _bairro,
+        'CODIBGE': _codibge,
       }.withoutNulls;
 
   @override
@@ -126,6 +194,30 @@ class ClienteListaDataTypeStruct extends BaseStruct {
         ),
         'ESTADO': serializeParam(
           _estado,
+          ParamType.String,
+        ),
+        'ENDERECO': serializeParam(
+          _endereco,
+          ParamType.String,
+        ),
+        'COMPLEMENTO': serializeParam(
+          _complemento,
+          ParamType.String,
+        ),
+        'CEP': serializeParam(
+          _cep,
+          ParamType.String,
+        ),
+        'COD_CIDADE': serializeParam(
+          _codCidade,
+          ParamType.int,
+        ),
+        'BAIRRO': serializeParam(
+          _bairro,
+          ParamType.String,
+        ),
+        'CODIBGE': serializeParam(
+          _codibge,
           ParamType.String,
         ),
       }.withoutNulls;
@@ -168,6 +260,36 @@ class ClienteListaDataTypeStruct extends BaseStruct {
           ParamType.String,
           false,
         ),
+        endereco: deserializeParam(
+          data['ENDERECO'],
+          ParamType.String,
+          false,
+        ),
+        complemento: deserializeParam(
+          data['COMPLEMENTO'],
+          ParamType.String,
+          false,
+        ),
+        cep: deserializeParam(
+          data['CEP'],
+          ParamType.String,
+          false,
+        ),
+        codCidade: deserializeParam(
+          data['COD_CIDADE'],
+          ParamType.int,
+          false,
+        ),
+        bairro: deserializeParam(
+          data['BAIRRO'],
+          ParamType.String,
+          false,
+        ),
+        codibge: deserializeParam(
+          data['CODIBGE'],
+          ParamType.String,
+          false,
+        ),
       );
 
   @override
@@ -182,12 +304,31 @@ class ClienteListaDataTypeStruct extends BaseStruct {
         tppessoa == other.tppessoa &&
         cpfcnpj == other.cpfcnpj &&
         cidade == other.cidade &&
-        estado == other.estado;
+        estado == other.estado &&
+        endereco == other.endereco &&
+        complemento == other.complemento &&
+        cep == other.cep &&
+        codCidade == other.codCidade &&
+        bairro == other.bairro &&
+        codibge == other.codibge;
   }
 
   @override
-  int get hashCode => const ListEquality()
-      .hash([idCodigo, nome, denome, tppessoa, cpfcnpj, cidade, estado]);
+  int get hashCode => const ListEquality().hash([
+        idCodigo,
+        nome,
+        denome,
+        tppessoa,
+        cpfcnpj,
+        cidade,
+        estado,
+        endereco,
+        complemento,
+        cep,
+        codCidade,
+        bairro,
+        codibge
+      ]);
 }
 
 ClienteListaDataTypeStruct createClienteListaDataTypeStruct({
@@ -198,6 +339,12 @@ ClienteListaDataTypeStruct createClienteListaDataTypeStruct({
   String? cpfcnpj,
   String? cidade,
   String? estado,
+  String? endereco,
+  String? complemento,
+  String? cep,
+  int? codCidade,
+  String? bairro,
+  String? codibge,
 }) =>
     ClienteListaDataTypeStruct(
       idCodigo: idCodigo,
@@ -207,4 +354,10 @@ ClienteListaDataTypeStruct createClienteListaDataTypeStruct({
       cpfcnpj: cpfcnpj,
       cidade: cidade,
       estado: estado,
+      endereco: endereco,
+      complemento: complemento,
+      cep: cep,
+      codCidade: codCidade,
+      bairro: bairro,
+      codibge: codibge,
     );

@@ -9,3 +9,4 @@ export 'custom_radial_gauge.dart' show CustomRadialGauge;
 export 'animated_text.dart' show AnimatedText;
 export 'data_grid_global.dart' show DataGridGlobal;
 export 'rotate_widget.dart' show RotateWidget;
+export 'widget_controller_scroll.dart' show WidgetControllerScroll;

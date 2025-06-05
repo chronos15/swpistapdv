@@ -18,6 +18,7 @@ class EmpresaDataTypeStruct extends BaseStruct {
     String? uf,
     String? cep,
     String? logo,
+    String? sSOFTHOUSE,
   })  : _idKey = idKey,
         _razaoSocial = razaoSocial,
         _nomeFantasia = nomeFantasia,
@@ -28,7 +29,8 @@ class EmpresaDataTypeStruct extends BaseStruct {
         _cidade = cidade,
         _uf = uf,
         _cep = cep,
-        _logo = logo;
+        _logo = logo,
+        _sSOFTHOUSE = sSOFTHOUSE;
 
   // "ID_KEY" field.
   int? _idKey;
@@ -109,6 +111,13 @@ class EmpresaDataTypeStruct extends BaseStruct {
 
   bool hasLogo() => _logo != null;
 
+  // "sSOFTHOUSE" field.
+  String? _sSOFTHOUSE;
+  String get sSOFTHOUSE => _sSOFTHOUSE ?? '';
+  set sSOFTHOUSE(String? val) => _sSOFTHOUSE = val;
+
+  bool hasSSOFTHOUSE() => _sSOFTHOUSE != null;
+
   static EmpresaDataTypeStruct fromMap(Map<String, dynamic> data) =>
       EmpresaDataTypeStruct(
         idKey: castToType<int>(data['ID_KEY']),
@@ -122,6 +131,7 @@ class EmpresaDataTypeStruct extends BaseStruct {
         uf: data['UF'] as String?,
         cep: data['CEP'] as String?,
         logo: data['LOGO'] as String?,
+        sSOFTHOUSE: data['sSOFTHOUSE'] as String?,
       );
 
   static EmpresaDataTypeStruct? maybeFromMap(dynamic data) => data is Map
@@ -140,6 +150,7 @@ class EmpresaDataTypeStruct extends BaseStruct {
         'UF': _uf,
         'CEP': _cep,
         'LOGO': _logo,
+        'sSOFTHOUSE': _sSOFTHOUSE,
       }.withoutNulls;
 
   @override
@@ -186,6 +197,10 @@ class EmpresaDataTypeStruct extends BaseStruct {
         ),
         'LOGO': serializeParam(
           _logo,
+          ParamType.String,
+        ),
+        'sSOFTHOUSE': serializeParam(
+          _sSOFTHOUSE,
           ParamType.String,
         ),
       }.withoutNulls;
@@ -247,6 +262,11 @@ class EmpresaDataTypeStruct extends BaseStruct {
           ParamType.String,
           false,
         ),
+        sSOFTHOUSE: deserializeParam(
+          data['sSOFTHOUSE'],
+          ParamType.String,
+          false,
+        ),
       );
 
   @override
@@ -265,7 +285,8 @@ class EmpresaDataTypeStruct extends BaseStruct {
         cidade == other.cidade &&
         uf == other.uf &&
         cep == other.cep &&
-        logo == other.logo;
+        logo == other.logo &&
+        sSOFTHOUSE == other.sSOFTHOUSE;
   }
 
   @override
@@ -280,7 +301,8 @@ class EmpresaDataTypeStruct extends BaseStruct {
         cidade,
         uf,
         cep,
-        logo
+        logo,
+        sSOFTHOUSE
       ]);
 }
 
@@ -296,6 +318,7 @@ EmpresaDataTypeStruct createEmpresaDataTypeStruct({
   String? uf,
   String? cep,
   String? logo,
+  String? sSOFTHOUSE,
 }) =>
     EmpresaDataTypeStruct(
       idKey: idKey,
@@ -309,4 +332,5 @@ EmpresaDataTypeStruct createEmpresaDataTypeStruct({
       uf: uf,
       cep: cep,
       logo: logo,
+      sSOFTHOUSE: sSOFTHOUSE,
     );

@@ -15,12 +15,11 @@ class VendasRemReturnStruct extends BaseStruct {
     String? datavenda,
     String? hora,
     int? idVendedor,
-    int? totalprodutos,
     int? numeroitens,
-    int? percDesc,
-    int? desconto,
-    int? entrada,
-    int? totalvenda,
+    double? percDesc,
+    double? desconto,
+    double? entrada,
+    double? totalvenda,
     int? idFormapgto,
     String? descrtpvenda,
     int? numparcelas,
@@ -33,6 +32,7 @@ class VendasRemReturnStruct extends BaseStruct {
     String? mobile,
     int? idVendaMob,
     String? chaveUnextern,
+    double? totalprodutos,
   })  : _id = id,
         _idCodigo = idCodigo,
         _idCliente = idCliente,
@@ -41,7 +41,6 @@ class VendasRemReturnStruct extends BaseStruct {
         _datavenda = datavenda,
         _hora = hora,
         _idVendedor = idVendedor,
-        _totalprodutos = totalprodutos,
         _numeroitens = numeroitens,
         _percDesc = percDesc,
         _desconto = desconto,
@@ -58,7 +57,8 @@ class VendasRemReturnStruct extends BaseStruct {
         _numdocVinc = numdocVinc,
         _mobile = mobile,
         _idVendaMob = idVendaMob,
-        _chaveUnextern = chaveUnextern;
+        _chaveUnextern = chaveUnextern,
+        _totalprodutos = totalprodutos;
 
   // "id" field.
   int? _id;
@@ -124,16 +124,6 @@ class VendasRemReturnStruct extends BaseStruct {
 
   bool hasIdVendedor() => _idVendedor != null;
 
-  // "TOTALPRODUTOS" field.
-  int? _totalprodutos;
-  int get totalprodutos => _totalprodutos ?? 0;
-  set totalprodutos(int? val) => _totalprodutos = val;
-
-  void incrementTotalprodutos(int amount) =>
-      totalprodutos = totalprodutos + amount;
-
-  bool hasTotalprodutos() => _totalprodutos != null;
-
   // "NUMEROITENS" field.
   int? _numeroitens;
   int get numeroitens => _numeroitens ?? 0;
@@ -144,38 +134,38 @@ class VendasRemReturnStruct extends BaseStruct {
   bool hasNumeroitens() => _numeroitens != null;
 
   // "PERC_DESC" field.
-  int? _percDesc;
-  int get percDesc => _percDesc ?? 0;
-  set percDesc(int? val) => _percDesc = val;
+  double? _percDesc;
+  double get percDesc => _percDesc ?? 0.0;
+  set percDesc(double? val) => _percDesc = val;
 
-  void incrementPercDesc(int amount) => percDesc = percDesc + amount;
+  void incrementPercDesc(double amount) => percDesc = percDesc + amount;
 
   bool hasPercDesc() => _percDesc != null;
 
   // "DESCONTO" field.
-  int? _desconto;
-  int get desconto => _desconto ?? 0;
-  set desconto(int? val) => _desconto = val;
+  double? _desconto;
+  double get desconto => _desconto ?? 0.0;
+  set desconto(double? val) => _desconto = val;
 
-  void incrementDesconto(int amount) => desconto = desconto + amount;
+  void incrementDesconto(double amount) => desconto = desconto + amount;
 
   bool hasDesconto() => _desconto != null;
 
   // "ENTRADA" field.
-  int? _entrada;
-  int get entrada => _entrada ?? 0;
-  set entrada(int? val) => _entrada = val;
+  double? _entrada;
+  double get entrada => _entrada ?? 0.0;
+  set entrada(double? val) => _entrada = val;
 
-  void incrementEntrada(int amount) => entrada = entrada + amount;
+  void incrementEntrada(double amount) => entrada = entrada + amount;
 
   bool hasEntrada() => _entrada != null;
 
   // "TOTALVENDA" field.
-  int? _totalvenda;
-  int get totalvenda => _totalvenda ?? 0;
-  set totalvenda(int? val) => _totalvenda = val;
+  double? _totalvenda;
+  double get totalvenda => _totalvenda ?? 0.0;
+  set totalvenda(double? val) => _totalvenda = val;
 
-  void incrementTotalvenda(int amount) => totalvenda = totalvenda + amount;
+  void incrementTotalvenda(double amount) => totalvenda = totalvenda + amount;
 
   bool hasTotalvenda() => _totalvenda != null;
 
@@ -273,6 +263,16 @@ class VendasRemReturnStruct extends BaseStruct {
 
   bool hasChaveUnextern() => _chaveUnextern != null;
 
+  // "TOTALPRODUTOS" field.
+  double? _totalprodutos;
+  double get totalprodutos => _totalprodutos ?? 0.0;
+  set totalprodutos(double? val) => _totalprodutos = val;
+
+  void incrementTotalprodutos(double amount) =>
+      totalprodutos = totalprodutos + amount;
+
+  bool hasTotalprodutos() => _totalprodutos != null;
+
   static VendasRemReturnStruct fromMap(Map<String, dynamic> data) =>
       VendasRemReturnStruct(
         id: castToType<int>(data['id']),
@@ -283,12 +283,11 @@ class VendasRemReturnStruct extends BaseStruct {
         datavenda: data['DATAVENDA'] as String?,
         hora: data['HORA'] as String?,
         idVendedor: castToType<int>(data['ID_VENDEDOR']),
-        totalprodutos: castToType<int>(data['TOTALPRODUTOS']),
         numeroitens: castToType<int>(data['NUMEROITENS']),
-        percDesc: castToType<int>(data['PERC_DESC']),
-        desconto: castToType<int>(data['DESCONTO']),
-        entrada: castToType<int>(data['ENTRADA']),
-        totalvenda: castToType<int>(data['TOTALVENDA']),
+        percDesc: castToType<double>(data['PERC_DESC']),
+        desconto: castToType<double>(data['DESCONTO']),
+        entrada: castToType<double>(data['ENTRADA']),
+        totalvenda: castToType<double>(data['TOTALVENDA']),
         idFormapgto: castToType<int>(data['ID_FORMAPGTO']),
         descrtpvenda: data['DESCRTPVENDA'] as String?,
         numparcelas: castToType<int>(data['NUMPARCELAS']),
@@ -301,6 +300,7 @@ class VendasRemReturnStruct extends BaseStruct {
         mobile: data['MOBILE'] as String?,
         idVendaMob: castToType<int>(data['ID_VENDA_MOB']),
         chaveUnextern: data['CHAVE_UNEXTERN'] as String?,
+        totalprodutos: castToType<double>(data['TOTALPRODUTOS']),
       );
 
   static VendasRemReturnStruct? maybeFromMap(dynamic data) => data is Map
@@ -316,7 +316,6 @@ class VendasRemReturnStruct extends BaseStruct {
         'DATAVENDA': _datavenda,
         'HORA': _hora,
         'ID_VENDEDOR': _idVendedor,
-        'TOTALPRODUTOS': _totalprodutos,
         'NUMEROITENS': _numeroitens,
         'PERC_DESC': _percDesc,
         'DESCONTO': _desconto,
@@ -334,6 +333,7 @@ class VendasRemReturnStruct extends BaseStruct {
         'MOBILE': _mobile,
         'ID_VENDA_MOB': _idVendaMob,
         'CHAVE_UNEXTERN': _chaveUnextern,
+        'TOTALPRODUTOS': _totalprodutos,
       }.withoutNulls;
 
   @override
@@ -370,29 +370,25 @@ class VendasRemReturnStruct extends BaseStruct {
           _idVendedor,
           ParamType.int,
         ),
-        'TOTALPRODUTOS': serializeParam(
-          _totalprodutos,
-          ParamType.int,
-        ),
         'NUMEROITENS': serializeParam(
           _numeroitens,
           ParamType.int,
         ),
         'PERC_DESC': serializeParam(
           _percDesc,
-          ParamType.int,
+          ParamType.double,
         ),
         'DESCONTO': serializeParam(
           _desconto,
-          ParamType.int,
+          ParamType.double,
         ),
         'ENTRADA': serializeParam(
           _entrada,
-          ParamType.int,
+          ParamType.double,
         ),
         'TOTALVENDA': serializeParam(
           _totalvenda,
-          ParamType.int,
+          ParamType.double,
         ),
         'ID_FORMAPGTO': serializeParam(
           _idFormapgto,
@@ -442,6 +438,10 @@ class VendasRemReturnStruct extends BaseStruct {
           _chaveUnextern,
           ParamType.String,
         ),
+        'TOTALPRODUTOS': serializeParam(
+          _totalprodutos,
+          ParamType.double,
+        ),
       }.withoutNulls;
 
   static VendasRemReturnStruct fromSerializableMap(Map<String, dynamic> data) =>
@@ -486,11 +486,6 @@ class VendasRemReturnStruct extends BaseStruct {
           ParamType.int,
           false,
         ),
-        totalprodutos: deserializeParam(
-          data['TOTALPRODUTOS'],
-          ParamType.int,
-          false,
-        ),
         numeroitens: deserializeParam(
           data['NUMEROITENS'],
           ParamType.int,
@@ -498,22 +493,22 @@ class VendasRemReturnStruct extends BaseStruct {
         ),
         percDesc: deserializeParam(
           data['PERC_DESC'],
-          ParamType.int,
+          ParamType.double,
           false,
         ),
         desconto: deserializeParam(
           data['DESCONTO'],
-          ParamType.int,
+          ParamType.double,
           false,
         ),
         entrada: deserializeParam(
           data['ENTRADA'],
-          ParamType.int,
+          ParamType.double,
           false,
         ),
         totalvenda: deserializeParam(
           data['TOTALVENDA'],
-          ParamType.int,
+          ParamType.double,
           false,
         ),
         idFormapgto: deserializeParam(
@@ -576,6 +571,11 @@ class VendasRemReturnStruct extends BaseStruct {
           ParamType.String,
           false,
         ),
+        totalprodutos: deserializeParam(
+          data['TOTALPRODUTOS'],
+          ParamType.double,
+          false,
+        ),
       );
 
   @override
@@ -592,7 +592,6 @@ class VendasRemReturnStruct extends BaseStruct {
         datavenda == other.datavenda &&
         hora == other.hora &&
         idVendedor == other.idVendedor &&
-        totalprodutos == other.totalprodutos &&
         numeroitens == other.numeroitens &&
         percDesc == other.percDesc &&
         desconto == other.desconto &&
@@ -609,7 +608,8 @@ class VendasRemReturnStruct extends BaseStruct {
         numdocVinc == other.numdocVinc &&
         mobile == other.mobile &&
         idVendaMob == other.idVendaMob &&
-        chaveUnextern == other.chaveUnextern;
+        chaveUnextern == other.chaveUnextern &&
+        totalprodutos == other.totalprodutos;
   }
 
   @override
@@ -622,7 +622,6 @@ class VendasRemReturnStruct extends BaseStruct {
         datavenda,
         hora,
         idVendedor,
-        totalprodutos,
         numeroitens,
         percDesc,
         desconto,
@@ -639,7 +638,8 @@ class VendasRemReturnStruct extends BaseStruct {
         numdocVinc,
         mobile,
         idVendaMob,
-        chaveUnextern
+        chaveUnextern,
+        totalprodutos
       ]);
 }
 
@@ -652,12 +652,11 @@ VendasRemReturnStruct createVendasRemReturnStruct({
   String? datavenda,
   String? hora,
   int? idVendedor,
-  int? totalprodutos,
   int? numeroitens,
-  int? percDesc,
-  int? desconto,
-  int? entrada,
-  int? totalvenda,
+  double? percDesc,
+  double? desconto,
+  double? entrada,
+  double? totalvenda,
   int? idFormapgto,
   String? descrtpvenda,
   int? numparcelas,
@@ -670,6 +669,7 @@ VendasRemReturnStruct createVendasRemReturnStruct({
   String? mobile,
   int? idVendaMob,
   String? chaveUnextern,
+  double? totalprodutos,
 }) =>
     VendasRemReturnStruct(
       id: id,
@@ -680,7 +680,6 @@ VendasRemReturnStruct createVendasRemReturnStruct({
       datavenda: datavenda,
       hora: hora,
       idVendedor: idVendedor,
-      totalprodutos: totalprodutos,
       numeroitens: numeroitens,
       percDesc: percDesc,
       desconto: desconto,
@@ -698,4 +697,5 @@ VendasRemReturnStruct createVendasRemReturnStruct({
       mobile: mobile,
       idVendaMob: idVendaMob,
       chaveUnextern: chaveUnextern,
+      totalprodutos: totalprodutos,
     );

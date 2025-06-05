@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'flutter_flow/request_manager.dart';
 import '/backend/schema/structs/index.dart';
+import 'package:ff_commons/api_requests/api_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'flutter_flow/flutter_flow_util.dart';
 
@@ -18,31 +20,6 @@ class FFAppState extends ChangeNotifier {
 
   Future initializePersistedState() async {
     prefs = await SharedPreferences.getInstance();
-    _safeInit(() {
-      if (prefs.containsKey('ff_venda')) {
-        try {
-          final serializedData = prefs.getString('ff_venda') ?? '{}';
-          _venda = VendasStruct.fromSerializableMap(jsonDecode(serializedData));
-        } catch (e) {
-          print("Can't decode persisted data type. Error: $e.");
-        }
-      }
-    });
-    _safeInit(() {
-      _vendaitens = prefs
-              .getStringList('ff_vendaitens')
-              ?.map((x) {
-                try {
-                  return VendaitemStruct.fromSerializableMap(jsonDecode(x));
-                } catch (e) {
-                  print("Can't decode persisted data type. Error: $e.");
-                  return null;
-                }
-              })
-              .withoutNulls
-              .toList() ??
-          _vendaitens;
-    });
     _safeInit(() {
       if (prefs.containsKey('ff_ConfigLocais')) {
         try {
@@ -80,6 +57,18 @@ class FFAppState extends ChangeNotifier {
               .withoutNulls
               .toList() ??
           _AbastecimentosSelecionados;
+    });
+    _safeInit(() {
+      if (prefs.containsKey('ff_FrentistaSelecionado')) {
+        try {
+          final serializedData =
+              prefs.getString('ff_FrentistaSelecionado') ?? '{}';
+          _FrentistaSelecionado = FrentistasDataTypeStruct.fromSerializableMap(
+              jsonDecode(serializedData));
+        } catch (e) {
+          print("Can't decode persisted data type. Error: $e.");
+        }
+      }
     });
     _safeInit(() {
       if (prefs.containsKey('ff_ConfigRemota')) {
@@ -134,6 +123,49 @@ class FFAppState extends ChangeNotifier {
               .toList() ??
           _Favoritos;
     });
+    _safeInit(() {
+      _CondPagamentoList = prefs
+              .getStringList('ff_CondPagamentoList')
+              ?.map((x) {
+                try {
+                  return CondPagamentoDataTypeStruct.fromSerializableMap(
+                      jsonDecode(x));
+                } catch (e) {
+                  print("Can't decode persisted data type. Error: $e.");
+                  return null;
+                }
+              })
+              .withoutNulls
+              .toList() ??
+          _CondPagamentoList;
+    });
+    _safeInit(() {
+      if (prefs.containsKey('ff_VendaObj')) {
+        try {
+          final serializedData = prefs.getString('ff_VendaObj') ?? '{}';
+          _VendaObj =
+              VendaDTObjStruct.fromSerializableMap(jsonDecode(serializedData));
+        } catch (e) {
+          print("Can't decode persisted data type. Error: $e.");
+        }
+      }
+    });
+    _safeInit(() {
+      _paymmentsConfirmed = prefs
+              .getStringList('ff_paymmentsConfirmed')
+              ?.map((x) {
+                try {
+                  return PaymentDataTypeStruct.fromSerializableMap(
+                      jsonDecode(x));
+                } catch (e) {
+                  print("Can't decode persisted data type. Error: $e.");
+                  return null;
+                }
+              })
+              .withoutNulls
+              .toList() ??
+          _paymmentsConfirmed;
+    });
   }
 
   void update(VoidCallback callback) {
@@ -143,60 +175,8 @@ class FFAppState extends ChangeNotifier {
 
   late SharedPreferences prefs;
 
-  VendasStruct _venda = VendasStruct();
-  VendasStruct get venda => _venda;
-  set venda(VendasStruct value) {
-    _venda = value;
-    prefs.setString('ff_venda', value.serialize());
-  }
-
-  void updateVendaStruct(Function(VendasStruct) updateFn) {
-    updateFn(_venda);
-    prefs.setString('ff_venda', _venda.serialize());
-  }
-
-  List<VendaitemStruct> _vendaitens = [];
-  List<VendaitemStruct> get vendaitens => _vendaitens;
-  set vendaitens(List<VendaitemStruct> value) {
-    _vendaitens = value;
-    prefs.setStringList(
-        'ff_vendaitens', value.map((x) => x.serialize()).toList());
-  }
-
-  void addToVendaitens(VendaitemStruct value) {
-    vendaitens.add(value);
-    prefs.setStringList(
-        'ff_vendaitens', _vendaitens.map((x) => x.serialize()).toList());
-  }
-
-  void removeFromVendaitens(VendaitemStruct value) {
-    vendaitens.remove(value);
-    prefs.setStringList(
-        'ff_vendaitens', _vendaitens.map((x) => x.serialize()).toList());
-  }
-
-  void removeAtIndexFromVendaitens(int index) {
-    vendaitens.removeAt(index);
-    prefs.setStringList(
-        'ff_vendaitens', _vendaitens.map((x) => x.serialize()).toList());
-  }
-
-  void updateVendaitensAtIndex(
-    int index,
-    VendaitemStruct Function(VendaitemStruct) updateFn,
-  ) {
-    vendaitens[index] = updateFn(_vendaitens[index]);
-    prefs.setStringList(
-        'ff_vendaitens', _vendaitens.map((x) => x.serialize()).toList());
-  }
-
-  void insertAtIndexInVendaitens(int index, VendaitemStruct value) {
-    vendaitens.insert(index, value);
-    prefs.setStringList(
-        'ff_vendaitens', _vendaitens.map((x) => x.serialize()).toList());
-  }
-
-  ConfigLocaisStruct _ConfigLocais = ConfigLocaisStruct();
+  ConfigLocaisStruct _ConfigLocais = ConfigLocaisStruct.fromSerializableMap(
+      jsonDecode('{\"GatewayPgto\":\"Cielo\"}'));
   ConfigLocaisStruct get ConfigLocais => _ConfigLocais;
   set ConfigLocais(ConfigLocaisStruct value) {
     _ConfigLocais = value;
@@ -270,14 +250,19 @@ class FFAppState extends ChangeNotifier {
   FrentistasDataTypeStruct get FrentistaSelecionado => _FrentistaSelecionado;
   set FrentistaSelecionado(FrentistasDataTypeStruct value) {
     _FrentistaSelecionado = value;
+    prefs.setString('ff_FrentistaSelecionado', value.serialize());
   }
 
   void updateFrentistaSelecionadoStruct(
       Function(FrentistasDataTypeStruct) updateFn) {
     updateFn(_FrentistaSelecionado);
+    prefs.setString(
+        'ff_FrentistaSelecionado', _FrentistaSelecionado.serialize());
   }
 
-  ConfiguracaoDataTypeStruct _ConfigRemota = ConfiguracaoDataTypeStruct();
+  ConfiguracaoDataTypeStruct _ConfigRemota =
+      ConfiguracaoDataTypeStruct.fromSerializableMap(
+          jsonDecode('{\"VLRPARC_MIN\":\"5.0\"}'));
   ConfiguracaoDataTypeStruct get ConfigRemota => _ConfigRemota;
   set ConfigRemota(ConfiguracaoDataTypeStruct value) {
     _ConfigRemota = value;
@@ -330,7 +315,9 @@ class FFAppState extends ChangeNotifier {
         _HistoricoVendas.map((x) => x.serialize()).toList());
   }
 
-  ClienteListaDataTypeStruct _ClienteSelected = ClienteListaDataTypeStruct();
+  ClienteListaDataTypeStruct _ClienteSelected =
+      ClienteListaDataTypeStruct.fromSerializableMap(jsonDecode(
+          '{\"ID_CODIGO\":\"1\",\"NOME\":\"CONSUMIDOR\",\"DENOME\":\"CONSUMIDOR\"}'));
   ClienteListaDataTypeStruct get ClienteSelected => _ClienteSelected;
   set ClienteSelected(ClienteListaDataTypeStruct value) {
     _ClienteSelected = value;
@@ -383,6 +370,167 @@ class FFAppState extends ChangeNotifier {
     prefs.setStringList(
         'ff_Favoritos', _Favoritos.map((x) => x.serialize()).toList());
   }
+
+  List<ListaAddAbastecimentoDataTypeStruct> _ListaLancamentoDiversos = [];
+  List<ListaAddAbastecimentoDataTypeStruct> get ListaLancamentoDiversos =>
+      _ListaLancamentoDiversos;
+  set ListaLancamentoDiversos(List<ListaAddAbastecimentoDataTypeStruct> value) {
+    _ListaLancamentoDiversos = value;
+  }
+
+  void addToListaLancamentoDiversos(ListaAddAbastecimentoDataTypeStruct value) {
+    ListaLancamentoDiversos.add(value);
+  }
+
+  void removeFromListaLancamentoDiversos(
+      ListaAddAbastecimentoDataTypeStruct value) {
+    ListaLancamentoDiversos.remove(value);
+  }
+
+  void removeAtIndexFromListaLancamentoDiversos(int index) {
+    ListaLancamentoDiversos.removeAt(index);
+  }
+
+  void updateListaLancamentoDiversosAtIndex(
+    int index,
+    ListaAddAbastecimentoDataTypeStruct Function(
+            ListaAddAbastecimentoDataTypeStruct)
+        updateFn,
+  ) {
+    ListaLancamentoDiversos[index] = updateFn(_ListaLancamentoDiversos[index]);
+  }
+
+  void insertAtIndexInListaLancamentoDiversos(
+      int index, ListaAddAbastecimentoDataTypeStruct value) {
+    ListaLancamentoDiversos.insert(index, value);
+  }
+
+  List<CondPagamentoDataTypeStruct> _CondPagamentoList = [];
+  List<CondPagamentoDataTypeStruct> get CondPagamentoList => _CondPagamentoList;
+  set CondPagamentoList(List<CondPagamentoDataTypeStruct> value) {
+    _CondPagamentoList = value;
+    prefs.setStringList(
+        'ff_CondPagamentoList', value.map((x) => x.serialize()).toList());
+  }
+
+  void addToCondPagamentoList(CondPagamentoDataTypeStruct value) {
+    CondPagamentoList.add(value);
+    prefs.setStringList('ff_CondPagamentoList',
+        _CondPagamentoList.map((x) => x.serialize()).toList());
+  }
+
+  void removeFromCondPagamentoList(CondPagamentoDataTypeStruct value) {
+    CondPagamentoList.remove(value);
+    prefs.setStringList('ff_CondPagamentoList',
+        _CondPagamentoList.map((x) => x.serialize()).toList());
+  }
+
+  void removeAtIndexFromCondPagamentoList(int index) {
+    CondPagamentoList.removeAt(index);
+    prefs.setStringList('ff_CondPagamentoList',
+        _CondPagamentoList.map((x) => x.serialize()).toList());
+  }
+
+  void updateCondPagamentoListAtIndex(
+    int index,
+    CondPagamentoDataTypeStruct Function(CondPagamentoDataTypeStruct) updateFn,
+  ) {
+    CondPagamentoList[index] = updateFn(_CondPagamentoList[index]);
+    prefs.setStringList('ff_CondPagamentoList',
+        _CondPagamentoList.map((x) => x.serialize()).toList());
+  }
+
+  void insertAtIndexInCondPagamentoList(
+      int index, CondPagamentoDataTypeStruct value) {
+    CondPagamentoList.insert(index, value);
+    prefs.setStringList('ff_CondPagamentoList',
+        _CondPagamentoList.map((x) => x.serialize()).toList());
+  }
+
+  FiltrosAbastecimentoStruct _aFiltros = FiltrosAbastecimentoStruct();
+  FiltrosAbastecimentoStruct get aFiltros => _aFiltros;
+  set aFiltros(FiltrosAbastecimentoStruct value) {
+    _aFiltros = value;
+  }
+
+  void updateAFiltrosStruct(Function(FiltrosAbastecimentoStruct) updateFn) {
+    updateFn(_aFiltros);
+  }
+
+  VendaDTObjStruct _VendaObj = VendaDTObjStruct();
+  VendaDTObjStruct get VendaObj => _VendaObj;
+  set VendaObj(VendaDTObjStruct value) {
+    _VendaObj = value;
+    prefs.setString('ff_VendaObj', value.serialize());
+  }
+
+  void updateVendaObjStruct(Function(VendaDTObjStruct) updateFn) {
+    updateFn(_VendaObj);
+    prefs.setString('ff_VendaObj', _VendaObj.serialize());
+  }
+
+  List<PaymentDataTypeStruct> _paymmentsConfirmed = [];
+  List<PaymentDataTypeStruct> get paymmentsConfirmed => _paymmentsConfirmed;
+  set paymmentsConfirmed(List<PaymentDataTypeStruct> value) {
+    _paymmentsConfirmed = value;
+    prefs.setStringList(
+        'ff_paymmentsConfirmed', value.map((x) => x.serialize()).toList());
+  }
+
+  void addToPaymmentsConfirmed(PaymentDataTypeStruct value) {
+    paymmentsConfirmed.add(value);
+    prefs.setStringList('ff_paymmentsConfirmed',
+        _paymmentsConfirmed.map((x) => x.serialize()).toList());
+  }
+
+  void removeFromPaymmentsConfirmed(PaymentDataTypeStruct value) {
+    paymmentsConfirmed.remove(value);
+    prefs.setStringList('ff_paymmentsConfirmed',
+        _paymmentsConfirmed.map((x) => x.serialize()).toList());
+  }
+
+  void removeAtIndexFromPaymmentsConfirmed(int index) {
+    paymmentsConfirmed.removeAt(index);
+    prefs.setStringList('ff_paymmentsConfirmed',
+        _paymmentsConfirmed.map((x) => x.serialize()).toList());
+  }
+
+  void updatePaymmentsConfirmedAtIndex(
+    int index,
+    PaymentDataTypeStruct Function(PaymentDataTypeStruct) updateFn,
+  ) {
+    paymmentsConfirmed[index] = updateFn(_paymmentsConfirmed[index]);
+    prefs.setStringList('ff_paymmentsConfirmed',
+        _paymmentsConfirmed.map((x) => x.serialize()).toList());
+  }
+
+  void insertAtIndexInPaymmentsConfirmed(
+      int index, PaymentDataTypeStruct value) {
+    paymmentsConfirmed.insert(index, value);
+    prefs.setStringList('ff_paymmentsConfirmed',
+        _paymmentsConfirmed.map((x) => x.serialize()).toList());
+  }
+
+  bool _AsConnectPersisted = false;
+  bool get AsConnectPersisted => _AsConnectPersisted;
+  set AsConnectPersisted(bool value) {
+    _AsConnectPersisted = value;
+  }
+
+  final _grupoDataManager = FutureRequestManager<ApiCallResponse>();
+  Future<ApiCallResponse> grupoData({
+    String? uniqueQueryKey,
+    bool? overrideCache,
+    required Future<ApiCallResponse> Function() requestFn,
+  }) =>
+      _grupoDataManager.performRequest(
+        uniqueQueryKey: uniqueQueryKey,
+        overrideCache: overrideCache,
+        requestFn: requestFn,
+      );
+  void clearGrupoDataCache() => _grupoDataManager.clear();
+  void clearGrupoDataCacheKey(String? uniqueKey) =>
+      _grupoDataManager.clearRequest(uniqueKey);
 }
 
 void _safeInit(Function() initializeField) {

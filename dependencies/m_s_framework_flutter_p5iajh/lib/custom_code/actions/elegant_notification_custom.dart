@@ -93,14 +93,21 @@ Future elegantNotificationCustom(
     isDismissable: true,
     position: alignment,
     animation: animation,
-    title: Text(title,
-        style: TextStyle(
-          color: colorText,
-        )),
-    description: Text(description,
-        style: TextStyle(
-          color: colorText,
-        )),
+    title: title.isNotEmpty // Verifica se o título não está vazio
+        ? Text(title,
+            style: TextStyle(
+              color: colorText,
+            ))
+        : null, // Se o título estiver vazio, define como null para não exibir
+    description: Text(
+      description,
+      textAlign: title.isNotEmpty
+          ? TextAlign.start
+          : TextAlign.center, // Ajusta o alinhamento do texto da descrição
+      style: TextStyle(
+        color: colorText,
+      ),
+    ),
     icon: imageIcon != null
         ? Image.network(
             // Carrega imagem diretamente da URL

@@ -26,16 +26,24 @@ export 'dart:typed_data' show Uint8List;
 export 'dart:convert' show jsonEncode, jsonDecode;
 export 'package:intl/intl.dart';
 export 'package:page_transition/page_transition.dart';
+export 'custom_icons.dart' show FFIcons;
+export 'internationalization.dart' show FFLocalizations;
 export 'nav/nav.dart';
 
 T valueOrDefault<T>(T? value, T defaultValue) =>
     (value is String && value.isEmpty) || value == null ? defaultValue : value;
+
+void _setTimeagoLocales() {
+  timeago.setLocaleMessages('pt', timeago.PtBrMessages());
+  timeago.setLocaleMessages('pt_short', timeago.PtBrShortMessages());
+}
 
 String dateTimeFormat(String format, DateTime? dateTime, {String? locale}) {
   if (dateTime == null) {
     return '';
   }
   if (format == 'relative') {
+    _setTimeagoLocales();
     return timeago.format(dateTime, locale: locale, allowFromNow: true);
   }
   return DateFormat(format, locale).format(dateTime);
@@ -267,6 +275,9 @@ extension IterableExt<T> on Iterable<T> {
       .toList();
 }
 
+void setAppLanguage(BuildContext context, String language) =>
+    MyApp.of(context).setLocale(language);
+
 void setDarkModeSetting(BuildContext context, ThemeMode themeMode) =>
     MyApp.of(context).setThemeMode(themeMode);
 
@@ -305,6 +316,19 @@ extension FFStringExt on String {
       maxChars != null && length > maxChars
           ? replaceRange(maxChars, null, replacement)
           : this;
+
+  String toCapitalization(TextCapitalization textCapitalization) {
+    switch (textCapitalization) {
+      case TextCapitalization.none:
+        return this;
+      case TextCapitalization.words:
+        return split(' ').map(toBeginningOfSentenceCase).join(' ');
+      case TextCapitalization.sentences:
+        return toBeginningOfSentenceCase(this);
+      case TextCapitalization.characters:
+        return toUpperCase();
+    }
+  }
 }
 
 extension ListFilterExt<T> on Iterable<T?> {

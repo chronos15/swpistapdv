@@ -24,6 +24,7 @@ class ListaAbastecimentoDataTypeStruct extends BaseStruct {
     bool? bAsProduct,
     ProdutoDataTypeStruct? produtoDT,
     DateTime? dateDefault,
+    String? unidade,
   })  : _codAbastecimento = codAbastecimento,
         _idBico = idBico,
         _combustivel = combustivel,
@@ -41,7 +42,8 @@ class ListaAbastecimentoDataTypeStruct extends BaseStruct {
         _cortexto = cortexto,
         _bAsProduct = bAsProduct,
         _produtoDT = produtoDT,
-        _dateDefault = dateDefault;
+        _dateDefault = dateDefault,
+        _unidade = unidade;
 
   // "COD_ABASTECIMENTO" field.
   int? _codAbastecimento;
@@ -190,6 +192,13 @@ class ListaAbastecimentoDataTypeStruct extends BaseStruct {
 
   bool hasDateDefault() => _dateDefault != null;
 
+  // "UNIDADE" field.
+  String? _unidade;
+  String get unidade => _unidade ?? '';
+  set unidade(String? val) => _unidade = val;
+
+  bool hasUnidade() => _unidade != null;
+
   static ListaAbastecimentoDataTypeStruct fromMap(Map<String, dynamic> data) =>
       ListaAbastecimentoDataTypeStruct(
         codAbastecimento: castToType<int>(data['COD_ABASTECIMENTO']),
@@ -212,6 +221,7 @@ class ListaAbastecimentoDataTypeStruct extends BaseStruct {
             ? data['ProdutoDT']
             : ProdutoDataTypeStruct.maybeFromMap(data['ProdutoDT']),
         dateDefault: data['DateDefault'] as DateTime?,
+        unidade: data['UNIDADE'] as String?,
       );
 
   static ListaAbastecimentoDataTypeStruct? maybeFromMap(dynamic data) => data
@@ -238,6 +248,7 @@ class ListaAbastecimentoDataTypeStruct extends BaseStruct {
         'bAsProduct': _bAsProduct,
         'ProdutoDT': _produtoDT?.toMap(),
         'DateDefault': _dateDefault,
+        'UNIDADE': _unidade,
       }.withoutNulls;
 
   @override
@@ -313,6 +324,10 @@ class ListaAbastecimentoDataTypeStruct extends BaseStruct {
         'DateDefault': serializeParam(
           _dateDefault,
           ParamType.DateTime,
+        ),
+        'UNIDADE': serializeParam(
+          _unidade,
+          ParamType.String,
         ),
       }.withoutNulls;
 
@@ -410,6 +425,11 @@ class ListaAbastecimentoDataTypeStruct extends BaseStruct {
           ParamType.DateTime,
           false,
         ),
+        unidade: deserializeParam(
+          data['UNIDADE'],
+          ParamType.String,
+          false,
+        ),
       );
 
   @override
@@ -435,7 +455,8 @@ class ListaAbastecimentoDataTypeStruct extends BaseStruct {
         cortexto == other.cortexto &&
         bAsProduct == other.bAsProduct &&
         produtoDT == other.produtoDT &&
-        dateDefault == other.dateDefault;
+        dateDefault == other.dateDefault &&
+        unidade == other.unidade;
   }
 
   @override
@@ -457,7 +478,8 @@ class ListaAbastecimentoDataTypeStruct extends BaseStruct {
         cortexto,
         bAsProduct,
         produtoDT,
-        dateDefault
+        dateDefault,
+        unidade
       ]);
 }
 
@@ -480,6 +502,7 @@ ListaAbastecimentoDataTypeStruct createListaAbastecimentoDataTypeStruct({
   bool? bAsProduct,
   ProdutoDataTypeStruct? produtoDT,
   DateTime? dateDefault,
+  String? unidade,
 }) =>
     ListaAbastecimentoDataTypeStruct(
       codAbastecimento: codAbastecimento,
@@ -500,4 +523,5 @@ ListaAbastecimentoDataTypeStruct createListaAbastecimentoDataTypeStruct({
       bAsProduct: bAsProduct,
       produtoDT: produtoDT ?? ProdutoDataTypeStruct(),
       dateDefault: dateDefault,
+      unidade: unidade,
     );

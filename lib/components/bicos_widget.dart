@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'bicos_model.dart';
 export 'bicos_model.dart';
@@ -50,8 +51,6 @@ class _BicosWidgetState extends State<BicosWidget> {
       _model.bicoSelected = widget.aSelected;
       safeSetState(() {});
     });
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -93,10 +92,16 @@ class _BicosWidgetState extends State<BicosWidget> {
             child: Text(
               'Selecionar Bico',
               style: FlutterFlowTheme.of(context).headlineSmall.override(
-                    fontFamily: 'Outfit',
+                    font: GoogleFonts.outfit(
+                      fontWeight: FontWeight.w300,
+                      fontStyle:
+                          FlutterFlowTheme.of(context).headlineSmall.fontStyle,
+                    ),
                     fontSize: 18.0,
                     letterSpacing: 0.0,
                     fontWeight: FontWeight.w300,
+                    fontStyle:
+                        FlutterFlowTheme.of(context).headlineSmall.fontStyle,
                   ),
             ),
           ),
@@ -155,11 +160,18 @@ class _BicosWidgetState extends State<BicosWidget> {
                   selectedChipStyle: ChipStyle(
                     backgroundColor: FlutterFlowTheme.of(context).secondary,
                     textStyle: FlutterFlowTheme.of(context).bodyMedium.override(
-                          fontFamily: 'Manrope',
+                          font: GoogleFonts.manrope(
+                            fontWeight: FontWeight.normal,
+                            fontStyle: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .fontStyle,
+                          ),
                           color: FlutterFlowTheme.of(context).primaryBackground,
                           fontSize: 14.0,
                           letterSpacing: 0.0,
                           fontWeight: FontWeight.normal,
+                          fontStyle:
+                              FlutterFlowTheme.of(context).bodyMedium.fontStyle,
                         ),
                     iconColor: FlutterFlowTheme.of(context).primaryBackground,
                     iconSize: 15.0,
@@ -172,9 +184,21 @@ class _BicosWidgetState extends State<BicosWidget> {
                     backgroundColor:
                         FlutterFlowTheme.of(context).secondaryBackground,
                     textStyle: FlutterFlowTheme.of(context).bodyMedium.override(
-                          fontFamily: 'Manrope',
+                          font: GoogleFonts.manrope(
+                            fontWeight: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .fontWeight,
+                            fontStyle: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .fontStyle,
+                          ),
                           color: FlutterFlowTheme.of(context).secondaryText,
                           letterSpacing: 0.0,
+                          fontWeight: FlutterFlowTheme.of(context)
+                              .bodyMedium
+                              .fontWeight,
+                          fontStyle:
+                              FlutterFlowTheme.of(context).bodyMedium.fontStyle,
                         ),
                     iconColor: FlutterFlowTheme.of(context).secondaryText,
                     iconSize: 18.0,
@@ -241,6 +265,8 @@ class _BicosWidgetState extends State<BicosWidget> {
 
                       return RefreshIndicator(
                         color: FlutterFlowTheme.of(context).primary,
+                        backgroundColor:
+                            FlutterFlowTheme.of(context).secondaryBackground,
                         strokeWidth: 1.0,
                         onRefresh: () async {
                           safeSetState(() => _model.apiRequestCompleter = null);
@@ -323,8 +349,25 @@ class _BicosWidgetState extends State<BicosWidget> {
                                         style: FlutterFlowTheme.of(context)
                                             .bodyLarge
                                             .override(
-                                              fontFamily: 'Manrope',
+                                              font: GoogleFonts.manrope(
+                                                fontWeight:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyLarge
+                                                        .fontWeight,
+                                                fontStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyLarge
+                                                        .fontStyle,
+                                              ),
                                               letterSpacing: 0.0,
+                                              fontWeight:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyLarge
+                                                      .fontWeight,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyLarge
+                                                      .fontStyle,
                                             ),
                                       ),
                                       Text(
@@ -336,12 +379,29 @@ class _BicosWidgetState extends State<BicosWidget> {
                                         style: FlutterFlowTheme.of(context)
                                             .bodySmall
                                             .override(
-                                              fontFamily: 'Manrope',
+                                              font: GoogleFonts.manrope(
+                                                fontWeight:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodySmall
+                                                        .fontWeight,
+                                                fontStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodySmall
+                                                        .fontStyle,
+                                              ),
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .secondaryText,
                                               fontSize: 14.0,
                                               letterSpacing: 0.0,
+                                              fontWeight:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodySmall
+                                                      .fontWeight,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodySmall
+                                                      .fontStyle,
                                             ),
                                       ),
                                     ],
@@ -375,9 +435,19 @@ class _BicosWidgetState extends State<BicosWidget> {
                       EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                   color: FlutterFlowTheme.of(context).primary,
                   textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                        fontFamily: 'Manrope',
+                        font: GoogleFonts.manrope(
+                          fontWeight: FlutterFlowTheme.of(context)
+                              .titleSmall
+                              .fontWeight,
+                          fontStyle:
+                              FlutterFlowTheme.of(context).titleSmall.fontStyle,
+                        ),
                         color: FlutterFlowTheme.of(context).info,
                         letterSpacing: 0.0,
+                        fontWeight:
+                            FlutterFlowTheme.of(context).titleSmall.fontWeight,
+                        fontStyle:
+                            FlutterFlowTheme.of(context).titleSmall.fontStyle,
                       ),
                   elevation: 0.0,
                   borderSide: BorderSide(

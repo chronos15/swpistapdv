@@ -36,8 +36,6 @@ class _ProductAbastecimentoWidgetState
   void initState() {
     super.initState();
     _model = createModel(context, () => ProductAbastecimentoModel());
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -88,12 +86,21 @@ class _ProductAbastecimentoWidgetState
                                   style: FlutterFlowTheme.of(context)
                                       .headlineMedium
                                       .override(
-                                        fontFamily: 'Outfit',
+                                        font: GoogleFonts.outfit(
+                                          fontWeight: FontWeight.normal,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .headlineMedium
+                                                  .fontStyle,
+                                        ),
                                         color: FlutterFlowTheme.of(context)
                                             .cardAlter,
                                         fontSize: 16.0,
                                         letterSpacing: 0.0,
                                         fontWeight: FontWeight.normal,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .headlineMedium
+                                            .fontStyle,
                                       ),
                                 ),
                                 Text(
@@ -101,12 +108,21 @@ class _ProductAbastecimentoWidgetState
                                   style: FlutterFlowTheme.of(context)
                                       .headlineMedium
                                       .override(
-                                        fontFamily: 'Outfit',
+                                        font: GoogleFonts.outfit(
+                                          fontWeight: FontWeight.normal,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .headlineMedium
+                                                  .fontStyle,
+                                        ),
                                         color: FlutterFlowTheme.of(context)
                                             .primary,
                                         fontSize: 12.0,
                                         letterSpacing: 0.0,
                                         fontWeight: FontWeight.normal,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .headlineMedium
+                                            .fontStyle,
                                       ),
                                 ),
                               ],
@@ -124,17 +140,26 @@ class _ProductAbastecimentoWidgetState
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
-                                          fontFamily: 'Manrope',
+                                          font: GoogleFonts.manrope(
+                                            fontWeight: FontWeight.w500,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .fontStyle,
+                                          ),
                                           color: FlutterFlowTheme.of(context)
                                               .secondaryText,
                                           letterSpacing: 0.0,
                                           fontWeight: FontWeight.w500,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMedium
+                                                  .fontStyle,
                                         ),
                                   ),
                                   TextSpan(
                                     text: ' - ',
-                                    style: GoogleFonts.getFont(
-                                      'Outfit',
+                                    style: GoogleFonts.outfit(
                                       color: FlutterFlowTheme.of(context)
                                           .cardAlter,
                                       fontWeight: FontWeight.w300,
@@ -143,8 +168,7 @@ class _ProductAbastecimentoWidgetState
                                   ),
                                   TextSpan(
                                     text: 'Hello World ',
-                                    style: GoogleFonts.getFont(
-                                      'Outfit',
+                                    style: GoogleFonts.outfit(
                                       fontWeight: FontWeight.w300,
                                       fontSize: 14.0,
                                     ),
@@ -153,8 +177,21 @@ class _ProductAbastecimentoWidgetState
                                 style: FlutterFlowTheme.of(context)
                                     .bodyMedium
                                     .override(
-                                      fontFamily: 'Manrope',
+                                      font: GoogleFonts.manrope(
+                                        fontWeight: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .fontWeight,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .fontStyle,
+                                      ),
                                       letterSpacing: 0.0,
+                                      fontWeight: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontWeight,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontStyle,
                                     ),
                               ),
                               maxLines: 1,
@@ -199,18 +236,27 @@ class _ProductAbastecimentoWidgetState
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
-                                          fontFamily: 'Manrope',
+                                          font: GoogleFonts.manrope(
+                                            fontWeight: FontWeight.w500,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .fontStyle,
+                                          ),
                                           color: FlutterFlowTheme.of(context)
                                               .secondaryText,
                                           fontSize: 10.0,
                                           letterSpacing: 0.0,
                                           fontWeight: FontWeight.w500,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMedium
+                                                  .fontStyle,
                                         ),
                                   ),
                                   TextSpan(
                                     text: '21,99',
-                                    style: GoogleFonts.getFont(
-                                      'Manrope',
+                                    style: GoogleFonts.manrope(
                                       color: FlutterFlowTheme.of(context)
                                           .cardAlter,
                                       fontWeight: FontWeight.w500,
@@ -223,8 +269,7 @@ class _ProductAbastecimentoWidgetState
                                   ),
                                   TextSpan(
                                     text: 'Hello World ',
-                                    style: GoogleFonts.getFont(
-                                      'Outfit',
+                                    style: GoogleFonts.outfit(
                                       color: FlutterFlowTheme.of(context)
                                           .secondaryText,
                                       fontWeight: FontWeight.w300,
@@ -239,8 +284,21 @@ class _ProductAbastecimentoWidgetState
                                 style: FlutterFlowTheme.of(context)
                                     .bodyMedium
                                     .override(
-                                      fontFamily: 'Outfit',
+                                      font: GoogleFonts.outfit(
+                                        fontWeight: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .fontWeight,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .fontStyle,
+                                      ),
                                       letterSpacing: 0.0,
+                                      fontWeight: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontWeight,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontStyle,
                                     ),
                               ),
                               maxLines: 1,
@@ -265,12 +323,20 @@ class _ProductAbastecimentoWidgetState
                               style: FlutterFlowTheme.of(context)
                                   .headlineMedium
                                   .override(
-                                    fontFamily: 'Outfit',
+                                    font: GoogleFonts.outfit(
+                                      fontWeight: FontWeight.normal,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .headlineMedium
+                                          .fontStyle,
+                                    ),
                                     color: FlutterFlowTheme.of(context)
                                         .secondaryText,
                                     fontSize: 14.0,
                                     letterSpacing: 0.0,
                                     fontWeight: FontWeight.normal,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .headlineMedium
+                                        .fontStyle,
                                   ),
                             ),
                           ),

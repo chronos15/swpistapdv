@@ -1,14 +1,20 @@
 import '/backend/api_requests/api_calls.dart';
 import '/components/com_autorizacao_widget.dart';
+import '/flutter_flow/flutter_flow_animations.dart';
+import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:m_s_framework_flutter_p5iajh/app_state.dart'
     as m_s_framework_flutter_p5iajh_app_state;
+import 'package:m_s_framework_flutter_p5iajh/components/un_view_m_s_frame_lista_vazia_widget.dart'
+    as m_s_framework_flutter_p5iajh;
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'selecionar_frentista_model.dart';
 export 'selecionar_frentista_model.dart';
@@ -22,8 +28,11 @@ class SelecionarFrentistaWidget extends StatefulWidget {
       _SelecionarFrentistaWidgetState();
 }
 
-class _SelecionarFrentistaWidgetState extends State<SelecionarFrentistaWidget> {
+class _SelecionarFrentistaWidgetState extends State<SelecionarFrentistaWidget>
+    with TickerProviderStateMixin {
   late SelecionarFrentistaModel _model;
+
+  final animationsMap = <String, AnimationInfo>{};
 
   @override
   void setState(VoidCallback callback) {
@@ -39,7 +48,27 @@ class _SelecionarFrentistaWidgetState extends State<SelecionarFrentistaWidget> {
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
     _model.textFieldFocusNode!.addListener(() => safeSetState(() {}));
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
+    animationsMap.addAll({
+      'iconButtonOnActionTriggerAnimation': AnimationInfo(
+        trigger: AnimationTrigger.onActionTrigger,
+        applyInitialState: true,
+        effectsBuilder: () => [
+          RotateEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 600.0.ms,
+            begin: 0.0,
+            end: 0.5,
+          ),
+        ],
+      ),
+    });
+    setupAnimations(
+      animationsMap.values.where((anim) =>
+          anim.trigger == AnimationTrigger.onActionTrigger ||
+          !anim.applyInitialState),
+      this,
+    );
   }
 
   @override
@@ -58,274 +87,392 @@ class _SelecionarFrentistaWidgetState extends State<SelecionarFrentistaWidget> {
       decoration: BoxDecoration(
         color: Colors.transparent,
       ),
-      child: Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: BoxDecoration(
-          color: FlutterFlowTheme.of(context).secondaryBackground,
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(0.0),
-            bottomRight: Radius.circular(0.0),
-            topLeft: Radius.circular(16.0),
-            topRight: Radius.circular(16.0),
-          ),
-        ),
-        child: Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 16.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                width: 40.0,
-                height: 4.0,
-                decoration: BoxDecoration(
-                  color: FlutterFlowTheme.of(context).alternate,
-                  borderRadius: BorderRadius.circular(4.0),
-                ),
+      child: Stack(
+        children: [
+          Container(
+            width: double.infinity,
+            height: double.infinity,
+            decoration: BoxDecoration(
+              color: FlutterFlowTheme.of(context).secondaryBackground,
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(0.0),
+                bottomRight: Radius.circular(0.0),
+                topLeft: Radius.circular(16.0),
+                topRight: Radius.circular(16.0),
               ),
-              Text(
-                'Selecionar Frentista',
-                style: FlutterFlowTheme.of(context).headlineSmall.override(
-                      fontFamily: 'Outfit',
-                      fontSize: 18.0,
-                      letterSpacing: 0.0,
-                      fontWeight: FontWeight.w300,
-                    ),
-              ),
-              TextFormField(
-                controller: _model.textController,
-                focusNode: _model.textFieldFocusNode,
-                onChanged: (_) => EasyDebounce.debounce(
-                  '_model.textController',
-                  Duration(milliseconds: 50),
-                  () async {
-                    safeSetState(() {});
-                  },
-                ),
-                autofocus: false,
-                obscureText: false,
-                decoration: InputDecoration(
-                  isDense: true,
-                  hintText: 'Procurar por frentista, nome, id...',
-                  hintStyle: FlutterFlowTheme.of(context).bodyMedium.override(
-                        fontFamily: 'Outfit',
-                        letterSpacing: 0.0,
-                        fontWeight: FontWeight.w300,
-                      ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
+            ),
+            child: Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 16.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    width: 40.0,
+                    height: 4.0,
+                    decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context).alternate,
-                      width: 1.0,
+                      borderRadius: BorderRadius.circular(4.0),
                     ),
-                    borderRadius: BorderRadius.circular(50.0),
                   ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: FlutterFlowTheme.of(context).primary,
-                      width: 1.0,
-                    ),
-                    borderRadius: BorderRadius.circular(50.0),
-                  ),
-                  errorBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(0x00000000),
-                      width: 1.0,
-                    ),
-                    borderRadius: BorderRadius.circular(50.0),
-                  ),
-                  focusedErrorBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(0x00000000),
-                      width: 1.0,
-                    ),
-                    borderRadius: BorderRadius.circular(50.0),
-                  ),
-                  filled: true,
-                  fillColor: FlutterFlowTheme.of(context).secondaryBackground,
-                  contentPadding:
-                      EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 0.0, 0.0),
-                  suffixIcon: Icon(
-                    Icons.search,
-                  ),
-                ),
-                style: FlutterFlowTheme.of(context).bodyMedium.override(
-                      fontFamily: 'Manrope',
-                      letterSpacing: 0.0,
-                    ),
-                minLines: 1,
-                cursorColor: FlutterFlowTheme.of(context).primary,
-                validator: _model.textControllerValidator.asValidator(context),
-              ),
-              Expanded(
-                child: FutureBuilder<ApiCallResponse>(
-                  future: FrentistasCall.call(
-                    ip: m_s_framework_flutter_p5iajh_app_state.FFAppState()
-                        .ConfigGlobaisServer
-                        .host,
-                    token: m_s_framework_flutter_p5iajh_app_state.FFAppState()
-                        .Token,
-                  ),
-                  builder: (context, snapshot) {
-                    // Customize what your widget looks like when it's loading.
-                    if (!snapshot.hasData) {
-                      return Center(
-                        child: SizedBox(
-                          width: 70.0,
-                          height: 70.0,
-                          child: SpinKitRipple(
-                            color: FlutterFlowTheme.of(context).primary,
-                            size: 70.0,
+                  Text(
+                    'Selecionar Frentista',
+                    style: FlutterFlowTheme.of(context).headlineSmall.override(
+                          font: GoogleFonts.outfit(
+                            fontWeight: FontWeight.w300,
+                            fontStyle: FlutterFlowTheme.of(context)
+                                .headlineSmall
+                                .fontStyle,
                           ),
+                          fontSize: 18.0,
+                          letterSpacing: 0.0,
+                          fontWeight: FontWeight.w300,
+                          fontStyle: FlutterFlowTheme.of(context)
+                              .headlineSmall
+                              .fontStyle,
                         ),
-                      );
-                    }
-                    final listViewFrentistasResponse = snapshot.data!;
+                  ),
+                  TextFormField(
+                    controller: _model.textController,
+                    focusNode: _model.textFieldFocusNode,
+                    onChanged: (_) => EasyDebounce.debounce(
+                      '_model.textController',
+                      Duration(milliseconds: 50),
+                      () async {
+                        safeSetState(() {});
+                      },
+                    ),
+                    autofocus: false,
+                    obscureText: false,
+                    decoration: InputDecoration(
+                      isDense: true,
+                      hintText: 'Procurar por frentista, nome, id...',
+                      hintStyle:
+                          FlutterFlowTheme.of(context).bodyMedium.override(
+                                font: GoogleFonts.outfit(
+                                  fontWeight: FontWeight.w300,
+                                  fontStyle: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .fontStyle,
+                                ),
+                                letterSpacing: 0.0,
+                                fontWeight: FontWeight.w300,
+                                fontStyle: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .fontStyle,
+                              ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: FlutterFlowTheme.of(context).alternate,
+                          width: 1.0,
+                        ),
+                        borderRadius: BorderRadius.circular(50.0),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: FlutterFlowTheme.of(context).primary,
+                          width: 1.0,
+                        ),
+                        borderRadius: BorderRadius.circular(50.0),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0x00000000),
+                          width: 1.0,
+                        ),
+                        borderRadius: BorderRadius.circular(50.0),
+                      ),
+                      focusedErrorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0x00000000),
+                          width: 1.0,
+                        ),
+                        borderRadius: BorderRadius.circular(50.0),
+                      ),
+                      filled: true,
+                      fillColor:
+                          FlutterFlowTheme.of(context).secondaryBackground,
+                      contentPadding:
+                          EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 0.0, 0.0),
+                      prefixIcon: Icon(
+                        FFIcons.kkuserSearch,
+                        color: FlutterFlowTheme.of(context).primary,
+                      ),
+                      suffixIcon: Icon(
+                        Icons.search,
+                        color: FlutterFlowTheme.of(context).primary,
+                      ),
+                    ),
+                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                          font: GoogleFonts.manrope(
+                            fontWeight: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .fontWeight,
+                            fontStyle: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .fontStyle,
+                          ),
+                          letterSpacing: 0.0,
+                          fontWeight: FlutterFlowTheme.of(context)
+                              .bodyMedium
+                              .fontWeight,
+                          fontStyle:
+                              FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                        ),
+                    minLines: 1,
+                    cursorColor: FlutterFlowTheme.of(context).primary,
+                    validator:
+                        _model.textControllerValidator.asValidator(context),
+                  ),
+                  Expanded(
+                    child: FutureBuilder<ApiCallResponse>(
+                      future: FrentistasCall.call(
+                        ip: m_s_framework_flutter_p5iajh_app_state.FFAppState()
+                            .ConfigGlobaisServer
+                            .host,
+                        token:
+                            m_s_framework_flutter_p5iajh_app_state.FFAppState()
+                                .Token,
+                      ),
+                      builder: (context, snapshot) {
+                        // Customize what your widget looks like when it's loading.
+                        if (!snapshot.hasData) {
+                          return Center(
+                            child: SizedBox(
+                              width: 70.0,
+                              height: 70.0,
+                              child: SpinKitRipple(
+                                color: FlutterFlowTheme.of(context).primary,
+                                size: 70.0,
+                              ),
+                            ),
+                          );
+                        }
+                        final listViewFrentistasResponse = snapshot.data!;
 
-                    return Builder(
-                      builder: (context) {
-                        final frentista = functions
-                                .pesquisaFrentista(
-                                    FrentistasCall.frentistas(
-                                      listViewFrentistasResponse.jsonBody,
-                                    )?.toList(),
-                                    _model.textController.text)
-                                ?.toList() ??
-                            [];
-
-                        return ListView.separated(
-                          padding: EdgeInsets.zero,
-                          primary: false,
-                          shrinkWrap: true,
-                          scrollDirection: Axis.vertical,
-                          itemCount: frentista.length,
-                          separatorBuilder: (_, __) => SizedBox(height: 12.0),
-                          itemBuilder: (context, frentistaIndex) {
-                            final frentistaItem = frentista[frentistaIndex];
-                            return Builder(
-                              builder: (context) => InkWell(
-                                splashColor: Colors.transparent,
-                                focusColor: Colors.transparent,
-                                hoverColor: Colors.transparent,
-                                highlightColor: Colors.transparent,
-                                onTap: () async {
-                                  if ((frentistaItem.idFrentista ==
-                                          FFAppState()
-                                              .FrentistaSelecionado
-                                              .idFrentista) ||
-                                      (FFAppState()
-                                              .ConfigRemota
-                                              .solicitaSenha ==
-                                          'N')) {
-                                    _model.selected = frentistaItem;
-                                    safeSetState(() {});
-                                  } else {
-                                    await showDialog(
-                                      context: context,
-                                      builder: (dialogContext) {
-                                        return Dialog(
-                                          elevation: 0,
-                                          insetPadding: EdgeInsets.zero,
-                                          backgroundColor: Colors.transparent,
-                                          alignment: AlignmentDirectional(
-                                                  0.0, 0.0)
-                                              .resolve(
-                                                  Directionality.of(context)),
-                                          child: Container(
-                                            height: 295.0,
-                                            width: 350.0,
-                                            child: ComAutorizacaoWidget(
-                                              idFrentista:
-                                                  frentistaItem.idFrentista,
-                                              cancelAction: () async {},
-                                              confirmAction: () async {
-                                                _model.selected = frentistaItem;
-                                                safeSetState(() {});
-                                              },
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                    );
-                                  }
-                                },
+                        return Builder(
+                          builder: (context) {
+                            final frentista = functions
+                                    .pesquisaFrentista(
+                                        FrentistasCall.frentistas(
+                                          listViewFrentistasResponse.jsonBody,
+                                        )?.toList(),
+                                        _model.textController.text)
+                                    ?.toList() ??
+                                [];
+                            if (frentista.isEmpty) {
+                              return Center(
                                 child: Container(
-                                  width: 100.0,
-                                  height: 50.0,
-                                  decoration: BoxDecoration(
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
+                                  width: double.infinity,
+                                  height: 220.0,
+                                  child: m_s_framework_flutter_p5iajh
+                                      .UnViewMSFrameListaVaziaWidget(
+                                    sTitulo: 'Lista Vazia',
+                                    sTexto:
+                                        'Verifique sua conexão ou pesquisa e tente novamente!',
+                                    bIsAction: false,
+                                    vSizeTitulo: 16.0,
+                                    vSizeTexto: 14.0,
+                                    corTitulo: FlutterFlowTheme.of(context)
+                                        .secondaryText,
+                                    corSubtitulo: FlutterFlowTheme.of(context)
+                                        .secondaryText,
+                                    aActionButton: () async {},
                                   ),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Expanded(
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: [
-                                            Container(
-                                              width: 40.0,
-                                              height: 40.0,
-                                              decoration: BoxDecoration(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .accent2,
-                                                shape: BoxShape.circle,
-                                              ),
-                                              child: Align(
-                                                alignment: AlignmentDirectional(
-                                                    0.0, 0.0),
-                                                child: Text(
-                                                  valueOrDefault<String>(
-                                                    frentistaItem.nomeFrentista,
-                                                    'A',
-                                                  ).maybeHandleOverflow(
-                                                    maxChars: 2,
-                                                  ),
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyLarge
-                                                      .override(
-                                                        fontFamily: 'Manrope',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primary,
-                                                        fontSize: 16.0,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                      ),
+                                ),
+                              );
+                            }
+
+                            return ListView.separated(
+                              padding: EdgeInsets.zero,
+                              primary: false,
+                              shrinkWrap: true,
+                              scrollDirection: Axis.vertical,
+                              itemCount: frentista.length,
+                              separatorBuilder: (_, __) =>
+                                  SizedBox(height: 12.0),
+                              itemBuilder: (context, frentistaIndex) {
+                                final frentistaItem = frentista[frentistaIndex];
+                                return Builder(
+                                  builder: (context) => InkWell(
+                                    splashColor: Colors.transparent,
+                                    focusColor: Colors.transparent,
+                                    hoverColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
+                                    onTap: () async {
+                                      var _shouldSetState = false;
+                                      if ((frentistaItem.idFrentista ==
+                                              FFAppState()
+                                                  .FrentistaSelecionado
+                                                  .idFrentista) ||
+                                          (FFAppState()
+                                                  .ConfigRemota
+                                                  .solicitaSenha ==
+                                              'N')) {
+                                        _model.selected = frentistaItem;
+                                        safeSetState(() {});
+                                      } else {
+                                        await showDialog(
+                                          context: context,
+                                          builder: (dialogContext) {
+                                            return Dialog(
+                                              elevation: 0,
+                                              insetPadding: EdgeInsets.zero,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              alignment:
+                                                  AlignmentDirectional(0.0, 0.0)
+                                                      .resolve(
+                                                          Directionality.of(
+                                                              context)),
+                                              child: Container(
+                                                height:
+                                                    MediaQuery.sizeOf(context)
+                                                            .height *
+                                                        1.0,
+                                                width: 350.0,
+                                                child: ComAutorizacaoWidget(
+                                                  idFrentista:
+                                                      frentistaItem.idFrentista,
+                                                  sNomeFrentista: frentistaItem
+                                                      .nomeFrentista,
+                                                  cancelAction: () async {},
+                                                  confirmAction: () async {
+                                                    _model.selected =
+                                                        frentistaItem;
+                                                    _model.updatePage(() {});
+                                                    await Future.delayed(
+                                                        const Duration(
+                                                            milliseconds: 300));
+                                                  },
                                                 ),
                                               ),
-                                            ),
-                                            Expanded(
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Expanded(
-                                                    child: Align(
-                                                      alignment:
-                                                          AlignmentDirectional(
-                                                              -1.0, 0.0),
-                                                      child: Text(
+                                            );
+                                          },
+                                        ).then((value) => safeSetState(() =>
+                                            _model.actFrentistaSelected =
+                                                value));
+
+                                        _shouldSetState = true;
+                                        if (_model.actFrentistaSelected!) {
+                                          Navigator.pop(
+                                              context, _model.selected);
+                                          if (_shouldSetState)
+                                            safeSetState(() {});
+                                          return;
+                                        } else {
+                                          if (_shouldSetState)
+                                            safeSetState(() {});
+                                          return;
+                                        }
+                                      }
+
+                                      if (_shouldSetState) safeSetState(() {});
+                                    },
+                                    child: Container(
+                                      width: 100.0,
+                                      height: 50.0,
+                                      decoration: BoxDecoration(
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryBackground,
+                                      ),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Expanded(
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                Container(
+                                                  width: 40.0,
+                                                  height: 40.0,
+                                                  decoration: BoxDecoration(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .accent2,
+                                                    shape: BoxShape.circle,
+                                                  ),
+                                                  child: Align(
+                                                    alignment:
+                                                        AlignmentDirectional(
+                                                            0.0, 0.0),
+                                                    child: Text(
+                                                      valueOrDefault<String>(
                                                         frentistaItem
                                                             .nomeFrentista,
-                                                        textAlign:
-                                                            TextAlign.start,
-                                                        maxLines: 1,
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
+                                                        'A',
+                                                      ).maybeHandleOverflow(
+                                                        maxChars: 2,
+                                                      ),
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyLarge
+                                                              .override(
+                                                                font: GoogleFonts
+                                                                    .manrope(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  fontStyle: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyLarge
+                                                                      .fontStyle,
+                                                                ),
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primary,
+                                                                fontSize: 16.0,
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                fontStyle: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyLarge
+                                                                    .fontStyle,
+                                                              ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Expanded(
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Expanded(
+                                                        child: Align(
+                                                          alignment:
+                                                              AlignmentDirectional(
+                                                                  -1.0, 0.0),
+                                                          child: Text(
+                                                            frentistaItem
+                                                                .nomeFrentista,
+                                                            textAlign:
+                                                                TextAlign.start,
+                                                            maxLines: 1,
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
                                                                 .bodyLarge
                                                                 .override(
-                                                                  fontFamily:
-                                                                      'Manrope',
+                                                                  font: GoogleFonts
+                                                                      .manrope(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w300,
+                                                                    fontStyle: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyLarge
+                                                                        .fontStyle,
+                                                                  ),
                                                                   color: FlutterFlowTheme.of(
                                                                           context)
                                                                       .primary,
@@ -336,32 +483,44 @@ class _SelecionarFrentistaWidgetState extends State<SelecionarFrentistaWidget> {
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .w300,
+                                                                  fontStyle: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyLarge
+                                                                      .fontStyle,
                                                                 ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Expanded(
-                                                    child: Align(
-                                                      alignment:
-                                                          AlignmentDirectional(
-                                                              -1.0, 0.0),
-                                                      child: Text(
-                                                        valueOrDefault<String>(
-                                                          frentistaItem
-                                                              .idFrentista
-                                                              .toString(),
-                                                          '00',
+                                                          ),
                                                         ),
-                                                        textAlign:
-                                                            TextAlign.start,
-                                                        maxLines: 1,
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
+                                                      ),
+                                                      Expanded(
+                                                        child: Align(
+                                                          alignment:
+                                                              AlignmentDirectional(
+                                                                  -1.0, 0.0),
+                                                          child: Text(
+                                                            valueOrDefault<
+                                                                String>(
+                                                              frentistaItem
+                                                                  .idFrentista
+                                                                  .toString(),
+                                                              '00',
+                                                            ),
+                                                            textAlign:
+                                                                TextAlign.start,
+                                                            maxLines: 1,
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
                                                                 .bodyLarge
                                                                 .override(
-                                                                  fontFamily:
-                                                                      'Manrope',
+                                                                  font: GoogleFonts
+                                                                      .manrope(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .normal,
+                                                                    fontStyle: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyLarge
+                                                                        .fontStyle,
+                                                                  ),
                                                                   color: FlutterFlowTheme.of(
                                                                           context)
                                                                       .secondaryText,
@@ -372,70 +531,114 @@ class _SelecionarFrentistaWidgetState extends State<SelecionarFrentistaWidget> {
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .normal,
+                                                                  fontStyle: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyLarge
+                                                                      .fontStyle,
                                                                 ),
+                                                          ),
+                                                        ),
                                                       ),
-                                                    ),
+                                                    ],
                                                   ),
-                                                ],
-                                              ),
+                                                ),
+                                              ].divide(SizedBox(width: 12.0)),
                                             ),
-                                          ].divide(SizedBox(width: 12.0)),
-                                        ),
+                                          ),
+                                          if (frentistaItem != _model.selected)
+                                            Icon(
+                                              Icons.radio_button_off,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryText,
+                                              size: 24.0,
+                                            ),
+                                          if (frentistaItem == _model.selected)
+                                            Icon(
+                                              Icons.check_circle_rounded,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primary,
+                                              size: 24.0,
+                                            ),
+                                        ].addToEnd(SizedBox(width: 6.0)),
                                       ),
-                                      if (frentistaItem != _model.selected)
-                                        Icon(
-                                          Icons.radio_button_off,
-                                          color: FlutterFlowTheme.of(context)
-                                              .secondaryText,
-                                          size: 24.0,
-                                        ),
-                                      if (frentistaItem == _model.selected)
-                                        Icon(
-                                          Icons.check_circle_rounded,
-                                          color: FlutterFlowTheme.of(context)
-                                              .primary,
-                                          size: 24.0,
-                                        ),
-                                    ].addToEnd(SizedBox(width: 6.0)),
+                                    ),
                                   ),
-                                ),
-                              ),
+                                );
+                              },
                             );
                           },
                         );
                       },
-                    );
-                  },
-                ),
-              ),
-              FFButtonWidget(
-                onPressed: () async {
-                  Navigator.pop(context, _model.selected);
-                },
-                text: 'Selecionar',
-                options: FFButtonOptions(
-                  width: double.infinity,
-                  height: 45.0,
-                  padding: EdgeInsets.all(8.0),
-                  iconPadding:
-                      EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                  color: FlutterFlowTheme.of(context).primary,
-                  textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                        fontFamily: 'Manrope',
-                        color: FlutterFlowTheme.of(context).info,
-                        letterSpacing: 0.0,
-                      ),
-                  elevation: 0.0,
-                  borderSide: BorderSide(
-                    color: Colors.transparent,
-                    width: 1.0,
+                    ),
                   ),
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
+                  FFButtonWidget(
+                    onPressed: () async {
+                      Navigator.pop(context, _model.selected);
+                    },
+                    text: 'Selecionar',
+                    options: FFButtonOptions(
+                      width: double.infinity,
+                      height: 45.0,
+                      padding: EdgeInsets.all(8.0),
+                      iconPadding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                      color: FlutterFlowTheme.of(context).primary,
+                      textStyle:
+                          FlutterFlowTheme.of(context).titleSmall.override(
+                                font: GoogleFonts.manrope(
+                                  fontWeight: FlutterFlowTheme.of(context)
+                                      .titleSmall
+                                      .fontWeight,
+                                  fontStyle: FlutterFlowTheme.of(context)
+                                      .titleSmall
+                                      .fontStyle,
+                                ),
+                                color: FlutterFlowTheme.of(context).info,
+                                letterSpacing: 0.0,
+                                fontWeight: FlutterFlowTheme.of(context)
+                                    .titleSmall
+                                    .fontWeight,
+                                fontStyle: FlutterFlowTheme.of(context)
+                                    .titleSmall
+                                    .fontStyle,
+                              ),
+                      elevation: 0.0,
+                      borderSide: BorderSide(
+                        color: Colors.transparent,
+                        width: 1.0,
+                      ),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                  ),
+                ].divide(SizedBox(height: 16.0)),
               ),
-            ].divide(SizedBox(height: 16.0)),
+            ),
           ),
-        ),
+          Align(
+            alignment: AlignmentDirectional(1.0, -1.0),
+            child: Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 10.0, 0.0),
+              child: FlutterFlowIconButton(
+                borderColor: Colors.transparent,
+                borderRadius: 20.0,
+                borderWidth: 1.0,
+                buttonSize: 40.0,
+                icon: Icon(
+                  Icons.close_rounded,
+                  color: FlutterFlowTheme.of(context).error,
+                  size: 22.0,
+                ),
+                onPressed: () async {
+                  Navigator.pop(context);
+                },
+              ).animateOnActionTrigger(
+                animationsMap['iconButtonOnActionTriggerAnimation']!,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -3,6 +3,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/index.dart';
 import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'nav_bar_model.dart';
 export 'nav_bar_model.dart';
 
@@ -31,8 +32,6 @@ class _NavBarWidgetState extends State<NavBarWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => NavBarModel());
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -73,7 +72,7 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                 hoverColor: Colors.transparent,
                 highlightColor: Colors.transparent,
                 onTap: () async {
-                  context.pushNamed(HomePageWidget.routeName);
+                  context.pushNamed(TelaInicialWidget.routeName);
                 },
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -90,11 +89,19 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                       child: Text(
                         'Início',
                         style: FlutterFlowTheme.of(context).bodyLarge.override(
-                              fontFamily: 'Outfit',
+                              font: GoogleFonts.outfit(
+                                fontWeight: FontWeight.w300,
+                                fontStyle: FlutterFlowTheme.of(context)
+                                    .bodyLarge
+                                    .fontStyle,
+                              ),
                               color: FlutterFlowTheme.of(context).primary,
                               fontSize: 12.0,
                               letterSpacing: 0.0,
                               fontWeight: FontWeight.w300,
+                              fontStyle: FlutterFlowTheme.of(context)
+                                  .bodyLarge
+                                  .fontStyle,
                             ),
                       ),
                     ),
@@ -117,11 +124,19 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                     child: Text(
                       'Lista',
                       style: FlutterFlowTheme.of(context).bodyLarge.override(
-                            fontFamily: 'Outfit',
+                            font: GoogleFonts.outfit(
+                              fontWeight: FontWeight.w300,
+                              fontStyle: FlutterFlowTheme.of(context)
+                                  .bodyLarge
+                                  .fontStyle,
+                            ),
                             color: Color(0x7E606A85),
                             fontSize: 12.0,
                             letterSpacing: 0.0,
                             fontWeight: FontWeight.w300,
+                            fontStyle: FlutterFlowTheme.of(context)
+                                .bodyLarge
+                                .fontStyle,
                           ),
                     ),
                   ),
@@ -182,11 +197,19 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                       textAlign: TextAlign.center,
                       maxLines: 1,
                       style: FlutterFlowTheme.of(context).bodyLarge.override(
-                            fontFamily: 'Outfit',
+                            font: GoogleFonts.outfit(
+                              fontWeight: FontWeight.w300,
+                              fontStyle: FlutterFlowTheme.of(context)
+                                  .bodyLarge
+                                  .fontStyle,
+                            ),
                             color: Color(0x7E606A85),
                             fontSize: 12.0,
                             letterSpacing: 0.0,
                             fontWeight: FontWeight.w300,
+                            fontStyle: FlutterFlowTheme.of(context)
+                                .bodyLarge
+                                .fontStyle,
                           ),
                     ),
                   ),
@@ -208,11 +231,19 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                     child: Text(
                       'Perfil',
                       style: FlutterFlowTheme.of(context).bodyLarge.override(
-                            fontFamily: 'Outfit',
+                            font: GoogleFonts.outfit(
+                              fontWeight: FontWeight.w300,
+                              fontStyle: FlutterFlowTheme.of(context)
+                                  .bodyLarge
+                                  .fontStyle,
+                            ),
                             color: Color(0x7E606A85),
                             fontSize: 12.0,
                             letterSpacing: 0.0,
                             fontWeight: FontWeight.w300,
+                            fontStyle: FlutterFlowTheme.of(context)
+                                .bodyLarge
+                                .fontStyle,
                           ),
                     ),
                   ),

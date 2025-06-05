@@ -1,5 +1,6 @@
 import '/backend/api_requests/api_calls.dart';
 import '/backend/schema/structs/index.dart';
+import '/components/side_bar_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
 import 'dart:async';
@@ -34,8 +35,13 @@ class ListaClientesModel extends FlutterFlowModel<ListaClientesWidget> {
   PagingController<ApiPagingParams, dynamic>? listViewPagingController;
   Function(ApiPagingParams nextPageMarker)? listViewApiCall;
 
+  // Model for SideBar component.
+  late SideBarModel sideBarModel;
+
   @override
-  void initState(BuildContext context) {}
+  void initState(BuildContext context) {
+    sideBarModel = createModel(context, () => SideBarModel());
+  }
 
   @override
   void dispose() {
@@ -43,6 +49,7 @@ class ListaClientesModel extends FlutterFlowModel<ListaClientesWidget> {
     textController?.dispose();
 
     listViewPagingController?.dispose();
+    sideBarModel.dispose();
   }
 
   /// Additional helper methods.

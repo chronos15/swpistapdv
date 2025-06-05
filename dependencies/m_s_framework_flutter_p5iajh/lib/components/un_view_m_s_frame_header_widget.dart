@@ -151,6 +151,8 @@ class _UnViewMSFrameHeaderWidgetState extends State<UnViewMSFrameHeaderWidget>
           !anim.applyInitialState),
       this,
     );
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -595,14 +597,32 @@ class _UnViewMSFrameHeaderWidgetState extends State<UnViewMSFrameHeaderWidget>
                                                                   .of(context)
                                                               .bodyMedium
                                                               .override(
-                                                                fontFamily:
-                                                                    'Outfit',
+                                                                font:
+                                                                    GoogleFonts
+                                                                        .outfit(
+                                                                  fontWeight: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .fontWeight,
+                                                                  fontStyle: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .fontStyle,
+                                                                ),
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
                                                                     .info,
                                                                 fontSize: 24.0,
                                                                 letterSpacing:
                                                                     0.0,
+                                                                fontWeight: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .fontWeight,
+                                                                fontStyle: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .fontStyle,
                                                               ),
                                                         ),
                                                         if (responsiveVisibility(
@@ -620,14 +640,31 @@ class _UnViewMSFrameHeaderWidgetState extends State<UnViewMSFrameHeaderWidget>
                                                                     .of(context)
                                                                 .bodyMedium
                                                                 .override(
-                                                                  fontFamily:
-                                                                      'Outfit',
+                                                                  font: GoogleFonts
+                                                                      .outfit(
+                                                                    fontWeight: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyMedium
+                                                                        .fontWeight,
+                                                                    fontStyle: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyMedium
+                                                                        .fontStyle,
+                                                                  ),
                                                                   color: Color(
                                                                       0xFFC3C3C3),
                                                                   fontSize:
                                                                       12.0,
                                                                   letterSpacing:
                                                                       0.0,
+                                                                  fontWeight: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .fontWeight,
+                                                                  fontStyle: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .fontStyle,
                                                                 ),
                                                           ),
                                                       ],
@@ -646,11 +683,32 @@ class _UnViewMSFrameHeaderWidgetState extends State<UnViewMSFrameHeaderWidget>
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
-                                                  fontFamily: 'Outfit',
+                                                  font: GoogleFonts.outfit(
+                                                    fontWeight:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodyMedium
+                                                            .fontWeight,
+                                                    fontStyle:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodyMedium
+                                                            .fontStyle,
+                                                  ),
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .info,
                                                   letterSpacing: 0.0,
+                                                  fontWeight:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMedium
+                                                          .fontWeight,
+                                                  fontStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMedium
+                                                          .fontStyle,
                                                 ),
                                           ),
                                       ].addToStart(SizedBox(height: 5.0)),
@@ -746,8 +804,15 @@ class _UnViewMSFrameHeaderWidgetState extends State<UnViewMSFrameHeaderWidget>
                                                                         context)
                                                                     .bodyMedium
                                                                     .override(
-                                                                      fontFamily:
-                                                                          'Readex Pro',
+                                                                      font: GoogleFonts
+                                                                          .readexPro(
+                                                                        fontWeight: FlutterFlowTheme.of(context)
+                                                                            .bodyMedium
+                                                                            .fontWeight,
+                                                                        fontStyle: FlutterFlowTheme.of(context)
+                                                                            .bodyMedium
+                                                                            .fontStyle,
+                                                                      ),
                                                                       color: FlutterFlowTheme.of(
                                                                               context)
                                                                           .primaryText,
@@ -755,6 +820,14 @@ class _UnViewMSFrameHeaderWidgetState extends State<UnViewMSFrameHeaderWidget>
                                                                           14.0,
                                                                       letterSpacing:
                                                                           0.0,
+                                                                      fontWeight: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .bodyMedium
+                                                                          .fontWeight,
+                                                                      fontStyle: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .bodyMedium
+                                                                          .fontStyle,
                                                                       lineHeight:
                                                                           1.5,
                                                                     ),
@@ -767,8 +840,15 @@ class _UnViewMSFrameHeaderWidgetState extends State<UnViewMSFrameHeaderWidget>
                                                                         context)
                                                                     .bodyMedium
                                                                     .override(
-                                                                      fontFamily:
-                                                                          'Readex Pro',
+                                                                      font: GoogleFonts
+                                                                          .readexPro(
+                                                                        fontWeight: FlutterFlowTheme.of(context)
+                                                                            .bodyMedium
+                                                                            .fontWeight,
+                                                                        fontStyle: FlutterFlowTheme.of(context)
+                                                                            .bodyMedium
+                                                                            .fontStyle,
+                                                                      ),
                                                                       color: FlutterFlowTheme.of(
                                                                               context)
                                                                           .secondaryText,
@@ -776,6 +856,14 @@ class _UnViewMSFrameHeaderWidgetState extends State<UnViewMSFrameHeaderWidget>
                                                                           14.0,
                                                                       letterSpacing:
                                                                           0.0,
+                                                                      fontWeight: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .bodyMedium
+                                                                          .fontWeight,
+                                                                      fontStyle: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .bodyMedium
+                                                                          .fontStyle,
                                                                       lineHeight:
                                                                           1.5,
                                                                     ),
@@ -851,14 +939,32 @@ class _UnViewMSFrameHeaderWidgetState extends State<UnViewMSFrameHeaderWidget>
                                                                   .of(context)
                                                               .bodyMedium
                                                               .override(
-                                                                fontFamily:
-                                                                    'Outfit',
+                                                                font:
+                                                                    GoogleFonts
+                                                                        .outfit(
+                                                                  fontWeight: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .fontWeight,
+                                                                  fontStyle: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .fontStyle,
+                                                                ),
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
                                                                     .primary,
                                                                 fontSize: 14.0,
                                                                 letterSpacing:
                                                                     0.0,
+                                                                fontWeight: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .fontWeight,
+                                                                fontStyle: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .fontStyle,
                                                                 lineHeight: 1.5,
                                                               ),
                                                           maxLength: 140,
@@ -878,6 +984,25 @@ class _UnViewMSFrameHeaderWidgetState extends State<UnViewMSFrameHeaderWidget>
                                                               .pesquisaTextControllerValidator
                                                               .asValidator(
                                                                   context),
+                                                          inputFormatters: [
+                                                            if (!isAndroid &&
+                                                                !isiOS)
+                                                              TextInputFormatter
+                                                                  .withFunction(
+                                                                      (oldValue,
+                                                                          newValue) {
+                                                                return TextEditingValue(
+                                                                  selection:
+                                                                      newValue
+                                                                          .selection,
+                                                                  text: newValue
+                                                                      .text
+                                                                      .toCapitalization(
+                                                                          TextCapitalization
+                                                                              .words),
+                                                                );
+                                                              }),
+                                                          ],
                                                         ),
                                                       ),
                                                     ),
@@ -1013,12 +1138,34 @@ class _UnViewMSFrameHeaderWidgetState extends State<UnViewMSFrameHeaderWidget>
                                                             context)
                                                         .bodyMedium
                                                         .override(
-                                                          fontFamily: 'Outfit',
+                                                          font: GoogleFonts
+                                                              .outfit(
+                                                            fontWeight:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .fontWeight,
+                                                            fontStyle:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .fontStyle,
+                                                          ),
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .alternate,
                                                           fontSize: 16.0,
                                                           letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .bodyMedium
+                                                                  .fontWeight,
+                                                          fontStyle:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .bodyMedium
+                                                                  .fontStyle,
                                                         ),
                                                   ),
                                                 ),

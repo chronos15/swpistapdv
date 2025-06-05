@@ -156,6 +156,9 @@ enum ParamType {
 
   DataStruct,
   Enum,
+
+  CustomClass,
+  CustomEnum,
 }
 
 dynamic deserializeParam<T>(

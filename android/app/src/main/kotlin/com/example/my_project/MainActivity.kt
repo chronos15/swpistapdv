@@ -1,4 +1,4 @@
-package com.multsoft.softworkposto
+package br.Multsoft.SoftworkPista
 
 import io.flutter.embedding.android.FlutterActivity
 

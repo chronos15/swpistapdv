@@ -12,6 +12,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:ff_theme/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'filtros_model.dart';
 export 'filtros_model.dart';
 
@@ -49,8 +50,6 @@ class _FiltrosWidgetState extends State<FiltrosWidget> {
       _model.aFiltros = widget.aFiltroSubmite;
       safeSetState(() {});
     });
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -106,10 +105,18 @@ class _FiltrosWidgetState extends State<FiltrosWidget> {
                               style: FlutterFlowTheme.of(context)
                                   .headlineSmall
                                   .override(
-                                    fontFamily: 'Outfit',
+                                    font: GoogleFonts.outfit(
+                                      fontWeight: FontWeight.w300,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .headlineSmall
+                                          .fontStyle,
+                                    ),
                                     fontSize: 18.0,
                                     letterSpacing: 0.0,
                                     fontWeight: FontWeight.w300,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .headlineSmall
+                                        .fontStyle,
                                   ),
                             ),
                             FlutterFlowIconButton(
@@ -194,7 +201,14 @@ class _FiltrosWidgetState extends State<FiltrosWidget> {
                                             style: FlutterFlowTheme.of(context)
                                                 .bodySmall
                                                 .override(
-                                                  fontFamily: 'Manrope',
+                                                  font: GoogleFonts.outfit(
+                                                    fontWeight: FontWeight.w300,
+                                                    fontStyle:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodySmall
+                                                            .fontStyle,
+                                                  ),
                                                   color: valueOrDefault<Color>(
                                                     _model.aFiltros
                                                                 ?.combustivelSelected ==
@@ -213,8 +227,14 @@ class _FiltrosWidgetState extends State<FiltrosWidget> {
                                                     FlutterFlowTheme.of(context)
                                                         .secondaryText,
                                                   ),
-                                                  fontSize: 14.0,
+                                                  fontSize: 13.0,
                                                   letterSpacing: 0.0,
+                                                  fontWeight: FontWeight.w300,
+                                                  fontStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodySmall
+                                                          .fontStyle,
                                                 ),
                                           ),
                                         ),
@@ -239,7 +259,6 @@ class _FiltrosWidgetState extends State<FiltrosWidget> {
                                   await showModalBottomSheet(
                                     isScrollControlled: true,
                                     backgroundColor: Colors.transparent,
-                                    enableDrag: false,
                                     context: context,
                                     builder: (context) {
                                       return Padding(
@@ -279,50 +298,62 @@ class _FiltrosWidgetState extends State<FiltrosWidget> {
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
+                                      Icon(
+                                        FFIcons.kkusers,
+                                        color: FlutterFlowTheme.of(context)
+                                            .primary,
+                                        size: 24.0,
+                                      ),
                                       Expanded(
                                         child: Align(
                                           alignment:
                                               AlignmentDirectional(-1.0, 0.0),
-                                          child: AutoSizeText(
-                                            valueOrDefault<String>(
-                                              'Frentista: ${valueOrDefault<String>(
-                                                _model.aFiltros?.frentista
-                                                    .nomeFrentista,
-                                                'Selecione',
-                                              )}',
-                                              '--',
+                                          child: Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    5.0, 0.0, 0.0, 0.0),
+                                            child: AutoSizeText(
+                                              valueOrDefault<String>(
+                                                'Frentista: ${valueOrDefault<String>(
+                                                  _model.aFiltros?.frentista
+                                                      .nomeFrentista,
+                                                  'Selecione',
+                                                )}',
+                                                '--',
+                                              ),
+                                              textAlign: TextAlign.center,
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .headlineMedium
+                                                  .override(
+                                                    font: GoogleFonts.outfit(
+                                                      fontWeight:
+                                                          FontWeight.w300,
+                                                      fontStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .headlineMedium
+                                                              .fontStyle,
+                                                    ),
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .secondaryText,
+                                                    fontSize: 14.0,
+                                                    letterSpacing: 0.0,
+                                                    fontWeight: FontWeight.w300,
+                                                    fontStyle:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .headlineMedium
+                                                            .fontStyle,
+                                                  ),
                                             ),
-                                            textAlign: TextAlign.center,
-                                            style: FlutterFlowTheme.of(context)
-                                                .headlineMedium
-                                                .override(
-                                                  fontFamily: 'Outfit',
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .secondaryText,
-                                                  fontSize: 14.0,
-                                                  letterSpacing: 0.0,
-                                                  fontWeight: FontWeight.w300,
-                                                ),
                                           ),
                                         ),
                                       ),
-                                      Align(
-                                        alignment:
-                                            AlignmentDirectional(1.0, 0.0),
-                                        child: Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 0.0, 5.0, 0.0),
-                                          child: Icon(
-                                            Icons.keyboard_arrow_down_rounded,
-                                            color: FlutterFlowTheme.of(context)
-                                                .secondaryText,
-                                            size: 16.0,
-                                          ),
-                                        ),
-                                      ),
-                                      if (_model.aFiltros != null)
+                                      if (_model.aFiltros!.frentista
+                                              .idFrentista >=
+                                          1)
                                         FlutterFlowIconButton(
                                           borderRadius: 20.0,
                                           borderWidth: 1.0,
@@ -343,6 +374,21 @@ class _FiltrosWidgetState extends State<FiltrosWidget> {
                                             safeSetState(() {});
                                           },
                                         ),
+                                      Align(
+                                        alignment:
+                                            AlignmentDirectional(1.0, 0.0),
+                                        child: Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 0.0, 5.0, 0.0),
+                                          child: Icon(
+                                            Icons.keyboard_arrow_down_rounded,
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondaryText,
+                                            size: 16.0,
+                                          ),
+                                        ),
+                                      ),
                                     ]
                                         .addToStart(SizedBox(width: 12.0))
                                         .addToEnd(SizedBox(width: 12.0)),
@@ -412,50 +458,88 @@ class _FiltrosWidgetState extends State<FiltrosWidget> {
                                   size: 24.0,
                                 ),
                                 Expanded(
-                                  child: RichText(
-                                    textScaler:
-                                        MediaQuery.of(context).textScaler,
-                                    text: TextSpan(
-                                      children: [
-                                        TextSpan(
-                                          text: dateTimeFormat(
-                                            "dd/MM/yyyy",
-                                            m_s_framework_flutter_p5iajh_functions
-                                                .dateNullFormate(_model
-                                                    .aFiltros?.dateInitial),
-                                            locale: FFLocalizations.of(context)
-                                                .languageCode,
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        5.0, 0.0, 5.0, 0.0),
+                                    child: RichText(
+                                      textScaler:
+                                          MediaQuery.of(context).textScaler,
+                                      text: TextSpan(
+                                        children: [
+                                          TextSpan(
+                                            text: dateTimeFormat(
+                                              "dd/MM/yyyy",
+                                              m_s_framework_flutter_p5iajh_functions
+                                                  .dateNullFormate(_model
+                                                      .aFiltros?.dateInitial),
+                                              locale:
+                                                  FFLocalizations.of(context)
+                                                      .languageCode,
+                                            ),
+                                            style: TextStyle(),
                                           ),
-                                          style: TextStyle(),
-                                        ),
-                                        TextSpan(
-                                          text: ' - ',
-                                          style: TextStyle(),
-                                        ),
-                                        TextSpan(
-                                          text: dateTimeFormat(
-                                            "dd/MM/yyyy",
-                                            m_s_framework_flutter_p5iajh_functions
-                                                .dateNullFormate(
-                                                    _model.aFiltros?.dateFinal),
-                                            locale: FFLocalizations.of(context)
-                                                .languageCode,
+                                          TextSpan(
+                                            text: ' - ',
+                                            style: TextStyle(),
                                           ),
-                                          style: TextStyle(),
-                                        )
-                                      ],
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Manrope',
-                                            color: FlutterFlowTheme.of(context)
-                                                .primary,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.w300,
-                                          ),
+                                          TextSpan(
+                                            text: dateTimeFormat(
+                                              "dd/MM/yyyy",
+                                              m_s_framework_flutter_p5iajh_functions
+                                                  .dateNullFormate(_model
+                                                      .aFiltros?.dateFinal),
+                                              locale:
+                                                  FFLocalizations.of(context)
+                                                      .languageCode,
+                                            ),
+                                            style: TextStyle(),
+                                          )
+                                        ],
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              font: GoogleFonts.manrope(
+                                                fontWeight: FontWeight.w300,
+                                                fontStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .fontStyle,
+                                              ),
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primary,
+                                              letterSpacing: 0.0,
+                                              fontWeight: FontWeight.w300,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .fontStyle,
+                                            ),
+                                      ),
                                     ),
                                   ),
                                 ),
+                                if (_model.aFiltros?.dateInitial != null)
+                                  FlutterFlowIconButton(
+                                    borderRadius: 20.0,
+                                    borderWidth: 1.0,
+                                    buttonSize: 35.0,
+                                    fillColor: FlutterFlowTheme.of(context)
+                                        .secondaryBackground,
+                                    icon: Icon(
+                                      Icons.clear_rounded,
+                                      color: FlutterFlowTheme.of(context).error,
+                                      size: 20.0,
+                                    ),
+                                    onPressed: () async {
+                                      _model.updateAFiltrosStruct(
+                                        (e) => e
+                                          ..dateInitial = null
+                                          ..dateFinal = null,
+                                      );
+                                      safeSetState(() {});
+                                    },
+                                  ),
                                 Align(
                                   alignment: AlignmentDirectional(1.0, 0.0),
                                   child: Padding(
@@ -470,7 +554,6 @@ class _FiltrosWidgetState extends State<FiltrosWidget> {
                                   ),
                                 ),
                               ]
-                                  .divide(SizedBox(width: 5.0))
                                   .addToStart(SizedBox(width: 12.0))
                                   .addToEnd(SizedBox(width: 12.0)),
                             ),
@@ -484,29 +567,45 @@ class _FiltrosWidgetState extends State<FiltrosWidget> {
             ),
             Align(
               alignment: AlignmentDirectional(0.0, 1.0),
-              child: FFButtonWidget(
-                onPressed: () async {
-                  Navigator.pop(context, _model.aFiltros);
-                },
-                text: 'Aplicar Filtros',
-                options: FFButtonOptions(
-                  width: double.infinity,
-                  height: 50.0,
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                  iconPadding:
-                      EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                  color: FlutterFlowTheme.of(context).primary,
-                  textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                        fontFamily: 'Manrope',
-                        color: FlutterFlowTheme.of(context).info,
-                        letterSpacing: 0.0,
-                      ),
-                  elevation: 0.0,
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(0.0),
-                    bottomRight: Radius.circular(0.0),
-                    topLeft: Radius.circular(0.0),
-                    topRight: Radius.circular(0.0),
+              child: Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 12.0),
+                child: FFButtonWidget(
+                  onPressed: () async {
+                    if (_model.aFiltros?.combustivelSelected.idProduto == 0) {
+                      _model.updateAFiltrosStruct(
+                        (e) => e..bico = null,
+                      );
+                      safeSetState(() {});
+                    }
+                    Navigator.pop(context, _model.aFiltros);
+                  },
+                  text: 'Aplicar Filtros',
+                  options: FFButtonOptions(
+                    width: double.infinity,
+                    height: 50.0,
+                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                    iconPadding:
+                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                    color: FlutterFlowTheme.of(context).primary,
+                    textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                          font: GoogleFonts.manrope(
+                            fontWeight: FlutterFlowTheme.of(context)
+                                .titleSmall
+                                .fontWeight,
+                            fontStyle: FlutterFlowTheme.of(context)
+                                .titleSmall
+                                .fontStyle,
+                          ),
+                          color: FlutterFlowTheme.of(context).info,
+                          letterSpacing: 0.0,
+                          fontWeight: FlutterFlowTheme.of(context)
+                              .titleSmall
+                              .fontWeight,
+                          fontStyle:
+                              FlutterFlowTheme.of(context).titleSmall.fontStyle,
+                        ),
+                    elevation: 0.0,
+                    borderRadius: BorderRadius.circular(12.0),
                   ),
                 ),
               ),

@@ -1,7 +1,7 @@
 import '/flutter_flow/flutter_flow_animations.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import 'dart:async';
 import 'dart:math';
 import 'dart:ui';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -68,6 +68,18 @@ class _UnViewMSFrameMessageBoxWidgetState
     _model = createModel(context, () => UnViewMSFrameMessageBoxModel());
 
     animationsMap.addAll({
+      'containerOnPageLoadAnimation': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 600.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+        ],
+      ),
       'textOnPageLoadAnimation': AnimationInfo(
         trigger: AnimationTrigger.onPageLoad,
         effectsBuilder: () => [
@@ -92,20 +104,9 @@ class _UnViewMSFrameMessageBoxWidgetState
           ),
         ],
       ),
-      'iconButtonOnPageLoadAnimation': AnimationInfo(
-        trigger: AnimationTrigger.onPageLoad,
-        effectsBuilder: () => [
-          TintEffect(
-            curve: Curves.easeInOut,
-            delay: 0.0.ms,
-            duration: 600.0.ms,
-            color: FlutterFlowTheme.of(context).error,
-            begin: 0.12,
-            end: 1.0,
-          ),
-        ],
-      ),
     });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -133,7 +134,7 @@ class _UnViewMSFrameMessageBoxWidgetState
         child: Stack(
           children: [
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 12.0, 12.0),
+              padding: EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 12.0, 0.0),
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 children: [
@@ -145,9 +146,18 @@ class _UnViewMSFrameMessageBoxWidgetState
                         AnimatedDefaultTextStyle(
                           style:
                               FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Readex Pro',
+                                    font: GoogleFonts.readexPro(
+                                      fontWeight: FontWeight.w300,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontStyle,
+                                    ),
                                     fontSize: 18.0,
                                     letterSpacing: 0.0,
+                                    fontWeight: FontWeight.w300,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .fontStyle,
                                   ),
                           duration: Duration(milliseconds: 600),
                           curve: Curves.easeIn,
@@ -176,12 +186,20 @@ class _UnViewMSFrameMessageBoxWidgetState
                           style: FlutterFlowTheme.of(context)
                               .bodyMedium
                               .override(
-                                fontFamily: 'Outfit',
+                                font: GoogleFonts.outfit(
+                                  fontWeight: FontWeight.w300,
+                                  fontStyle: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .fontStyle,
+                                ),
                                 color:
                                     FlutterFlowTheme.of(context).secondaryText,
                                 fontSize: 16.0,
                                 letterSpacing: 0.0,
                                 fontWeight: FontWeight.w300,
+                                fontStyle: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .fontStyle,
                               ),
                         ),
                       ),
@@ -213,16 +231,26 @@ class _UnViewMSFrameMessageBoxWidgetState
                                 textStyle: FlutterFlowTheme.of(context)
                                     .titleSmall
                                     .override(
-                                      fontFamily: 'Outfit',
+                                      font: GoogleFonts.outfit(
+                                        fontWeight: FontWeight.normal,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .titleSmall
+                                            .fontStyle,
+                                      ),
                                       color: valueOrDefault<Color>(
                                         widget!.colorTextButtonConfirm,
                                         FlutterFlowTheme.of(context).info,
                                       ),
                                       letterSpacing: 0.0,
                                       fontWeight: FontWeight.normal,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .titleSmall
+                                          .fontStyle,
                                     ),
                                 elevation: 0.0,
                                 borderSide: BorderSide(
+                                  color: FlutterFlowTheme.of(context)
+                                      .primaryBackground,
                                   width: 0.0,
                                 ),
                                 borderRadius: BorderRadius.circular(8.0),
@@ -235,7 +263,11 @@ class _UnViewMSFrameMessageBoxWidgetState
                               alignment: AlignmentDirectional(1.0, 1.0),
                               child: FFButtonWidget(
                                 onPressed: () async {
-                                  await widget.actCancel?.call();
+                                  unawaited(
+                                    () async {
+                                      await widget.actCancel?.call();
+                                    }(),
+                                  );
                                 },
                                 text: widget!.sTextoCancel,
                                 options: FFButtonOptions(
@@ -249,13 +281,22 @@ class _UnViewMSFrameMessageBoxWidgetState
                                   textStyle: FlutterFlowTheme.of(context)
                                       .titleSmall
                                       .override(
-                                        fontFamily: 'Outfit',
+                                        font: GoogleFonts.outfit(
+                                          fontWeight: FontWeight.normal,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .titleSmall
+                                                  .fontStyle,
+                                        ),
                                         color: valueOrDefault<Color>(
                                           widget!.colorTextButtonCancel,
                                           FlutterFlowTheme.of(context).error,
                                         ),
                                         letterSpacing: 0.0,
                                         fontWeight: FontWeight.normal,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .titleSmall
+                                            .fontStyle,
                                       ),
                                   elevation: 0.0,
                                   borderSide: BorderSide(
@@ -275,34 +316,12 @@ class _UnViewMSFrameMessageBoxWidgetState
                   ),
                 ]
                     .addToStart(SizedBox(height: 15.0))
-                    .addToEnd(SizedBox(height: 10.0)),
+                    .addToEnd(SizedBox(height: 12.0)),
               ),
             ),
-            if (!widget!.enableCancel)
-              Align(
-                alignment: AlignmentDirectional(1.0, -1.0),
-                child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 5.0, 5.0, 0.0),
-                  child: FlutterFlowIconButton(
-                    borderColor: Colors.transparent,
-                    borderRadius: 20.0,
-                    borderWidth: 1.0,
-                    buttonSize: 40.0,
-                    icon: Icon(
-                      Icons.close_rounded,
-                      color: FlutterFlowTheme.of(context).error,
-                      size: 20.0,
-                    ),
-                    onPressed: () async {
-                      Navigator.pop(context);
-                    },
-                  ).animateOnPageLoad(
-                      animationsMap['iconButtonOnPageLoadAnimation']!),
-                ),
-              ),
           ],
         ),
-      ),
+      ).animateOnPageLoad(animationsMap['containerOnPageLoadAnimation']!),
     );
   }
 }
