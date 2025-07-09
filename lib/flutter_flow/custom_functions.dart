@@ -1265,3 +1265,40 @@ String? atualizaStringDigitado(
 
   // Retorna sem alterações
 }
+
+String? resultMessagesFromCode(int? codeResult) {
+  if (codeResult == null)
+    return 'Erro desconhecido. Tente novamente mais tarde.';
+
+  switch (codeResult) {
+    case 200:
+    case 201:
+      return null; // Nenhuma mensagem para sucesso
+    case 400:
+      return 'Requisição inválida. Verifique os dados informados.';
+    case 401:
+      return 'Não autorizado. Verifique suas credenciais.';
+    case 403:
+      return 'Acesso negado. Você não tem permissão para esta ação.';
+    case 404:
+      return 'Recurso não encontrado. Verifique se o endereço está correto.';
+    case 408:
+      return 'Tempo de resposta esgotado. Tente novamente.';
+    case 409:
+      return 'Conflito de dados. Verifique as informações enviadas.';
+    case 422:
+      return 'Dados inválidos ou incompletos. Corrija e tente novamente.';
+    case 429:
+      return 'Muitas requisições. Por favor, aguarde e tente novamente.';
+    case 500:
+      return 'Erro interno do servidor. Por favor, tente mais tarde.';
+    case 502:
+      return 'Serviço temporariamente indisponível. Tente novamente.';
+    case 503:
+      return 'Servidor indisponível. Por favor, tente mais tarde.';
+    case 504:
+      return 'Tempo de resposta excedido. Verifique sua conexão e tente novamente.';
+    default:
+      return 'Erro inesperado (código $codeResult). Tente novamente ou contate o suporte.';
+  }
+}

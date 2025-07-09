@@ -103,10 +103,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
             'bLogin',
             ParamType.bool,
           ),
-          bReloadListView: params.getParam(
-            'bReloadListView',
-            ParamType.bool,
-          ),
         ),
       ),
       FFRoute(

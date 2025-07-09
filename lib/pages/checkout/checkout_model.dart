@@ -401,9 +401,9 @@ class CheckoutModel extends FlutterFlowModel<CheckoutWidget> {
                       .UnViewMSFrameMessageBoxWidget(
                     sTitulo: 'Erro',
                     sText:
-                        'Falha ao realizar comunicação com o servidor... Verifique sua conexão e tente novamente!${(returnVendaAPI?.jsonBody ?? '').toString()}',
+                        '${functions.resultMessagesFromCode((returnVendaAPI?.statusCode ?? 200))} ${currentUserData?.usuario == 'SOFTWORK' ? (returnVendaAPI?.jsonBody ?? '').toString() : ''}',
                     colorConfirm:
-                        FlutterFlowTheme.of(context).secondaryBackground,
+                        FlutterFlowTheme.of(context).primaryBackground,
                     colorCancel: Color(0x00000000),
                     enableCancel: false,
                     colorTextButtonConfirm:

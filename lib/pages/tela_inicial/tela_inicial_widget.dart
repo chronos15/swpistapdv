@@ -46,12 +46,9 @@ class TelaInicialWidget extends StatefulWidget {
   const TelaInicialWidget({
     super.key,
     bool? bLogin,
-    bool? bReloadListView,
-  })  : this.bLogin = bLogin ?? false,
-        this.bReloadListView = bReloadListView ?? false;
+  }) : this.bLogin = bLogin ?? false;
 
   final bool bLogin;
-  final bool bReloadListView;
 
   static String routeName = 'TelaInicial';
   static String routePath = '/telaInicial';
@@ -76,123 +73,108 @@ class _TelaInicialWidgetState extends State<TelaInicialWidget>
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       Function() _navigate = () {};
-      await Future.wait([
-        Future(() async {
-          if (!FFAppState().AsConnectPersisted) {
-            await m_s_framework_flutter_p5iajh_actions.testConnectionServer();
-            _model.getToken = await m_s_framework_flutter_p5iajh_api_calls_util
-                .ServerConnectionGroup.getTokenCall
-                .call(
-              path: m_s_framework_flutter_p5iajh_app_state.FFAppState()
-                  .ConfigGlobaisServer
-                  .path,
-              cnpj: m_s_framework_flutter_p5iajh_app_state.FFAppState()
-                  .ConfigGlobaisServer
-                  .cnpj,
-              ip: m_s_framework_flutter_p5iajh_app_state.FFAppState()
-                  .ConfigGlobaisServer
-                  .host,
-            );
+      if (!FFAppState().AsConnectPersisted) {
+        await m_s_framework_flutter_p5iajh_actions.testConnectionServer();
+        _model.getToken = await m_s_framework_flutter_p5iajh_api_calls_util
+            .ServerConnectionGroup.getTokenCall
+            .call(
+          path: m_s_framework_flutter_p5iajh_app_state.FFAppState()
+              .ConfigGlobaisServer
+              .path,
+          cnpj: m_s_framework_flutter_p5iajh_app_state.FFAppState()
+              .ConfigGlobaisServer
+              .cnpj,
+          ip: m_s_framework_flutter_p5iajh_app_state.FFAppState()
+              .ConfigGlobaisServer
+              .host,
+        );
 
-            if ((_model.getToken?.succeeded ?? true)) {
-              m_s_framework_flutter_p5iajh_app_state.FFAppState().Token =
-                  m_s_framework_flutter_p5iajh_api_calls_util
-                      .ServerConnectionGroup.getTokenCall
-                      .token(
-                        (_model.getToken?.jsonBody ?? ''),
-                      )
-                      .toString();
-              FFAppState().updateConfigLocaisStruct(
-                (e) => e
-                  ..versaoServer = m_s_framework_flutter_p5iajh_api_calls_util
-                      .ServerConnectionGroup.getTokenCall
-                      .buildServer(
-                        (_model.getToken?.jsonBody ?? ''),
-                      )
-                      .toString()
-                  ..versaoMin = m_s_framework_flutter_p5iajh_api_calls_util
-                      .ServerConnectionGroup.getTokenCall
-                      .buildMin(
-                        (_model.getToken?.jsonBody ?? ''),
-                      )
-                      .toString()
-                  ..versaoMax = m_s_framework_flutter_p5iajh_api_calls_util
-                      .ServerConnectionGroup.getTokenCall
-                      .buildMax(
-                        (_model.getToken?.jsonBody ?? ''),
-                      )
-                      .toString(),
-              );
-              FFAppState().AsConnectPersisted = true;
-              safeSetState(() {});
-              _model.actReturnTerminal =
-                  await action_blocks.verificaTerminal(context);
-              await action_blocks.verificaVersao(context);
-              safeSetState(() {});
-            } else {
-              await Future.delayed(const Duration(milliseconds: 3000));
-              GoRouter.of(context).prepareAuthEvent();
-              await authManager.signOut();
-              GoRouter.of(context).clearRedirectLocation();
-
-              _navigate = () =>
-                  context.goNamedAuth(LoginWidget.routeName, context.mounted);
-
-              _navigate();
-              return;
-            }
-          }
-          _model.combustivelSelected = CombustiveisDataTypeStruct(
-            idProduto: 0,
-            nome: 'TODOS',
-            cor: '\$000064ED',
-            cortexto: '\$00FFFFFF',
+        if ((_model.getToken?.succeeded ?? true)) {
+          m_s_framework_flutter_p5iajh_app_state.FFAppState().Token =
+              m_s_framework_flutter_p5iajh_api_calls_util
+                  .ServerConnectionGroup.getTokenCall
+                  .token(
+                    (_model.getToken?.jsonBody ?? ''),
+                  )
+                  .toString();
+          FFAppState().updateConfigLocaisStruct(
+            (e) => e
+              ..versaoServer = m_s_framework_flutter_p5iajh_api_calls_util
+                  .ServerConnectionGroup.getTokenCall
+                  .buildServer(
+                    (_model.getToken?.jsonBody ?? ''),
+                  )
+                  .toString()
+              ..versaoMin = m_s_framework_flutter_p5iajh_api_calls_util
+                  .ServerConnectionGroup.getTokenCall
+                  .buildMin(
+                    (_model.getToken?.jsonBody ?? ''),
+                  )
+                  .toString()
+              ..versaoMax = m_s_framework_flutter_p5iajh_api_calls_util
+                  .ServerConnectionGroup.getTokenCall
+                  .buildMax(
+                    (_model.getToken?.jsonBody ?? ''),
+                  )
+                  .toString(),
           );
-          safeSetState(() {});
-          _model.apiListaCombustivel = await CombustiveisCall.call(
-            ip: m_s_framework_flutter_p5iajh_app_state.FFAppState()
-                .ConfigGlobaisServer
-                .host,
-            token: m_s_framework_flutter_p5iajh_app_state.FFAppState().Token,
-          );
-
-          if ((_model.apiListaCombustivel?.succeeded ?? true)) {
-            _model.valuesCombustiveis = CombustiveisCall.combustiveis(
-              (_model.apiListaCombustivel?.jsonBody ?? ''),
-            )!
-                .toList()
-                .cast<CombustiveisDataTypeStruct>();
-            safeSetState(() {});
-          } else {
-            await m_s_framework_flutter_p5iajh_actions
-                .elegantNotificationCustom(
-              context,
-              'Atenção',
-              'Falha ao realizar comunicação com o servidor!',
-              FlutterFlowTheme.of(context).primaryText,
-              FlutterFlowTheme.of(context).secondaryBackground,
-              350.0,
-              'bottomcenter',
-              'frombottom',
-              FlutterFlowTheme.of(context).error,
-              'https://cdn-icons-png.flaticon.com/512/595/595067.png',
-            );
-          }
-
           FFAppState().AsConnectPersisted = true;
           safeSetState(() {});
-        }),
-        Future(() async {
-          if (widget.bReloadListView) {
-            safeSetState(
-                () => _model.lvAbastecimentosPagingController?.refresh());
-            await _model.waitForOnePageForLvAbastecimentos();
-            return;
-          } else {
-            return;
-          }
-        }),
-      ]);
+          _model.actReturnTerminal =
+              await action_blocks.verificaTerminal(context);
+          await action_blocks.verificaVersao(context);
+          safeSetState(() {});
+        } else {
+          await Future.delayed(const Duration(milliseconds: 3000));
+          GoRouter.of(context).prepareAuthEvent();
+          await authManager.signOut();
+          GoRouter.of(context).clearRedirectLocation();
+
+          _navigate =
+              () => context.goNamedAuth(LoginWidget.routeName, context.mounted);
+
+          _navigate();
+          return;
+        }
+      }
+      _model.combustivelSelected = CombustiveisDataTypeStruct(
+        idProduto: 0,
+        nome: 'TODOS',
+        cor: '\$000064ED',
+        cortexto: '\$00FFFFFF',
+      );
+      safeSetState(() {});
+      _model.apiListaCombustivel = await CombustiveisCall.call(
+        ip: m_s_framework_flutter_p5iajh_app_state.FFAppState()
+            .ConfigGlobaisServer
+            .host,
+        token: m_s_framework_flutter_p5iajh_app_state.FFAppState().Token,
+      );
+
+      if ((_model.apiListaCombustivel?.succeeded ?? true)) {
+        _model.valuesCombustiveis = CombustiveisCall.combustiveis(
+          (_model.apiListaCombustivel?.jsonBody ?? ''),
+        )!
+            .toList()
+            .cast<CombustiveisDataTypeStruct>();
+        safeSetState(() {});
+      } else {
+        await m_s_framework_flutter_p5iajh_actions.elegantNotificationCustom(
+          context,
+          'Atenção',
+          'Falha ao realizar comunicação com o servidor!',
+          FlutterFlowTheme.of(context).primaryText,
+          FlutterFlowTheme.of(context).secondaryBackground,
+          350.0,
+          'bottomcenter',
+          'frombottom',
+          FlutterFlowTheme.of(context).error,
+          'https://cdn-icons-png.flaticon.com/512/595/595067.png',
+        );
+      }
+
+      FFAppState().AsConnectPersisted = true;
+      safeSetState(() {});
 
       _navigate();
     });
@@ -342,6 +324,8 @@ class _TelaInicialWidgetState extends State<TelaInicialWidget>
                 )),
             child: FloatingActionButton(
               onPressed: () async {
+                FFAppState().aRefreshList = false;
+                safeSetState(() {});
                 await Future.wait([
                   Future(() async {
                     safeSetState(() =>
@@ -1044,7 +1028,9 @@ class _TelaInicialWidgetState extends State<TelaInicialWidget>
                           ),
                         ),
                       ),
-                    if (_model.bListaAtiva && FFAppState().AsConnectPersisted)
+                    if (_model.bListaAtiva &&
+                        FFAppState().AsConnectPersisted &&
+                        !FFAppState().aRefreshList)
                       Expanded(
                         child: InkWell(
                           splashColor: Colors.transparent,
@@ -1984,7 +1970,8 @@ class _TelaInicialWidgetState extends State<TelaInicialWidget>
                             animationsMap['listViewOnPageLoadAnimation']!),
                       ),
                     if ((FFAppState().AbastecimentosSelecionados.length <= 0) &&
-                        FFAppState().AsConnectPersisted)
+                        FFAppState().AsConnectPersisted &&
+                        !FFAppState().aRefreshList)
                       Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.end,
@@ -2800,7 +2787,14 @@ class _TelaInicialWidgetState extends State<TelaInicialWidget>
                                                                   sTitulo:
                                                                       'Atenção',
                                                                   sText:
-                                                                      'Falha ao realizar comunicação com o servidor!',
+                                                                      valueOrDefault<
+                                                                          String>(
+                                                                    functions.resultMessagesFromCode((_model
+                                                                            .actReturnCTAdd
+                                                                            ?.statusCode ??
+                                                                        200)),
+                                                                    'Falha ao realizar comunicação com o servidor!',
+                                                                  ),
                                                                   colorConfirm:
                                                                       FlutterFlowTheme.of(
                                                                               context)

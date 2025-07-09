@@ -23,6 +23,7 @@ Future<void> verifyCompActPage(
   bool lastWasActive = false;
 
   void checkOverlay() {
+    if (!context.mounted) return;
     final overlay = Overlay.of(context);
 
     // Verifica se há algo sobreposto com base no número de entries visíveis no overlay

@@ -530,6 +530,12 @@ class FFAppState extends ChangeNotifier {
     prefs.setDouble('ff_vDesconto', value);
   }
 
+  bool _aRefreshList = false;
+  bool get aRefreshList => _aRefreshList;
+  set aRefreshList(bool value) {
+    _aRefreshList = value;
+  }
+
   final _grupoDataManager = FutureRequestManager<ApiCallResponse>();
   Future<ApiCallResponse> grupoData({
     String? uniqueQueryKey,

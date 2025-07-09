@@ -442,13 +442,6 @@ Future<bool?> buscaEmpresaConfig(BuildContext context) async {
   }
 }
 
-Future<String?> verificaStatusNFe(
-  BuildContext context, {
-  int? idVendaRem,
-}) async {
-  return null;
-}
-
 Future verificaVersao(BuildContext context) async {
   String? actVersaoInfo;
 

@@ -4895,18 +4895,28 @@ class _CheckoutWidgetState extends State<CheckoutWidget>
                                                         ..tPRegistro =
                                                             TPRegistro.Todos,
                                                     );
-                                                    safeSetState(() {});
+                                                    FFAppState().aRefreshList =
+                                                        true;
+                                                    FFAppState().update(() {});
+                                                    await Future.delayed(
+                                                        const Duration(
+                                                            milliseconds: 100));
+                                                    FFAppState().aRefreshList =
+                                                        false;
+                                                    FFAppState().update(() {});
 
                                                     context.goNamed(
                                                       TelaInicialWidget
                                                           .routeName,
-                                                      queryParameters: {
-                                                        'bReloadListView':
-                                                            serializeParam(
-                                                          true,
-                                                          ParamType.bool,
+                                                      extra: <String, dynamic>{
+                                                        kTransitionInfoKey:
+                                                            TransitionInfo(
+                                                          hasTransition: true,
+                                                          transitionType:
+                                                              PageTransitionType
+                                                                  .bottomToTop,
                                                         ),
-                                                      }.withoutNulls,
+                                                      },
                                                     );
                                                   },
                                             text: 'Tela Inicial',
