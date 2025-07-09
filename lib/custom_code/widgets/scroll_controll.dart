@@ -79,6 +79,11 @@ class _ScrollControllState extends State<ScrollControll> {
 
   @override
   Widget build(BuildContext context) {
+    // Força verificação após o layout ser reconstruído
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) _checkScrollPosition();
+    });
+
     return SizedBox(
       width: widget.width ?? double.infinity,
       height: widget.height ?? 100,
@@ -111,26 +116,37 @@ class _ScrollControllState extends State<ScrollControll> {
   }
 
   Widget _buildArrowButton(IconData icon, VoidCallback onTap) {
-    return Container(
-      width: 40,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: icon == Icons.arrow_back_ios
-              ? Alignment.centerLeft
-              : Alignment.centerRight,
-          end: icon == Icons.arrow_back_ios
-              ? Alignment.centerRight
-              : Alignment.centerLeft,
-          colors: [
-            Colors.white.withOpacity(0.9),
-            Colors.white.withOpacity(0.0)
-          ],
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(12),
+      child: Container(
+        width: 40,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: icon == Icons.arrow_back_ios
+                ? Alignment.centerLeft
+                : Alignment.centerRight,
+            end: icon == Icons.arrow_back_ios
+                ? Alignment.centerRight
+                : Alignment.centerLeft,
+            colors: [
+              Colors.white.withOpacity(0.9),
+              Colors.white.withOpacity(0.0),
+            ],
+          ),
         ),
-      ),
-      child: GestureDetector(
-        onTap: onTap,
-        child: Icon(icon, size: 16, color: Colors.blue),
+        child: GestureDetector(
+          onTap: onTap,
+          child: Align(
+            alignment: icon == Icons.arrow_back_ios
+                ? Alignment.centerLeft
+                : Alignment.centerRight,
+            child: GestureDetector(
+              onTap: onTap,
+              child: Icon(icon, size: 16, color: Colors.blue),
+            ),
+          ),
+        ),
       ),
     );
   }

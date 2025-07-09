@@ -784,7 +784,7 @@ class _AlteraProdutoWidgetState extends State<AlteraProdutoWidget> {
                             ),
                             child: Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
-                                  12.0, 5.0, 12.0, 5.0),
+                                  12.0, 10.0, 12.0, 10.0),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment:
@@ -818,35 +818,6 @@ class _AlteraProdutoWidgetState extends State<AlteraProdutoWidget> {
                                               fontStyle:
                                                   FlutterFlowTheme.of(context)
                                                       .headlineSmall
-                                                      .fontStyle,
-                                            ),
-                                      ),
-                                      Text(
-                                        'Com desconto aplicado',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodySmall
-                                            .override(
-                                              font: GoogleFonts.manrope(
-                                                fontWeight:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodySmall
-                                                        .fontWeight,
-                                                fontStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodySmall
-                                                        .fontStyle,
-                                              ),
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryText,
-                                              letterSpacing: 0.0,
-                                              fontWeight:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodySmall
-                                                      .fontWeight,
-                                              fontStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodySmall
                                                       .fontStyle,
                                             ),
                                       ),

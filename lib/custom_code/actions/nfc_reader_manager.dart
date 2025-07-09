@@ -16,10 +16,11 @@ import 'package:flutter/material.dart';
 
 import 'dart:async';
 import 'dart:convert';
-import 'package:nfc_manager/nfc_manager.dart';
+//import 'package:nfc_manager/nfc_manager.dart';
 
 Future<String> nfcReaderManager() async {
-  bool isAvailable = await NfcManager.instance.isAvailable();
+  return '';
+  /*bool isAvailable = await NfcManager.instance.isAvailable();
 
   if (!isAvailable) {
     return "NFC não disponível no dispositivo.";
@@ -52,5 +53,5 @@ Future<String> nfcReaderManager() async {
     return completer.future;
   } catch (e) {
     return "Erro ao iniciar leitura NFC: $e";
-  }
+  }*/
 }

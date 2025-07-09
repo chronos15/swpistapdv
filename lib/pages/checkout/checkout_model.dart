@@ -67,6 +67,15 @@ class CheckoutModel extends FlutterFlowModel<CheckoutWidget> {
 
   int? iModoReg = 0;
 
+  bool bTentarNovamente = false;
+
+  bool bFailDeppLinkAbertura = false;
+
+  AParamCTRegStruct? aCTAbastecimento;
+  void updateACTAbastecimentoStruct(Function(AParamCTRegStruct) updateFn) {
+    updateFn(aCTAbastecimento ??= AParamCTRegStruct());
+  }
+
   ///  State fields for stateful widgets in this page.
 
   final formKey = GlobalKey<FormState>();
@@ -111,12 +120,20 @@ class CheckoutModel extends FlutterFlowModel<CheckoutWidget> {
   // State field(s) for Expandable widget.
   late ExpandableController expandableExpandableController;
 
+  // Stores action output result for [Custom Action - buscaNFeFromDoc] action in btnNFe widget.
+  String? actReturnBodyFrom;
   // Stores action output result for [Action Block - VerificaStatusNFe] action in btnNFe widget.
   StatusNFDataTypeStruct? actReturnStatus;
   // Stores action output result for [Custom Action - geraComprovante] action in btnNFe widget.
   FFUploadedFile? returnComprovante;
   // Stores action output result for [Action Block - ConfirmaVenda] action in Button widget.
   bool? actReturnVendaNovamente;
+  // State field(s) for MouseRegion widget.
+  bool mouseRegionHovered = false;
+  // Stores action output result for [Backend Call - API (AddRemoveVerificaAbastecimento)] action in Button widget.
+  ApiCallResponse? actReturnLoop;
+  // Stores action output result for [Bottom Sheet - virtualKeyboard] action in RichText widget.
+  double? actVirtualBack;
   // Stores action output result for [Bottom Sheet - SelecionarCliente] action in IconButton widget.
   ClienteListaDataTypeStruct? actClienteReturn;
   // State field(s) for edtNomeCliente widget.
@@ -152,7 +169,7 @@ class CheckoutModel extends FlutterFlowModel<CheckoutWidget> {
   // State field(s) for edtIBGE widget.
   FocusNode? edtIBGEFocusNode;
   TextEditingController? edtIBGETextController;
-  final edtIBGEMask = MaskTextInputFormatter(mask: '#####-###');
+  late MaskTextInputFormatter edtIBGEMask;
   String? Function(BuildContext, String?)? edtIBGETextControllerValidator;
   // State field(s) for edtComplemento widget.
   FocusNode? edtComplementoFocusNode;
@@ -162,7 +179,7 @@ class CheckoutModel extends FlutterFlowModel<CheckoutWidget> {
   // State field(s) for edtCep widget.
   FocusNode? edtCepFocusNode;
   TextEditingController? edtCepTextController;
-  final edtCepMask = MaskTextInputFormatter(mask: '#####-###');
+  late MaskTextInputFormatter edtCepMask;
   String? Function(BuildContext, String?)? edtCepTextControllerValidator;
 
   @override
@@ -313,6 +330,8 @@ class CheckoutModel extends FlutterFlowModel<CheckoutWidget> {
           );
           FFAppState().AbastecimentosSelecionados = [];
           FFAppState().paymmentsConfirmed = [];
+          FFAppState().FrentistaSelecionado = FrentistasDataTypeStruct();
+          FFAppState().vDesconto = 0.0;
           return VendaCall.result(
             (returnVendaAPI.jsonBody ?? ''),
           )!;
@@ -429,9 +448,11 @@ class CheckoutModel extends FlutterFlowModel<CheckoutWidget> {
               .toList())),
       false,
     );
+    bFailDeppLinkAbertura = false;
     if (!functions.enumDefaultApp(tpPag?.tPPagEnum)!) {
       if (FFAppState().ConfigLocais.gatewayPgto == GateWay.Getnet) {
         getNetPayChecked = await actions.getNetRealizaPagamento(
+          context,
           tpPag!.valor,
           tpPag.tPPagEnum!,
           tpPag.parcelas,
@@ -462,8 +483,7 @@ class CheckoutModel extends FlutterFlowModel<CheckoutWidget> {
                 valor: tpPag.valor,
                 tpparc: 'Administradora',
                 codadm: null,
-                cnpjadm: functions.getValueJsonByCampo(
-                    getNetPayChecked, 'ecDocument'),
+                cnpjadm: '10.440.482/0001-54',
                 modoequip: 2,
                 modoreg: iModoReg,
                 numpag: functions.enumClienteToServer(tpPag.tPPagEnum),
@@ -472,7 +492,11 @@ class CheckoutModel extends FlutterFlowModel<CheckoutWidget> {
                     functions.getValueJsonByCampo(getNetPayChecked, 'callerId'),
               ),
           );
+        } else {
+          bFailDeppLinkAbertura =
+              functions.getValueJsonByCampo(getNetPayChecked, 'result') == '99';
         }
+
         bGatWaySucessPgto =
             functions.getValueJsonByCampo(getNetPayChecked, 'result') == '0';
       } else {
@@ -530,17 +554,57 @@ class CheckoutModel extends FlutterFlowModel<CheckoutWidget> {
           }
           bGatWaySucessPgto = cieloPgto;
         } else {
-          await m_s_framework_flutter_p5iajh_actions.elegantNotificationError(
-            context,
-            'Falha',
-            'Nenhum Gateway de pagamento identificado...',
-            FlutterFlowTheme.of(context).primaryText,
-            FlutterFlowTheme.of(context).secondaryBackground,
-            350.0,
-            'bottomcenter',
-            'frombottom',
-          );
-          bGatWaySucessPgto = false;
+          if (FFAppState().ConfigLocais.gatewayPgto == GateWay.InfinitePay) {
+            await actions.infinitePayRealizaPagamento(
+              functions.doubleToCentavos(tpPag?.valor)?.toDouble(),
+              () {
+                if (tpPag?.tPPagEnum == TpPagamento.CARTAO_CREDITO) {
+                  return 'credit';
+                } else if (tpPag?.tPPagEnum == TpPagamento.CARTAO_DEBITO) {
+                  return 'debit';
+                } else {
+                  return 'pix';
+                }
+              }(),
+              valueOrDefault<int>(
+                tpPag?.parcelas,
+                1,
+              ),
+              (FFAppState().HistoricoVendas.length + 1).toString(),
+              'mypocapp://example/tap_result',
+              currentUserData?.nome,
+              false,
+              () async {
+                await showDialog(
+                  context: context,
+                  builder: (alertDialogContext) {
+                    return AlertDialog(
+                      title: Text('teste'),
+                      content: Text('ok'),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(alertDialogContext),
+                          child: Text('Ok'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
+            );
+          } else {
+            await m_s_framework_flutter_p5iajh_actions.elegantNotificationError(
+              context,
+              'Falha',
+              'Nenhum Gateway de pagamento identificado...',
+              FlutterFlowTheme.of(context).primaryText,
+              FlutterFlowTheme.of(context).secondaryBackground,
+              350.0,
+              'bottomcenter',
+              'frombottom',
+            );
+            bGatWaySucessPgto = false;
+          }
         }
       }
 
@@ -772,28 +836,40 @@ class CheckoutModel extends FlutterFlowModel<CheckoutWidget> {
   }) async {
     if (base64Value != null && base64Value != '') {
       if (FFAppState().ConfigLocais.gatewayPgto == GateWay.Cielo) {
-        await actions.cieloLioRealizaImpressaoBase64(
-          context,
-          base64Value,
+        unawaited(
+          () async {
+            await actions.cieloLioRealizaImpressaoBase64(
+              context,
+              base64Value,
+            );
+          }(),
         );
         return;
       } else {
-        await actions.getNetRealizaImpressaoBase64(
-          context,
-          base64Value,
+        unawaited(
+          () async {
+            await actions.getNetRealizaImpressaoBase64(
+              context,
+              base64Value,
+            );
+          }(),
         );
         return;
       }
     } else {
-      await m_s_framework_flutter_p5iajh_actions.elegantNotificationError(
-        context,
-        'Falha',
-        'Não foi possível identificar a NF-e, verifique sua conexão ou tente novamente!',
-        FlutterFlowTheme.of(context).primaryText,
-        FlutterFlowTheme.of(context).secondaryBackground,
-        350.0,
-        'bottomcenter',
-        'frombottom',
+      unawaited(
+        () async {
+          await m_s_framework_flutter_p5iajh_actions.elegantNotificationError(
+            context,
+            'Falha',
+            'Não foi possível identificar a NF-e, verifique sua conexão ou tente novamente!',
+            FlutterFlowTheme.of(context).primaryText,
+            FlutterFlowTheme.of(context).secondaryBackground,
+            350.0,
+            'bottomcenter',
+            'frombottom',
+          );
+        }(),
       );
       return;
     }

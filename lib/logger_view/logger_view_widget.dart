@@ -21,7 +21,7 @@ class LoggerViewWidget extends StatefulWidget {
   const LoggerViewWidget({super.key});
 
   static String routeName = 'LoggerView';
-  static String routePath = 'loggerView';
+  static String routePath = '/loggerView';
 
   @override
   State<LoggerViewWidget> createState() => _LoggerViewWidgetState();

@@ -27,7 +27,7 @@ class ListaClientesWidget extends StatefulWidget {
   const ListaClientesWidget({super.key});
 
   static String routeName = 'ListaClientes';
-  static String routePath = 'ListaClientes';
+  static String routePath = '/ListaClientes';
 
   @override
   State<ListaClientesWidget> createState() => _ListaClientesWidgetState();

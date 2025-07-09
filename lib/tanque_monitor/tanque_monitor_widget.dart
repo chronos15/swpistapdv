@@ -12,7 +12,7 @@ class TanqueMonitorWidget extends StatefulWidget {
   const TanqueMonitorWidget({super.key});
 
   static String routeName = 'TanqueMonitor';
-  static String routePath = 'tanqueMonitor';
+  static String routePath = '/tanqueMonitor';
 
   @override
   State<TanqueMonitorWidget> createState() => _TanqueMonitorWidgetState();

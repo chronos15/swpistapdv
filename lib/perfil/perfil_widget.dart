@@ -10,7 +10,7 @@ class PerfilWidget extends StatefulWidget {
   const PerfilWidget({super.key});
 
   static String routeName = 'Perfil';
-  static String routePath = 'perfil';
+  static String routePath = '/perfil';
 
   @override
   State<PerfilWidget> createState() => _PerfilWidgetState();

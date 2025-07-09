@@ -388,6 +388,7 @@ Future<bool?> buscaEmpresaConfig(BuildContext context) async {
   ApiCallResponse? apiResultCofig;
   ApiCallResponse? apiResultEmpresa;
   String? actSofthouseInfo;
+  String? logoBase64;
 
   apiResultCofig = await ConfiguracaoCall.call(
     ip: m_s_framework_flutter_p5iajh_app_state.FFAppState()
@@ -416,8 +417,14 @@ Future<bool?> buscaEmpresaConfig(BuildContext context) async {
       '${m_s_framework_flutter_p5iajh_app_state.FFAppState().ConfigGlobaisServer.host}/entities/EMPRESAVIEW(1)/SOFTHOUSE',
       m_s_framework_flutter_p5iajh_app_state.FFAppState().Token,
     );
+    logoBase64 = await actions.bodyToBase64(
+      '${m_s_framework_flutter_p5iajh_app_state.FFAppState().ConfigGlobaisServer.host}/entities/EMPRESAVIEW(1)/LOGO',
+      m_s_framework_flutter_p5iajh_app_state.FFAppState().Token,
+    );
     FFAppState().updateEmpresaStruct(
-      (e) => e..sSOFTHOUSE = actSofthouseInfo,
+      (e) => e
+        ..sSOFTHOUSE = actSofthouseInfo
+        ..logo = logoBase64,
     );
     return true;
   } else {
@@ -715,8 +722,12 @@ Future buscaVale(
           )?.firstOrNull,
           FFAppState().HistoricoVendas.lastOrNull?.nomeCliente,
           functions
-              .allFrentistas(FFAppState().AbastecimentosSelecionados.toList())
-              ?.lastOrNull,
+              .allFrentistas(FFAppState()
+                  .HistoricoVendas
+                  .lastOrNull
+                  ?.abastecimentos
+                  .toList())
+              ?.firstOrNull,
         );
         if (FFAppState().ConfigLocais.gatewayPgto == GateWay.Cielo) {
           await actions.cieloLioRealizaImpressaoBase64(

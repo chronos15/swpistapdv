@@ -19,12 +19,14 @@ class WidgetControllerScroll extends StatefulWidget {
     this.height,
     required this.widget,
     required this.actionOnScroll,
+    this.bReload = false,
   });
 
   final double? width;
   final double? height;
-  final Widget Function() widget;
-  final Future Function(bool isScrolling) actionOnScroll;
+  final bool bReload;
+  final Widget Function() widget; // Função que retorna o widget interno
+  final Future<void> Function(bool isScrolling) actionOnScroll;
 
   @override
   State<WidgetControllerScroll> createState() => _WidgetControllerScrollState();
@@ -32,6 +34,12 @@ class WidgetControllerScroll extends StatefulWidget {
 
 class _WidgetControllerScrollState extends State<WidgetControllerScroll> {
   Timer? _scrollStopTimer;
+  Key _contentKey = UniqueKey(); // Adiciona uma chave para o conteúdo interno
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   Future<void> _onScrollUpdate() async {
     _scrollStopTimer?.cancel();
@@ -43,6 +51,18 @@ class _WidgetControllerScrollState extends State<WidgetControllerScroll> {
   }
 
   @override
+  void didUpdateWidget(covariant WidgetControllerScroll oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.bReload != oldWidget.bReload && widget.bReload) {
+      setState(() {
+        _contentKey =
+            UniqueKey(); // Gera uma nova chave para forçar a reconstrução
+      });
+      print('Widget recarregado devido a bReload ser true!');
+    }
+  }
+
+  @override
   void dispose() {
     _scrollStopTimer?.cancel();
     super.dispose();
@@ -50,6 +70,8 @@ class _WidgetControllerScrollState extends State<WidgetControllerScroll> {
 
   @override
   Widget build(BuildContext context) {
+    print(
+        'Build do WidgetControllerScroll chamado. bReload: ${widget.bReload}');
     return Container(
       width: widget.width,
       height: widget.height,
@@ -61,7 +83,11 @@ class _WidgetControllerScrollState extends State<WidgetControllerScroll> {
           return false;
         },
         child: SingleChildScrollView(
-          child: widget.widget(),
+          // Passa a chave para o widget retornado pela função widget()
+          child: KeyedSubtree(
+            key: _contentKey,
+            child: widget.widget(),
+          ),
         ),
       ),
     );

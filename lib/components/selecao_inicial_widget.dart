@@ -1,9 +1,7 @@
-import '/backend/schema/enums/enums.dart';
 import '/backend/schema/structs/index.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_choice_chips.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:m_s_framework_flutter_p5iajh/app_state.dart'
@@ -20,9 +18,11 @@ class SelecaoInicialWidget extends StatefulWidget {
   const SelecaoInicialWidget({
     super.key,
     this.onTapedChoice,
-  });
+    bool? frentistaUpdated,
+  }) : this.frentistaUpdated = frentistaUpdated ?? false;
 
   final Future Function()? onTapedChoice;
+  final bool frentistaUpdated;
 
   @override
   State<SelecaoInicialWidget> createState() => _SelecaoInicialWidgetState();
@@ -46,7 +46,7 @@ class _SelecaoInicialWidgetState extends State<SelecaoInicialWidget>
     _model = createModel(context, () => SelecaoInicialModel());
 
     animationsMap.addAll({
-      'buttonOnPageLoadAnimation': AnimationInfo(
+      'containerOnPageLoadAnimation': AnimationInfo(
         trigger: AnimationTrigger.onPageLoad,
         effectsBuilder: () => [
           ShakeEffect(
@@ -74,6 +74,40 @@ class _SelecaoInicialWidgetState extends State<SelecaoInicialWidget>
           ),
         ],
       ),
+      'rowOnPageLoadAnimation': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          ShakeEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 1000.0.ms,
+            hz: 10,
+            offset: Offset(0.0, 0.0),
+            rotation: 0.087,
+          ),
+          TintEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 310.0.ms,
+            color: Color(0x7F0064ED),
+            begin: 1.0,
+            end: 0.0,
+          ),
+        ],
+      ),
+      'choiceChipsOnPageLoadAnimation': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          VisibilityEffect(duration: 270.ms),
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 270.0.ms,
+            duration: 600.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+        ],
+      ),
     });
   }
 
@@ -93,65 +127,143 @@ class _SelecaoInicialWidgetState extends State<SelecaoInicialWidget>
       mainAxisSize: MainAxisSize.max,
       children: [
         if (valueOrDefault<bool>(
-          FFAppState().aFiltros.frentista.idFrentista >= 1,
+          FFAppState().aFiltrosAbastecimento.frentista.idFrentista >= 1,
           false,
         ))
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(5.0, 0.0, 5.0, 0.0),
-            child: FFButtonWidget(
-              onPressed: () async {
+            padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 5.0, 0.0),
+            child: InkWell(
+              splashColor: Colors.transparent,
+              focusColor: Colors.transparent,
+              hoverColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              onTap: () async {
                 FFAppState().FrentistaSelecionado = FrentistasDataTypeStruct();
-                FFAppState().updateAFiltrosStruct(
+                FFAppState().updateAFiltrosAbastecimentoStruct(
                   (e) => e..frentista = null,
                 );
                 safeSetState(() {});
                 await widget.onTapedChoice?.call();
               },
-              text: valueOrDefault<String>(
-                FFAppState().aFiltros.frentista.nomeFrentista,
-                '--',
-              ),
-              icon: Icon(
-                Icons.close_rounded,
-                size: 20.0,
-              ),
-              options: FFButtonOptions(
-                height: 35.0,
-                padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
-                iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                iconColor: FlutterFlowTheme.of(context).error,
-                color: FlutterFlowTheme.of(context).secondaryBackground,
-                textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                      font: GoogleFonts.outfit(
-                        fontWeight: FontWeight.w300,
-                        fontStyle:
-                            FlutterFlowTheme.of(context).titleSmall.fontStyle,
-                      ),
-                      color: FlutterFlowTheme.of(context).error,
-                      fontSize: 12.0,
-                      letterSpacing: 0.0,
-                      fontWeight: FontWeight.w300,
-                      fontStyle:
-                          FlutterFlowTheme.of(context).titleSmall.fontStyle,
-                    ),
-                elevation: 0.0,
-                borderSide: BorderSide(
-                  color: FlutterFlowTheme.of(context).error,
-                  width: 1.0,
+              child: Container(
+                height: 32.0,
+                decoration: BoxDecoration(
+                  color: FlutterFlowTheme.of(context).secondaryBackground,
+                  borderRadius: BorderRadius.circular(50.0),
+                  border: Border.all(
+                    color: FlutterFlowTheme.of(context).error,
+                  ),
                 ),
-                borderRadius: BorderRadius.circular(50.0),
+                child: Stack(
+                  alignment: AlignmentDirectional(0.0, 0.0),
+                  children: [
+                    Opacity(
+                      opacity: 0.0,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                4.0, 0.0, 0.0, 0.0),
+                            child: Icon(
+                              Icons.close_rounded,
+                              color: FlutterFlowTheme.of(context).error,
+                              size: 18.0,
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 5.0, 0.0),
+                            child: Text(
+                              valueOrDefault<String>(
+                                FFAppState()
+                                    .aFiltrosAbastecimento
+                                    .frentista
+                                    .nomeFrentista,
+                                '--',
+                              ),
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    font: GoogleFonts.manrope(
+                                      fontWeight: FontWeight.w300,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontStyle,
+                                    ),
+                                    color: FlutterFlowTheme.of(context).error,
+                                    fontSize: 12.0,
+                                    letterSpacing: 0.0,
+                                    fontWeight: FontWeight.w300,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .fontStyle,
+                                  ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    if (!widget.frentistaUpdated)
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                4.0, 0.0, 0.0, 0.0),
+                            child: Icon(
+                              Icons.close_rounded,
+                              color: FlutterFlowTheme.of(context).error,
+                              size: 18.0,
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 5.0, 0.0),
+                            child: Text(
+                              valueOrDefault<String>(
+                                FFAppState()
+                                    .aFiltrosAbastecimento
+                                    .frentista
+                                    .nomeFrentista,
+                                '--',
+                              ),
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    font: GoogleFonts.manrope(
+                                      fontWeight: FontWeight.w300,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontStyle,
+                                    ),
+                                    color: FlutterFlowTheme.of(context).error,
+                                    fontSize: 12.0,
+                                    letterSpacing: 0.0,
+                                    fontWeight: FontWeight.w300,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .fontStyle,
+                                  ),
+                            ),
+                          ),
+                        ],
+                      ).animateOnPageLoad(
+                          animationsMap['rowOnPageLoadAnimation']!),
+                  ],
+                ),
               ),
-            ).animateOnPageLoad(animationsMap['buttonOnPageLoadAnimation']!),
+            ).animateOnPageLoad(animationsMap['containerOnPageLoadAnimation']!),
           ),
         FlutterFlowChoiceChips(
-          options: TPRegistro.values
-              .map((e) => e.name)
-              .toList()
-              .map((label) => ChipData(label))
-              .toList(),
+          options: [
+            ChipData('Todos   '),
+            ChipData('Abastecimentos   '),
+            ChipData('Diversos   ')
+          ],
           onChanged: (val) async {
             safeSetState(() => _model.choiceChipsValue = val?.firstOrNull);
-            FFAppState().updateAFiltrosStruct(
+            FFAppState().updateAFiltrosAbastecimentoStruct(
               (e) => e
                 ..tPRegistro =
                     functions.enumStringTPToEnum(_model.choiceChipsValue),
@@ -175,6 +287,7 @@ class _SelecaoInicialWidgetState extends State<SelecaoInicialWidget>
                 ),
             iconColor: FlutterFlowTheme.of(context).info,
             iconSize: 10.0,
+            labelPadding: EdgeInsetsDirectional.fromSTEB(7.0, 0.0, 0.0, 0.0),
             elevation: 0.0,
             borderRadius: BorderRadius.circular(50.0),
           ),
@@ -194,6 +307,7 @@ class _SelecaoInicialWidgetState extends State<SelecaoInicialWidget>
                 ),
             iconColor: FlutterFlowTheme.of(context).primaryBackground,
             iconSize: 13.0,
+            labelPadding: EdgeInsetsDirectional.fromSTEB(5.0, 0.0, 0.0, 0.0),
             elevation: 0.0,
             borderColor: FlutterFlowTheme.of(context).alternate,
             borderRadius: BorderRadius.circular(50.0),
@@ -205,11 +319,11 @@ class _SelecaoInicialWidgetState extends State<SelecaoInicialWidget>
           alignment: WrapAlignment.start,
           controller: _model.choiceChipsValueController ??=
               FormFieldController<List<String>>(
-            ['Todos'],
+            ['Todos   '],
           ),
           wrapped: false,
-        ),
-      ].divide(SizedBox(width: 0.0)).addToEnd(SizedBox(width: 16.0)),
+        ).animateOnPageLoad(animationsMap['choiceChipsOnPageLoadAnimation']!),
+      ].divide(SizedBox(width: 0.0)).addToEnd(SizedBox(width: 0.0)),
     );
   }
 }

@@ -24,7 +24,7 @@ class HistoricoPageWidget extends StatefulWidget {
   const HistoricoPageWidget({super.key});
 
   static String routeName = 'HistoricoPage';
-  static String routePath = 'historicoPage';
+  static String routePath = '/historicoPage';
 
   @override
   State<HistoricoPageWidget> createState() => _HistoricoPageWidgetState();

@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 // Begin custom widget code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
+import 'package:device_info_plus/device_info_plus.dart';
+import 'package:flutter/foundation.dart';
 import 'package:qr_code_scanner_plus/qr_code_scanner_plus.dart';
 
 class ScannerWidget extends StatefulWidget {
@@ -33,9 +35,44 @@ class _ScannerWidgetState extends State<ScannerWidget> {
   QRViewController? controller;
   bool hasScanned = false;
   bool isFlashOn = false;
+  bool isDeviceSupported = true; // <- Flag para saber se o device é compatível
+
+  @override
+  void initState() {
+    super.initState();
+    _checkAndroidVersion();
+  }
+
+  Future<void> _checkAndroidVersion() async {
+    if (!kIsWeb && Theme.of(context).platform == TargetPlatform.android) {
+      final deviceInfo = DeviceInfoPlugin();
+      final androidInfo = await deviceInfo.androidInfo;
+      final sdkInt = androidInfo.version.sdkInt ?? 0;
+
+      if (sdkInt < 24) {
+        // Android 7 = API 24
+        setState(() {
+          isDeviceSupported = false;
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    if (!isDeviceSupported) {
+      return const Center(
+        child: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Text(
+            'Este dispositivo não é compatível com a leitura de QR Code.\n(Android 7 ou superior é necessário)',
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 16, color: Colors.white),
+          ),
+        ),
+      );
+    }
+
     return Stack(
       children: [
         QRView(
@@ -72,8 +109,7 @@ class _ScannerWidgetState extends State<ScannerWidget> {
       if (!hasScanned) {
         hasScanned = true;
         widget.actReturn?.call(scanData.code);
-        print('QR code: ${scanData.code}');
-        Future.delayed(Duration(seconds: 2), () {
+        Future.delayed(const Duration(seconds: 2), () {
           hasScanned = false;
         });
       }

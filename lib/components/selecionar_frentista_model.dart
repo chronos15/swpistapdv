@@ -7,9 +7,9 @@ class SelecionarFrentistaModel
     extends FlutterFlowModel<SelecionarFrentistaWidget> {
   ///  Local state fields for this component.
 
-  FrentistasDataTypeStruct? selected;
-  void updateSelectedStruct(Function(FrentistasDataTypeStruct) updateFn) {
-    updateFn(selected ??= FrentistasDataTypeStruct());
+  FrentistasDataTypeStruct? selectedLocal;
+  void updateSelectedLocalStruct(Function(FrentistasDataTypeStruct) updateFn) {
+    updateFn(selectedLocal ??= FrentistasDataTypeStruct());
   }
 
   ///  State fields for stateful widgets in this component.

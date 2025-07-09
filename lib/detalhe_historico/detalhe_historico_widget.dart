@@ -22,7 +22,7 @@ class DetalheHistoricoWidget extends StatefulWidget {
   final VendasStruct? dtVenda;
 
   static String routeName = 'DetalheHistorico';
-  static String routePath = 'detalheHistorico';
+  static String routePath = '/detalheHistorico';
 
   @override
   State<DetalheHistoricoWidget> createState() => _DetalheHistoricoWidgetState();

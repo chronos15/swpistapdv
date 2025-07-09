@@ -7,6 +7,8 @@ class BackupMenuModel extends FlutterFlowModel<BackupMenuWidget> {
 
   // Stores action output result for [Custom Action - restoreState] action in ListTile widget.
   bool? returnBkp;
+  // Stores action output result for [Custom Action - limpaBaseAtual] action in ListTile widget.
+  bool? returnDBClear;
 
   @override
   void initState(BuildContext context) {}

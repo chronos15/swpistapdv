@@ -57,7 +57,7 @@ class UnViewMSConfiguracaoModel
   // State field(s) for edtTerminalSimple widget.
   FocusNode? edtTerminalSimpleFocusNode;
   TextEditingController? edtTerminalSimpleTextController;
-  final edtTerminalSimpleMask = MaskTextInputFormatter(mask: '###');
+  late MaskTextInputFormatter edtTerminalSimpleMask;
   String? Function(BuildContext, String?)?
       edtTerminalSimpleTextControllerValidator;
   // Stores action output result for [Bottom Sheet - unViewMSFrameScanner] action in IconButton widget.
@@ -89,7 +89,7 @@ class UnViewMSConfiguracaoModel
   // State field(s) for edtCNPJ widget.
   FocusNode? edtCNPJFocusNode;
   TextEditingController? edtCNPJTextController;
-  final edtCNPJMask = MaskTextInputFormatter(mask: '##.###.###/####-##');
+  late MaskTextInputFormatter edtCNPJMask;
   String? Function(BuildContext, String?)? edtCNPJTextControllerValidator;
   String? _edtCNPJTextControllerValidator(BuildContext context, String? val) {
     if (val == null || val.isEmpty) {
@@ -118,7 +118,7 @@ class UnViewMSConfiguracaoModel
   // State field(s) for edtPorta widget.
   FocusNode? edtPortaFocusNode;
   TextEditingController? edtPortaTextController;
-  final edtPortaMask = MaskTextInputFormatter(mask: '######');
+  late MaskTextInputFormatter edtPortaMask;
   String? Function(BuildContext, String?)? edtPortaTextControllerValidator;
   // State field(s) for edtHost3 widget.
   FocusNode? edtHost3FocusNode;

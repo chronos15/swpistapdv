@@ -13,8 +13,6 @@ import 'package:m_s_framework_flutter_p5iajh/components/un_view_m_s_frame_messag
     as m_s_framework_flutter_p5iajh;
 import 'package:m_s_framework_flutter_p5iajh/components/un_view_ms_windows_bar_widget.dart'
     as m_s_framework_flutter_p5iajh;
-import 'package:m_s_framework_flutter_p5iajh/flutter_flow/custom_functions.dart'
-    as m_s_framework_flutter_p5iajh_functions;
 import 'package:m_s_framework_flutter_p5iajh/flutter_flow/flutter_flow_util.dart'
     as m_s_framework_flutter_p5iajh_util
     show wrapWithModel, createModel, FlutterFlowDynamicModels;
@@ -144,15 +142,6 @@ class LoginModel extends FlutterFlowModel<LoginWidget> {
       empresasucess = await action_blocks.buscaEmpresaConfig(context);
       pagsucess = await action_blocks.buscaCondPagamento(context);
       if (empresasucess! && pagsucess!) {
-        FFAppState().updateEmpresaStruct(
-          (e) => e
-            ..logo = valueOrDefault<String>(
-              '${m_s_framework_flutter_p5iajh_app_state.FFAppState().ConfigGlobaisServer.host}/Imagens/${m_s_framework_flutter_p5iajh_functions.replaceImageUrl(m_s_framework_flutter_p5iajh_api_calls_util.ServerConnectionGroup.getTokenCall.logo(
-                    (getToken?.jsonBody ?? ''),
-                  ).toString(), null)}',
-              'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/s-w-easy-ibbc0c/assets/78b2hlu3x8rt/imgPlaceHolder.png',
-            ),
-        );
         return AutentificacaoCall.usuario(
           (autResult.jsonBody ?? ''),
         );

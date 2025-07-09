@@ -666,9 +666,11 @@ class _InformaValorWidgetState extends State<InformaValorWidget> {
                                                               safeSetState(() {
                                                                 _model.edtValueDefinedTextController
                                                                         ?.text =
-                                                                    functions.edtTextToCurrency(_model
-                                                                        .edtValueDefinedTextController
-                                                                        .text)!;
+                                                                    functions.edtTextToCurrency(
+                                                                        _model
+                                                                            .edtValueDefinedTextController
+                                                                            .text,
+                                                                        true)!;
                                                                 _model
                                                                     .edtValueDefinedFocusNode
                                                                     ?.requestFocus();
@@ -1195,11 +1197,11 @@ class _InformaValorWidgetState extends State<InformaValorWidget> {
                                                                   () async {
                                                                     safeSetState(
                                                                         () {
-                                                                      _model.edtRecebidoTotalTextController
-                                                                              ?.text =
-                                                                          functions.edtTextToCurrency(_model
+                                                                      _model.edtRecebidoTotalTextController?.text = functions.edtTextToCurrency(
+                                                                          _model
                                                                               .edtRecebidoTotalTextController
-                                                                              .text)!;
+                                                                              .text,
+                                                                          true)!;
                                                                       _model
                                                                           .edtRecebidoTotalFocusNode
                                                                           ?.requestFocus();

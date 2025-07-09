@@ -1,4 +1,5 @@
 import '/backend/api_requests/api_calls.dart';
+import '/backend/schema/enums/enums.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -27,12 +28,14 @@ class ComAutorizacaoWidget extends StatefulWidget {
     this.confirmAction,
     int? idFrentista,
     this.sNomeFrentista,
+    this.tpSelecao,
   }) : this.idFrentista = idFrentista ?? 0;
 
   final Future Function()? cancelAction;
   final Future Function()? confirmAction;
   final int idFrentista;
   final String? sNomeFrentista;
+  final TpSelecaoFrentista? tpSelecao;
 
   @override
   State<ComAutorizacaoWidget> createState() => _ComAutorizacaoWidgetState();
@@ -283,14 +286,17 @@ class _ComAutorizacaoWidgetState extends State<ComAutorizacaoWidget>
                                                       ?.jsonBody ??
                                                   ''),
                                             )?.firstOrNull?.password) {
-                                          FFAppState().FrentistaSelecionado =
-                                              FrentistasCall.frentistas(
-                                            (_model.resultFrentistaAct
-                                                    ?.jsonBody ??
-                                                ''),
-                                          )!
-                                                  .firstOrNull!;
-                                          safeSetState(() {});
+                                          if (widget.tpSelecao !=
+                                              TpSelecaoFrentista.seFiltro) {
+                                            FFAppState().FrentistaSelecionado =
+                                                FrentistasCall.frentistas(
+                                              (_model.resultFrentistaAct
+                                                      ?.jsonBody ??
+                                                  ''),
+                                            )!
+                                                    .firstOrNull!;
+                                            safeSetState(() {});
+                                          }
                                           await widget.confirmAction?.call();
                                           Navigator.pop(context, true);
                                           if (_shouldSetState)
@@ -395,13 +401,20 @@ class _ComAutorizacaoWidgetState extends State<ComAutorizacaoWidget>
                                     if (_shouldSetState) safeSetState(() {});
                                   },
                                   text: 'Confirmar',
+                                  icon: Icon(
+                                    FFIcons.kkuserCheck,
+                                    size: 18.0,
+                                  ),
                                   options: FFButtonOptions(
                                     width: double.infinity,
                                     height: 45.0,
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         0.0, 0.0, 0.0, 0.0),
+                                    iconAlignment: IconAlignment.end,
                                     iconPadding: EdgeInsetsDirectional.fromSTEB(
                                         0.0, 0.0, 0.0, 0.0),
+                                    iconColor:
+                                        FlutterFlowTheme.of(context).alternate,
                                     color: FlutterFlowTheme.of(context).primary,
                                     textStyle: FlutterFlowTheme.of(context)
                                         .titleSmall
@@ -422,7 +435,7 @@ class _ComAutorizacaoWidgetState extends State<ComAutorizacaoWidget>
                                                   .titleSmall
                                                   .fontStyle,
                                         ),
-                                    elevation: 2.0,
+                                    elevation: 0.0,
                                     borderSide: BorderSide(
                                       color: Colors.transparent,
                                       width: 1.0,

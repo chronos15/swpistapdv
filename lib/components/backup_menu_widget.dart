@@ -290,6 +290,122 @@ class _BackupMenuWidgetState extends State<BackupMenuWidget> {
                   ),
                 ),
               ),
+              InkWell(
+                splashColor: Colors.transparent,
+                focusColor: Colors.transparent,
+                hoverColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                onTap: () async {
+                  var confirmDialogResponse = await showDialog<bool>(
+                        context: context,
+                        builder: (alertDialogContext) {
+                          return AlertDialog(
+                            title: Text('Atenção'),
+                            content: Text(
+                                'Deseja realmente limpar essa base de dados!? Todo os dados serão limpos desse dispositivo...'),
+                            actions: [
+                              TextButton(
+                                onPressed: () =>
+                                    Navigator.pop(alertDialogContext, false),
+                                child: Text('Cancelar'),
+                              ),
+                              TextButton(
+                                onPressed: () =>
+                                    Navigator.pop(alertDialogContext, true),
+                                child: Text('Confirmar'),
+                              ),
+                            ],
+                          );
+                        },
+                      ) ??
+                      false;
+                  if (confirmDialogResponse) {
+                    _model.returnDBClear = await actions.limpaBaseAtual();
+                    if (_model.returnDBClear!) {
+                      await showDialog(
+                        context: context,
+                        builder: (alertDialogContext) {
+                          return AlertDialog(
+                            title: Text('Sucesso'),
+                            content: Text(
+                                'Dados do dispositivo limpo com sucesso. O Sistema será fechado, realize uma nova inicialização!'),
+                            actions: [
+                              TextButton(
+                                onPressed: () =>
+                                    Navigator.pop(alertDialogContext),
+                                child: Text('Ok'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                      await m_s_framework_flutter_p5iajh_actions
+                          .handleWindowAction(
+                        0,
+                      );
+                    } else {
+                      await showDialog(
+                        context: context,
+                        builder: (alertDialogContext) {
+                          return AlertDialog(
+                            title: Text('Atenção'),
+                            content:
+                                Text('Falha ao limpar dados do dispositivo...'),
+                            actions: [
+                              TextButton(
+                                onPressed: () =>
+                                    Navigator.pop(alertDialogContext),
+                                child: Text('Ok'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    }
+                  }
+
+                  safeSetState(() {});
+                },
+                child: Material(
+                  color: Colors.transparent,
+                  child: ListTile(
+                    leading: Icon(
+                      Icons.manage_history,
+                      color: FlutterFlowTheme.of(context).error,
+                      size: 24.0,
+                    ),
+                    title: Text(
+                      'Limpa Base de Dados',
+                      style: FlutterFlowTheme.of(context).titleLarge.override(
+                            font: GoogleFonts.outfit(
+                              fontWeight: FontWeight.normal,
+                              fontStyle: FlutterFlowTheme.of(context)
+                                  .titleLarge
+                                  .fontStyle,
+                            ),
+                            fontSize: 14.0,
+                            letterSpacing: 0.0,
+                            fontWeight: FontWeight.normal,
+                            fontStyle: FlutterFlowTheme.of(context)
+                                .titleLarge
+                                .fontStyle,
+                          ),
+                    ),
+                    trailing: Icon(
+                      Icons.navigate_next_rounded,
+                      color: FlutterFlowTheme.of(context).secondaryText,
+                      size: 24.0,
+                    ),
+                    tileColor: FlutterFlowTheme.of(context).secondaryBackground,
+                    dense: true,
+                    contentPadding:
+                        EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 0.0),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                  ),
+                ),
+              ),
             ].divide(SizedBox(height: 12.0)),
           ),
         ),

@@ -38,7 +38,7 @@ class ConfiguracaoWidget extends StatefulWidget {
   final bool? adminPass;
 
   static String routeName = 'Configuracao';
-  static String routePath = 'configuracao';
+  static String routePath = '/configuracao';
 
   @override
   State<ConfiguracaoWidget> createState() => _ConfiguracaoWidgetState();
@@ -251,7 +251,7 @@ class _ConfiguracaoWidgetState extends State<ConfiguracaoWidget>
                                             ?.toList())!
                                     .toList(),
                             );
-                            FFAppState().aFiltros =
+                            FFAppState().aFiltrosAbastecimento =
                                 FiltrosAbastecimentoStruct();
                             safeSetState(() {});
                             if (Navigator.of(context).canPop()) {

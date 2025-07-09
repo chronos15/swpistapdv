@@ -7,6 +7,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'dart:async';
 import 'dart:ui';
+import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:aligned_tooltip/aligned_tooltip.dart';
 import 'package:m_s_framework_flutter_p5iajh/components/un_view_m_s_frame_scanner_widget.dart'
@@ -65,7 +66,7 @@ class _LancamentoVoucherWidgetState extends State<LancamentoVoucherWidget>
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       safeSetState(() {
         _model.edtDescontoTextController?.text =
-            functions.edtTextToCurrency('0')!;
+            functions.edtTextToCurrency('0', true)!;
       });
       _model.idPay = -1;
       _model.dpdActive = false;
@@ -89,9 +90,9 @@ class _LancamentoVoucherWidgetState extends State<LancamentoVoucherWidget>
           _model.edtDescontoTextController?.text = (functions
                       .stringToDouble(_model.edtDescontoTextController.text)! <=
                   widget.totalAbastecimento!
-              ? functions
-                  .edtTextToCurrency(_model.edtDescontoTextController.text)!
-              : functions.edtTextToCurrency('0')!);
+              ? functions.edtTextToCurrency(
+                  _model.edtDescontoTextController.text, true)!
+              : functions.edtTextToCurrency('0', true)!);
         });
       },
     );
@@ -448,7 +449,7 @@ class _LancamentoVoucherWidgetState extends State<LancamentoVoucherWidget>
                                                                           safeSetState(
                                                                               () {
                                                                             _model.edtDescontoTextController?.text =
-                                                                                functions.edtTextToCurrency(_model.edtDescontoTextController.text)!;
+                                                                                functions.edtTextToCurrency(_model.edtDescontoTextController.text, true)!;
                                                                             _model.edtDescontoFocusNode?.requestFocus();
                                                                             WidgetsBinding.instance.addPostFrameCallback((_) {
                                                                               _model.edtDescontoTextController?.selection = TextSelection.collapsed(
@@ -460,7 +461,7 @@ class _LancamentoVoucherWidgetState extends State<LancamentoVoucherWidget>
                                                                           safeSetState(
                                                                               () {
                                                                             _model.edtDescontoTextController?.text =
-                                                                                functions.edtTextToCurrency('0')!;
+                                                                                functions.edtTextToCurrency('0', true)!;
                                                                             _model.edtDescontoFocusNode?.requestFocus();
                                                                             WidgetsBinding.instance.addPostFrameCallback((_) {
                                                                               _model.edtDescontoTextController?.selection = TextSelection.collapsed(
@@ -493,9 +494,9 @@ class _LancamentoVoucherWidgetState extends State<LancamentoVoucherWidget>
                                                                               .totalAbastecimento!) {
                                                                         safeSetState(
                                                                             () {
-                                                                          _model
-                                                                              .edtDescontoTextController
-                                                                              ?.text = functions.edtTextToCurrency(_model.edtDescontoTextController.text)!;
+                                                                          _model.edtDescontoTextController?.text = functions.edtTextToCurrency(
+                                                                              _model.edtDescontoTextController.text,
+                                                                              true)!;
                                                                         });
                                                                         safeSetState(
                                                                             () {
@@ -517,9 +518,9 @@ class _LancamentoVoucherWidgetState extends State<LancamentoVoucherWidget>
                                                                       } else {
                                                                         safeSetState(
                                                                             () {
-                                                                          _model
-                                                                              .edtDescontoTextController
-                                                                              ?.text = functions.edtTextToCurrency('0')!;
+                                                                          _model.edtDescontoTextController?.text = functions.edtTextToCurrency(
+                                                                              '0',
+                                                                              true)!;
                                                                           _model
                                                                               .edtDescontoFocusNode
                                                                               ?.requestFocus();
@@ -1163,6 +1164,10 @@ class _LancamentoVoucherWidgetState extends State<LancamentoVoucherWidget>
                                                                   Colors
                                                                       .transparent,
                                                               onTap: () async {
+                                                                await actions
+                                                                    .hideKeyboard(
+                                                                  context,
+                                                                );
                                                                 _model.dpdActive =
                                                                     !_model
                                                                         .dpdActive;

@@ -431,6 +431,52 @@ class AbastecimentoUnicoCall {
       ) as List?;
 }
 
+class VerificaAbastecimentoCall {
+  static Future<ApiCallResponse> call({
+    String? ip = '',
+    String? token = '',
+    int? id,
+  }) async {
+    return FFApiInterceptor.makeApiCall(
+      // ignore: prefer_const_constructors - can be mutated by interceptors
+      ApiCallOptions(
+        callName: 'VerificaAbastecimento',
+        apiUrl: '${ip}/Services/AbastecimentoDisponível',
+        callType: ApiCallType.GET,
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Authorization': 'Bearer ${token}',
+        },
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        params: {
+          'aid': id,
+        },
+
+        returnBody: true,
+        encodeBodyUtf8: false,
+        decodeUtf8: false,
+        cache: false,
+        isStreamingApi: false,
+        alwaysAllowBody: false,
+      ),
+
+      interceptors,
+    );
+  }
+
+  static final interceptors = [
+    m_s_framework_flutter_p5iajh_api_interceptors.InterceptorVerificaToken(),
+    AddTimerOnRequest(),
+  ];
+
+  static bool? result(dynamic response) => castToType<bool>(getJsonField(
+        response,
+        r'''$.value''',
+      ));
+}
+
 class UsuariosCall {
   static Future<ApiCallResponse> call({
     String? ip = '',
@@ -1400,6 +1446,52 @@ class GetStatusNFeCall {
       ));
 }
 
+class GetNumDocumentoFiscalCall {
+  static Future<ApiCallResponse> call({
+    String? ip = '',
+    String? token = '',
+    int? idVenda,
+  }) async {
+    return FFApiInterceptor.makeApiCall(
+      // ignore: prefer_const_constructors - can be mutated by interceptors
+      ApiCallOptions(
+        callName: 'GetNumDocumentoFiscal',
+        apiUrl: '${ip}/Services/GetNumDoc',
+        callType: ApiCallType.GET,
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Authorization': 'Bearer ${token}',
+        },
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        params: {
+          'IdVenda': idVenda,
+        },
+
+        returnBody: true,
+        encodeBodyUtf8: false,
+        decodeUtf8: false,
+        cache: false,
+        isStreamingApi: false,
+        alwaysAllowBody: false,
+      ),
+
+      interceptors,
+    );
+  }
+
+  static final interceptors = [
+    m_s_framework_flutter_p5iajh_api_interceptors.InterceptorVerificaToken(),
+    AddTimerOnRequest(),
+  ];
+
+  static String? status(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.value''',
+      ));
+}
+
 class AddListaAbastecimentoCall {
   static Future<ApiCallResponse> call({
     String? ip = '',
@@ -1445,6 +1537,76 @@ ${listaAbastecimento}''';
         response,
         r'''$.result''',
       ));
+}
+
+class AddRemoveVerificaAbastecimentoCall {
+  static Future<ApiCallResponse> call({
+    String? ip = '',
+    String? token = '',
+    dynamic aparamsJson,
+  }) async {
+    final aparams = _serializeJson(aparamsJson);
+    final ffApiRequestBody = '''
+${aparams}''';
+    return FFApiInterceptor.makeApiCall(
+      // ignore: prefer_const_constructors - can be mutated by interceptors
+      ApiCallOptions(
+        callName: 'AddRemoveVerificaAbastecimento',
+        apiUrl: '${ip}/Services/AbastecimentoEmUso',
+        callType: ApiCallType.POST,
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Authorization': 'Bearer ${token}',
+        },
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        params: {},
+        body: ffApiRequestBody,
+        bodyType: BodyType.JSON,
+        returnBody: true,
+        encodeBodyUtf8: false,
+        decodeUtf8: true,
+        cache: false,
+        isStreamingApi: false,
+        alwaysAllowBody: false,
+      ),
+
+      interceptors,
+    );
+  }
+
+  static final interceptors = [
+    m_s_framework_flutter_p5iajh_api_interceptors.InterceptorVerificaToken(),
+  ];
+
+  static bool? result(dynamic response) => castToType<bool>(getJsonField(
+        response,
+        r'''$.result''',
+      ));
+  static String? mensagem(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.mensagem''',
+      ));
+  static List<int>? abastindisponiveis(dynamic response) => (getJsonField(
+        response,
+        r'''$.abastind''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<int>(x))
+          .withoutNulls
+          .toList();
+  static List? abastinuso(dynamic response) => getJsonField(
+        response,
+        r'''$.idcodigo''',
+        true,
+      ) as List?;
+  static List? terminaisemuso(dynamic response) => getJsonField(
+        response,
+        r'''$.terminais''',
+        true,
+      ) as List?;
 }
 
 class AddAbastecimentoCall {

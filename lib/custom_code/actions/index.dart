@@ -1,7 +1,11 @@
 export 'portrait_action.dart' show portraitAction;
+export 'limpa_base_atual.dart' show limpaBaseAtual;
+export 'busca_n_fe_from_doc.dart' show buscaNFeFromDoc;
+export 'body_to_base64.dart' show bodyToBase64;
 export 'gera_vale_base64.dart' show geraValeBase64;
 export 'body_p_d_f_api_to_uploaded.dart' show bodyPDFApiToUploaded;
 export 'date_picker_ranger_custom.dart' show datePickerRangerCustom;
+export 'infinite_pay_realiza_pagamento.dart' show infinitePayRealizaPagamento;
 export 'get_net_realiza_impressao_base64.dart'
     show getNetRealizaImpressaoBase64;
 export 'cielo_lio_realiza_impressao_base64.dart'

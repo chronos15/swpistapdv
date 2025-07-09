@@ -178,8 +178,7 @@ class _MyAppState extends State<MyApp> {
       _router.routerDelegate.currentConfiguration.matches
           .map((e) => getRoute(e))
           .toList();
-
-  late Stream<SoftworkAuthUser> userStream;
+  late Stream<SOFTWORKPistaAuthUser> userStream;
 
   @override
   void initState() {
@@ -187,7 +186,7 @@ class _MyAppState extends State<MyApp> {
 
     _appStateNotifier = AppStateNotifier.instance;
     _router = createRouter(_appStateNotifier);
-    userStream = softworkAuthUserStream()
+    userStream = sOFTWORKPistaAuthUserStream()
       ..listen((user) {
         _appStateNotifier.update(user);
       });
@@ -211,7 +210,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      title: 'SOFTWORK',
+      title: 'SOFTWORK Pista',
       localizationsDelegates: [
         FFLocalizationsDelegate(),
         m_s_framework_flutter_p5iajh_internationalization

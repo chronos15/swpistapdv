@@ -1,6 +1,7 @@
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'dart:ui';
+import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'home_widget.dart' show HomeWidget;
 import 'package:easy_debounce/easy_debounce.dart';
@@ -17,12 +18,23 @@ class HomeModel extends FlutterFlowModel<HomeWidget> {
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode1;
   TextEditingController? textController1;
-  final textFieldMask1 = MaskTextInputFormatter(mask: '##.###.###/####-##');
+  late MaskTextInputFormatter textFieldMask1;
   String? Function(BuildContext, String?)? textController1Validator;
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode2;
   TextEditingController? textController2;
   String? Function(BuildContext, String?)? textController2Validator;
+  // State field(s) for edtCript widget.
+  FocusNode? edtCriptFocusNode;
+  TextEditingController? edtCriptTextController;
+  late MaskTextInputFormatter edtCriptMask;
+  String? Function(BuildContext, String?)? edtCriptTextControllerValidator;
+  // Stores action output result for [Custom Action - criptAES256] action in Button widget.
+  String? actReturnCript;
+  // State field(s) for TextField widget.
+  FocusNode? textFieldFocusNode3;
+  TextEditingController? textController4;
+  String? Function(BuildContext, String?)? textController4Validator;
 
   @override
   void initState(BuildContext context) {}
@@ -34,5 +46,11 @@ class HomeModel extends FlutterFlowModel<HomeWidget> {
 
     textFieldFocusNode2?.dispose();
     textController2?.dispose();
+
+    edtCriptFocusNode?.dispose();
+    edtCriptTextController?.dispose();
+
+    textFieldFocusNode3?.dispose();
+    textController4?.dispose();
   }
 }

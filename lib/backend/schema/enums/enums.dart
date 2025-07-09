@@ -32,6 +32,7 @@ enum GateWay {
   Getnet,
   Cielo,
   Vazio,
+  InfinitePay,
 }
 
 enum StatusFinalizado {
@@ -49,6 +50,17 @@ enum PagNumServer {
   VALECOMBUSTIVEL,
 }
 
+enum TpSelecaoFrentista {
+  seNone,
+  seComparative,
+  seFiltro,
+}
+
+enum TEOpcao {
+  AAdd,
+  ARemove,
+}
+
 T? deserializeEnum<T>(String? value) {
   switch (T) {
     case (Pages):
@@ -63,6 +75,10 @@ T? deserializeEnum<T>(String? value) {
       return StatusFinalizado.values.deserialize(value) as T?;
     case (PagNumServer):
       return PagNumServer.values.deserialize(value) as T?;
+    case (TpSelecaoFrentista):
+      return TpSelecaoFrentista.values.deserialize(value) as T?;
+    case (TEOpcao):
+      return TEOpcao.values.deserialize(value) as T?;
     case (m_s_framework_flutter_p5iajh_enums.FormatEnum):
       return m_s_framework_flutter_p5iajh_enums.FormatEnum.values
           .deserialize(value) as T?;

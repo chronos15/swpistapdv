@@ -93,7 +93,7 @@ BEGIN
             VALUE "FileDescription", "A new Flutter project." "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
             VALUE "InternalName", "MSFrameworkFlutter" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2024 MSFrameworkFlutter. All rights reserved." "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2025 MSFrameworkFlutter. All rights reserved." "\0"
             VALUE "OriginalFilename", "m_s_framework_flutter_p5iajh.exe" "\0"
             VALUE "ProductName", "MSFrameworkFlutter" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"

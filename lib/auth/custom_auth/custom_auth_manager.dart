@@ -31,13 +31,13 @@ class CustomAuthManager {
     uid = null;
     userData = null;
     // Update the current user.
-    softworkAuthUserSubject.add(
-      SoftworkAuthUser(loggedIn: false),
+    sOFTWORKPistaAuthUserSubject.add(
+      SOFTWORKPistaAuthUser(loggedIn: false),
     );
     persistAuthData();
   }
 
-  Future<SoftworkAuthUser?> signIn({
+  Future<SOFTWORKPistaAuthUser?> signIn({
     String? authenticationToken,
     String? refreshToken,
     DateTime? tokenExpiration,
@@ -73,7 +73,7 @@ class CustomAuthManager {
     );
   }
 
-  SoftworkAuthUser? _updateCurrentUser({
+  SOFTWORKPistaAuthUser? _updateCurrentUser({
     String? authenticationToken,
     String? refreshToken,
     DateTime? tokenExpiration,
@@ -86,12 +86,12 @@ class CustomAuthManager {
     this.uid = authUid;
     this.userData = userData;
     // Update the current user stream.
-    final updatedUser = SoftworkAuthUser(
+    final updatedUser = SOFTWORKPistaAuthUser(
       loggedIn: true,
       uid: authUid,
       userData: userData,
     );
-    softworkAuthUserSubject.add(updatedUser);
+    sOFTWORKPistaAuthUserSubject.add(updatedUser);
     persistAuthData();
     return updatedUser;
   }
@@ -124,12 +124,12 @@ class CustomAuthManager {
     final authTokenExists = authenticationToken != null;
     final tokenExpired =
         tokenExpiration != null && tokenExpiration!.isBefore(DateTime.now());
-    final updatedUser = SoftworkAuthUser(
+    final updatedUser = SOFTWORKPistaAuthUser(
       loggedIn: authTokenExists && !tokenExpired,
       uid: uid,
       userData: userData,
     );
-    softworkAuthUserSubject.add(updatedUser);
+    sOFTWORKPistaAuthUserSubject.add(updatedUser);
   }
 
   void persistAuthData() {
@@ -151,5 +151,5 @@ class CustomAuthManager {
   }
 }
 
-SoftworkAuthUser? currentUser;
+SOFTWORKPistaAuthUser? currentUser;
 bool get loggedIn => currentUser?.loggedIn ?? false;

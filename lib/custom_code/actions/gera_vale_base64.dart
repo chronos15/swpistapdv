@@ -76,7 +76,7 @@ Future<String> geraValeBase64(
               style: pw.TextStyle(fontSize: 8), textAlign: pw.TextAlign.left),
           pw.Text('REG.: $dataMov',
               style: pw.TextStyle(fontSize: 8), textAlign: pw.TextAlign.left),
-          pw.Text('OPERADOR: ${sOperador}',
+          pw.Text('OPERADOR: ${sOperador ?? 'NÃO INFORMADO'}',
               style: pw.TextStyle(fontSize: 8), textAlign: pw.TextAlign.left),
           pw.SizedBox(height: 10),
           pw.Center(

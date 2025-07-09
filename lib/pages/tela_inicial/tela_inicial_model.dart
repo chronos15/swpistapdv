@@ -3,8 +3,8 @@ import '/backend/schema/structs/index.dart';
 import '/components/header_widget.dart';
 import '/components/side_bar_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/index.dart';
 import 'dart:async';
+import '/index.dart';
 import 'package:ff_commons/api_requests/api_paging_params.dart';
 import 'package:m_s_framework_flutter_p5iajh/backend/api_requests/api_calls.dart'
     as m_s_framework_flutter_p5iajh_api_calls_util;
@@ -41,6 +41,22 @@ class TelaInicialModel extends FlutterFlowModel<TelaInicialWidget> {
 
   bool btnVisible = true;
 
+  bool bAsUpdated = false;
+
+  AParamCTRegStruct? aDataParamsCT;
+  void updateADataParamsCTStruct(Function(AParamCTRegStruct) updateFn) {
+    updateFn(aDataParamsCT ??= AParamCTRegStruct());
+  }
+
+  List<int> aIDsInUses = [];
+  void addToAIDsInUses(int item) => aIDsInUses.add(item);
+  void removeFromAIDsInUses(int item) => aIDsInUses.remove(item);
+  void removeAtIndexFromAIDsInUses(int index) => aIDsInUses.removeAt(index);
+  void insertAtIndexInAIDsInUses(int index, int item) =>
+      aIDsInUses.insert(index, item);
+  void updateAIDsInUsesAtIndex(int index, Function(int) updateFn) =>
+      aIDsInUses[index] = updateFn(aIDsInUses[index]);
+
   ///  State fields for stateful widgets in this page.
 
   // Stores action output result for [Backend Call - API (GetToken)] action in TelaInicial widget.
@@ -50,13 +66,21 @@ class TelaInicialModel extends FlutterFlowModel<TelaInicialWidget> {
   // Stores action output result for [Backend Call - API (Combustiveis)] action in TelaInicial widget.
   ApiCallResponse? apiListaCombustivel;
   // Stores action output result for [Bottom Sheet - Filtros] action in IconButton widget.
-  FiltrosAbastecimentoStruct? vFiltrosReturn;
+  FiltrosAbastecimentoStruct? vFiltrosReturnBS;
   Completer<ApiCallResponse>? apiRequestCompleter2;
   // State field(s) for lvAbastecimentos widget.
 
   PagingController<ApiPagingParams, dynamic>? lvAbastecimentosPagingController;
   Function(ApiPagingParams nextPageMarker)? lvAbastecimentosApiCall;
 
+  // Stores action output result for [Backend Call - API (AddRemoveVerificaAbastecimento)] action in Button widget.
+  ApiCallResponse? actaRemoveOnly;
+  // State field(s) for MouseRegion widget.
+  bool mouseRegionHovered = false;
+  // Stores action output result for [Backend Call - API (AddRemoveVerificaAbastecimento)] action in Button widget.
+  ApiCallResponse? actReturnLoop;
+  // Stores action output result for [Backend Call - API (AddRemoveVerificaAbastecimento)] action in Button widget.
+  ApiCallResponse? actReturnCTAdd;
   // Model for SideBar component.
   late SideBarModel sideBarModel;
   // Model for Header component.

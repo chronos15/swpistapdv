@@ -11,7 +11,7 @@ class VendasWidget extends StatefulWidget {
   const VendasWidget({super.key});
 
   static String routeName = 'Vendas';
-  static String routePath = 'vendas';
+  static String routePath = '/vendas';
 
   @override
   State<VendasWidget> createState() => _VendasWidgetState();

@@ -73,6 +73,22 @@ class InterceptorVerificaToken extends FFApiInterceptor {
     required ApiCallResponse response,
     required Future<ApiCallResponse> Function() retryFn,
   }) async {
-    return response;
+    final result = response;
+
+    final jsonMap = response.jsonBody as Map<String, dynamic>? ?? {};
+
+    final error = jsonMap['error'];
+    final code = (error is Map && error['code'] != null)
+        ? error['code'].toString()
+        : null;
+
+    if (response.jsonBody == null ||
+        response.jsonBody is! Map ||
+        response.statusCode == 500 ||
+        code == 'IBNativeException') {
+      return const ApiCallResponse({'value': []}, {}, 0);
+    }
+
+    return result;
   }
 }

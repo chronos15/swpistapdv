@@ -53,15 +53,7 @@ class _SelecionarClienteWidgetState extends State<SelecionarClienteWidget>
     _model = createModel(context, () => SelecionarClienteModel());
 
     // On component load action.
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      _model.clienteSelectedPage = null;
-      safeSetState(() {});
-      if (animationsMap['containerOnActionTriggerAnimation'] != null) {
-        await animationsMap['containerOnActionTriggerAnimation']!
-            .controller
-            .reverse();
-      }
-    });
+    SchedulerBinding.instance.addPostFrameCallback((_) async {});
 
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
@@ -175,19 +167,22 @@ class _SelecionarClienteWidgetState extends State<SelecionarClienteWidget>
                               ),
                     ),
                   ),
-                  Container(
-                    width: MediaQuery.sizeOf(context).width * 1.0,
-                    decoration: BoxDecoration(
-                      color: Colors.transparent,
-                    ),
-                    child: Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 12.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Expanded(
-                            child: Container(
+                  if (responsiveVisibility(
+                    context: context,
+                    desktop: false,
+                  ))
+                    Container(
+                      width: MediaQuery.sizeOf(context).width * 1.0,
+                      decoration: BoxDecoration(
+                        color: Colors.transparent,
+                      ),
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            12.0, 0.0, 12.0, 12.0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Container(
                               width: double.infinity,
                               decoration: BoxDecoration(
                                 color: FlutterFlowTheme.of(context)
@@ -317,65 +312,74 @@ class _SelecionarClienteWidgetState extends State<SelecionarClienteWidget>
                                 ].addToEnd(SizedBox(width: 12.0)),
                               ),
                             ),
-                          ),
-                          FlutterFlowChoiceChips(
-                            options: [
-                              ChipData('Todos'),
-                              ChipData('Pessoa Física'),
-                              ChipData('Pessoa Jurídica'),
-                              ChipData('Cidade')
-                            ],
-                            onChanged: (val) async {
-                              safeSetState(() =>
-                                  _model.ccFiltroValue = val?.firstOrNull);
-                              if (_model.ccFiltroValue == 'Cidade') {
-                                await showModalBottomSheet(
-                                  isScrollControlled: true,
-                                  backgroundColor: Colors.transparent,
-                                  context: context,
-                                  builder: (context) {
-                                    return Padding(
-                                      padding: MediaQuery.viewInsetsOf(context),
-                                      child: Container(
-                                        height:
-                                            MediaQuery.sizeOf(context).height *
-                                                0.75,
-                                        child: SelecionarCidadesWidget(
-                                          aCidade: _model.cidadeSelected,
+                            FlutterFlowChoiceChips(
+                              options: [
+                                ChipData('Todos'),
+                                ChipData('Pessoa Física'),
+                                ChipData('Pessoa Jurídica'),
+                                ChipData('Cidade')
+                              ],
+                              onChanged: (val) async {
+                                safeSetState(() =>
+                                    _model.ccFiltroValue = val?.firstOrNull);
+                                if (_model.ccFiltroValue == 'Cidade') {
+                                  await showModalBottomSheet(
+                                    isScrollControlled: true,
+                                    backgroundColor: Colors.transparent,
+                                    context: context,
+                                    builder: (context) {
+                                      return Padding(
+                                        padding:
+                                            MediaQuery.viewInsetsOf(context),
+                                        child: Container(
+                                          height: MediaQuery.sizeOf(context)
+                                                  .height *
+                                              0.75,
+                                          child: SelecionarCidadesWidget(
+                                            aCidade: _model.cidadeSelected,
+                                          ),
                                         ),
-                                      ),
-                                    );
-                                  },
-                                ).then((value) => safeSetState(
-                                    () => _model.actReturnCidade = value));
+                                      );
+                                    },
+                                  ).then((value) => safeSetState(
+                                      () => _model.actReturnCidade = value));
 
-                                if (_model.actReturnCidade != null) {
-                                  _model.cidadeSelected =
-                                      _model.actReturnCidade;
-                                  safeSetState(() {});
+                                  if (_model.actReturnCidade != null) {
+                                    _model.cidadeSelected =
+                                        _model.actReturnCidade;
+                                    safeSetState(() {});
+                                  } else {
+                                    _model.cidadeSelected = null;
+                                    safeSetState(() {});
+                                  }
                                 } else {
-                                  _model.cidadeSelected = null;
-                                  safeSetState(() {});
+                                  if (_model.ccFiltroValue == 'Todos') {
+                                    _model.cidadeSelected = null;
+                                    safeSetState(() {});
+                                  }
                                 }
-                              } else {
-                                if (_model.ccFiltroValue == 'Todos') {
-                                  _model.cidadeSelected = null;
-                                  safeSetState(() {});
-                                }
-                              }
 
-                              safeSetState(() =>
-                                  _model.listViewPagingController?.refresh());
+                                safeSetState(() =>
+                                    _model.listViewPagingController?.refresh());
 
-                              safeSetState(() {});
-                            },
-                            selectedChipStyle: ChipStyle(
-                              backgroundColor:
-                                  FlutterFlowTheme.of(context).primary,
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    font: GoogleFonts.manrope(
+                                safeSetState(() {});
+                              },
+                              selectedChipStyle: ChipStyle(
+                                backgroundColor:
+                                    FlutterFlowTheme.of(context).primary,
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      font: GoogleFonts.manrope(
+                                        fontWeight: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .fontWeight,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .fontStyle,
+                                      ),
+                                      color: FlutterFlowTheme.of(context).info,
+                                      letterSpacing: 0.0,
                                       fontWeight: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .fontWeight,
@@ -383,28 +387,29 @@ class _SelecionarClienteWidgetState extends State<SelecionarClienteWidget>
                                           .bodyMedium
                                           .fontStyle,
                                     ),
-                                    color: FlutterFlowTheme.of(context).info,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontStyle,
-                                  ),
-                              iconColor:
-                                  FlutterFlowTheme.of(context).primaryText,
-                              iconSize: 18.0,
-                              elevation: 0.0,
-                              borderRadius: BorderRadius.circular(20.0),
-                            ),
-                            unselectedChipStyle: ChipStyle(
-                              backgroundColor: FlutterFlowTheme.of(context)
-                                  .secondaryBackground,
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .bodySmall
-                                  .override(
-                                    font: GoogleFonts.manrope(
+                                iconColor:
+                                    FlutterFlowTheme.of(context).primaryText,
+                                iconSize: 18.0,
+                                elevation: 0.0,
+                                borderRadius: BorderRadius.circular(20.0),
+                              ),
+                              unselectedChipStyle: ChipStyle(
+                                backgroundColor: FlutterFlowTheme.of(context)
+                                    .secondaryBackground,
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .bodySmall
+                                    .override(
+                                      font: GoogleFonts.manrope(
+                                        fontWeight: FlutterFlowTheme.of(context)
+                                            .bodySmall
+                                            .fontWeight,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .bodySmall
+                                            .fontStyle,
+                                      ),
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryText,
+                                      letterSpacing: 0.0,
                                       fontWeight: FlutterFlowTheme.of(context)
                                           .bodySmall
                                           .fontWeight,
@@ -412,38 +417,28 @@ class _SelecionarClienteWidgetState extends State<SelecionarClienteWidget>
                                           .bodySmall
                                           .fontStyle,
                                     ),
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryText,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .bodySmall
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .bodySmall
-                                        .fontStyle,
-                                  ),
-                              iconColor:
-                                  FlutterFlowTheme.of(context).primaryText,
-                              iconSize: 18.0,
-                              elevation: 0.0,
-                              borderRadius: BorderRadius.circular(20.0),
+                                iconColor:
+                                    FlutterFlowTheme.of(context).primaryText,
+                                iconSize: 18.0,
+                                elevation: 0.0,
+                                borderRadius: BorderRadius.circular(20.0),
+                              ),
+                              chipSpacing: 8.0,
+                              rowSpacing: 8.0,
+                              multiselect: false,
+                              alignment: WrapAlignment.start,
+                              controller: _model.ccFiltroValueController ??=
+                                  FormFieldController<List<String>>(
+                                [],
+                              ),
+                              wrapped: false,
                             ),
-                            chipSpacing: 8.0,
-                            rowSpacing: 8.0,
-                            multiselect: false,
-                            alignment: WrapAlignment.start,
-                            controller: _model.ccFiltroValueController ??=
-                                FormFieldController<List<String>>(
-                              [],
-                            ),
-                            wrapped: false,
-                          ),
-                        ]
-                            .divide(SizedBox(height: 5.0))
-                            .addToStart(SizedBox(height: 12.0)),
+                          ]
+                              .divide(SizedBox(height: 5.0))
+                              .addToStart(SizedBox(height: 12.0)),
+                        ),
                       ),
                     ),
-                  ),
                   Expanded(
                     child: RefreshIndicator(
                       color: FlutterFlowTheme.of(context).primary,
@@ -840,8 +835,19 @@ class _SelecionarClienteWidgetState extends State<SelecionarClienteWidget>
               alignment: AlignmentDirectional(0.0, 1.0),
               child: Container(
                 width: double.infinity,
+                constraints: BoxConstraints(
+                  maxHeight: 150.0,
+                ),
                 decoration: BoxDecoration(
-                  color: FlutterFlowTheme.of(context).cardAlter,
+                  color: FlutterFlowTheme.of(context).cardTotalizacao2,
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: Image.asset(
+                      Theme.of(context).brightness == Brightness.dark
+                          ? 'assets/images/Dot-PNG-Background.png'
+                          : 'assets/images/Dot-PNG-Background.png',
+                    ).image,
+                  ),
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(0.0),
                     bottomRight: Radius.circular(0.0),
@@ -849,178 +855,155 @@ class _SelecionarClienteWidgetState extends State<SelecionarClienteWidget>
                     topRight: Radius.circular(20.0),
                   ),
                 ),
-                child: Stack(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Opacity(
-                      opacity: 0.2,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(8.0),
-                        child: Image.asset(
-                          'assets/images/dotHome.jpg',
-                          width: double.infinity,
-                          height: 130.0,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                    Column(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              20.0, 20.0, 20.0, 20.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Expanded(
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Expanded(
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            valueOrDefault<String>(
-                                              _model.clienteSelectedPage?.nome,
-                                              '--',
-                                            ).maybeHandleOverflow(
-                                              maxChars: 35,
-                                              replacement: '…',
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                          20.0, 20.0, 20.0, 20.0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Expanded(
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Expanded(
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        valueOrDefault<String>(
+                                          _model.clienteSelectedPage?.nome,
+                                          '--',
+                                        ).maybeHandleOverflow(
+                                          maxChars: 35,
+                                          replacement: '…',
+                                        ),
+                                        maxLines: 1,
+                                        style: FlutterFlowTheme.of(context)
+                                            .headlineMedium
+                                            .override(
+                                              font: GoogleFonts.outfit(
+                                                fontWeight: FontWeight.normal,
+                                                fontStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .headlineMedium
+                                                        .fontStyle,
+                                              ),
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryBackground,
+                                              fontSize: 16.0,
+                                              letterSpacing: 0.0,
+                                              fontWeight: FontWeight.normal,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .headlineMedium
+                                                      .fontStyle,
                                             ),
-                                            maxLines: 1,
-                                            style: FlutterFlowTheme.of(context)
-                                                .headlineMedium
-                                                .override(
-                                                  font: GoogleFonts.outfit(
-                                                    fontWeight:
-                                                        FontWeight.normal,
-                                                    fontStyle:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .headlineMedium
-                                                            .fontStyle,
-                                                  ),
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .info,
-                                                  fontSize: 16.0,
-                                                  letterSpacing: 0.0,
-                                                  fontWeight: FontWeight.normal,
+                                      ),
+                                      RichText(
+                                        textScaler:
+                                            MediaQuery.of(context).textScaler,
+                                        text: TextSpan(
+                                          children: [
+                                            TextSpan(
+                                              text: valueOrDefault<String>(
+                                                _model.clienteSelectedPage
+                                                    ?.cpfcnpj,
+                                                '--',
+                                              ),
+                                              style: GoogleFonts.outfit(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryBackground,
+                                                fontSize: 14.0,
+                                              ),
+                                            )
+                                          ],
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                font: GoogleFonts.manrope(
+                                                  fontWeight:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMedium
+                                                          .fontWeight,
                                                   fontStyle:
                                                       FlutterFlowTheme.of(
                                                               context)
-                                                          .headlineMedium
+                                                          .bodyMedium
                                                           .fontStyle,
                                                 ),
-                                          ),
-                                          RichText(
-                                            textScaler: MediaQuery.of(context)
-                                                .textScaler,
-                                            text: TextSpan(
-                                              children: [
-                                                TextSpan(
-                                                  text: valueOrDefault<String>(
-                                                    _model.clienteSelectedPage
-                                                        ?.cpfcnpj,
-                                                    '--',
-                                                  ),
-                                                  style: GoogleFonts.outfit(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .info,
-                                                    fontSize: 14.0,
-                                                  ),
-                                                )
-                                              ],
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .bodyMedium
-                                                  .override(
-                                                    font: GoogleFonts.manrope(
-                                                      fontWeight:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMedium
-                                                              .fontWeight,
-                                                      fontStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMedium
-                                                              .fontStyle,
-                                                    ),
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .info,
-                                                    letterSpacing: 0.0,
-                                                    fontWeight:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyMedium
-                                                            .fontWeight,
-                                                    fontStyle:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyMedium
-                                                            .fontStyle,
-                                                  ),
-                                            ),
-                                            maxLines: 1,
-                                          ),
-                                        ],
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryBackground,
+                                                letterSpacing: 0.0,
+                                                fontWeight:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .fontWeight,
+                                                fontStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .fontStyle,
+                                              ),
+                                        ),
+                                        maxLines: 1,
                                       ),
-                                    ),
-                                    FlutterFlowIconButton(
-                                      borderColor: Colors.transparent,
-                                      borderRadius: 20.0,
-                                      borderWidth: 1.0,
-                                      buttonSize: 40.0,
-                                      icon: Icon(
-                                        Icons.close_rounded,
-                                        color:
-                                            FlutterFlowTheme.of(context).error,
-                                        size: 24.0,
-                                      ),
-                                      onPressed: () async {
-                                        _model.clienteSelectedPage = null;
-                                        safeSetState(() {});
-                                        if (animationsMap[
-                                                'containerOnActionTriggerAnimation'] !=
-                                            null) {
-                                          await animationsMap[
-                                                  'containerOnActionTriggerAnimation']!
-                                              .controller
-                                              .reverse();
-                                        }
-                                      },
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ].divide(SizedBox(width: 12.0)),
+                                FlutterFlowIconButton(
+                                  borderColor: Colors.transparent,
+                                  borderRadius: 20.0,
+                                  borderWidth: 1.0,
+                                  buttonSize: 40.0,
+                                  icon: Icon(
+                                    Icons.close_rounded,
+                                    color: FlutterFlowTheme.of(context).error,
+                                    size: 24.0,
+                                  ),
+                                  onPressed: () async {
+                                    _model.clienteSelectedPage = null;
+                                    safeSetState(() {});
+                                    if (animationsMap[
+                                            'containerOnActionTriggerAnimation'] !=
+                                        null) {
+                                      await animationsMap[
+                                              'containerOnActionTriggerAnimation']!
+                                          .controller
+                                          .reverse();
+                                    }
+                                  },
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        FFButtonWidget(
-                          onPressed: () async {
-                            Navigator.pop(context, _model.clienteSelectedPage);
-                          },
-                          text: 'Confirmar Seleção',
-                          options: FFButtonOptions(
-                            width: double.infinity,
-                            height: 50.0,
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                24.0, 0.0, 24.0, 0.0),
-                            iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 0.0),
-                            color: FlutterFlowTheme.of(context).primary,
-                            textStyle: FlutterFlowTheme.of(context)
-                                .titleSmall
-                                .override(
+                        ].divide(SizedBox(width: 12.0)),
+                      ),
+                    ),
+                    FFButtonWidget(
+                      onPressed: () async {
+                        Navigator.pop(context, _model.clienteSelectedPage);
+                      },
+                      text: 'Confirmar Seleção',
+                      options: FFButtonOptions(
+                        width: double.infinity,
+                        height: 50.0,
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            24.0, 0.0, 24.0, 0.0),
+                        iconPadding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                        color: FlutterFlowTheme.of(context).primary,
+                        textStyle:
+                            FlutterFlowTheme.of(context).titleSmall.override(
                                   font: GoogleFonts.outfit(
                                     fontWeight: FontWeight.w300,
                                     fontStyle: FlutterFlowTheme.of(context)
@@ -1034,20 +1017,18 @@ class _SelecionarClienteWidgetState extends State<SelecionarClienteWidget>
                                       .titleSmall
                                       .fontStyle,
                                 ),
-                            elevation: 3.0,
-                            borderSide: BorderSide(
-                              color: Colors.transparent,
-                              width: 1.0,
-                            ),
-                            borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(0.0),
-                              bottomRight: Radius.circular(0.0),
-                              topLeft: Radius.circular(0.0),
-                              topRight: Radius.circular(0.0),
-                            ),
-                          ),
+                        elevation: 3.0,
+                        borderSide: BorderSide(
+                          color: Colors.transparent,
+                          width: 1.0,
                         ),
-                      ],
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(0.0),
+                          bottomRight: Radius.circular(0.0),
+                          topLeft: Radius.circular(0.0),
+                          topRight: Radius.circular(0.0),
+                        ),
+                      ),
                     ),
                   ],
                 ),

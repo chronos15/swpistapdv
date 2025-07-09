@@ -831,7 +831,7 @@ class _SideBarWidgetState extends State<SideBarWidget>
                             hoverColor: Colors.transparent,
                             highlightColor: Colors.transparent,
                             onTap: () async {
-                              FFAppState().aFiltros =
+                              FFAppState().aFiltrosAbastecimento =
                                   FiltrosAbastecimentoStruct();
                               FFAppState().ClienteSelected =
                                   ClienteListaDataTypeStruct

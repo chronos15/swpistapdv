@@ -5,3 +5,4 @@ export 'infinite_list_view.dart' show InfiniteListView;
 export 'loading_widget.dart' show LoadingWidget;
 export 'scroll_controll.dart' show ScrollControll;
 export 'image_from_path.dart' show ImageFromPath;
+export 'image_from_base64.dart' show ImageFromBase64;

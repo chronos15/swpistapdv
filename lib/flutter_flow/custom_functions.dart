@@ -64,6 +64,38 @@ dynamic formaJsonCieloEstorno(
   return const JsonEncoder.withIndent("  ").convert(jsonMap);
 }
 
+double? sumListDoubleQtd(List<double>? cartItemsTotal) {
+  final formatter = NumberFormat("#,##0.000", "pt_BR");
+
+  double _total = cartItemsTotal!
+      .fold(0.0, (double total, double subtotal) => subtotal + total);
+
+  _total = double.parse(_total.toStringAsFixed(3));
+
+  return _total;
+}
+
+bool? verifyAllValues(
+  List<PaymentDataTypeStruct>? listDTPay,
+  double? valorTotal,
+) {
+  if (listDTPay == null || valorTotal == null) return false;
+
+  final totalPago = listDTPay.fold<double>(
+    0.0,
+    (sum, item) => sum + (item.valor ?? 0),
+  );
+
+  final todosConfirmados = listDTPay.every((item) => item.confirmado == true);
+
+  // Permite se o total pago for igual ou superior (com tolerância de ponto flutuante)
+  final pagamentoSuficiente = (totalPago - valorTotal) >= -0.01;
+
+  print((totalPago - valorTotal).toString());
+
+  return pagamentoSuficiente;
+}
+
 bool? enumDefaultApp(TpPagamento? enumTp) {
   final allowedTypes = {
     TpPagamento.DINHEIRO,
@@ -564,8 +596,11 @@ bool? verifyProductInList(
 }
 
 TPRegistro? enumStringTPToEnum(String? valueName) {
+  // Remove espaços do valueName
+  final cleanedValue = valueName?.replaceAll(' ', '');
+
   // enum name string to enum
-  return deserializeEnum<TPRegistro>(valueName);
+  return deserializeEnum<TPRegistro>(cleanedValue);
 }
 
 dynamic formaJsonCieloFunction(
@@ -716,15 +751,22 @@ CondPagamentoDataTypeStruct? returnFromTPPag(
   );
 }
 
-String? edtTextToCurrency(String? valueString) {
+String? edtTextToCurrency(
+  String? valueString,
+  bool? asCifrao,
+) {
   String numericValue = (valueString ?? '').replaceAll(RegExp(r'\D'), '');
 
-  // Converte para número e divide por 100 para formatar como moeda
   double value = double.tryParse(numericValue) ?? 0.0;
-  String formattedValue =
-      NumberFormat.currency(locale: 'pt_BR', symbol: 'R\$').format(value / 100);
 
-  return formattedValue;
+  final bool showCifrao = asCifrao ?? true;
+
+  String formattedValue = NumberFormat.currency(
+    locale: 'pt_BR',
+    symbol: showCifrao ? 'R\$' : '',
+  ).format(value / 100);
+
+  return formattedValue.trim();
 }
 
 bool? verifyAllConfirmed(
@@ -740,7 +782,10 @@ bool? verifyAllConfirmed(
 
   final todosConfirmados = listDTPay.every((item) => item.confirmado == true);
 
-  return totalPago >= valorTotal && todosConfirmados;
+  // Tolerância para ponto flutuante
+  final valoresIguais = (totalPago - valorTotal) >= -0.01;
+
+  return valoresIguais && todosConfirmados;
 }
 
 int? iTipoEnumPag(TpPagamento? enumPag) {
@@ -1172,4 +1217,51 @@ List<String>? allFrentistas(
   }
 
   return frentistasSet.toList();
+}
+
+bool? isBase64(String? valueBase) {
+  if (valueBase == null || valueBase.isEmpty) return false;
+
+  try {
+    final decoded = base64Decode(valueBase);
+    // Considera válido se a string decodifica e retorna algum byte
+    return decoded.isNotEmpty;
+  } catch (e) {
+    return false;
+  }
+}
+
+int intNotNull(int? value) {
+  // tratar null, se for null vem 0
+  return value ?? 0; // Return 0 if value is null
+}
+
+int? doubleToCentavos(double? value) {
+  // double para centavos, 1.0 para 100
+  if (value == null) return null; // Return null if the input is null
+  return (value * 100)
+      .round(); // Convert to centavos and round to nearest integer
+}
+
+String? atualizaStringDigitado(
+  int? aNumb,
+  String? valorAtual,
+) {
+  valorAtual ??= '';
+
+  if (aNumb == -1) {
+    // Remove o último caractere se houver
+    if (valorAtual.isNotEmpty) {
+      return valorAtual.substring(0, valorAtual.length - 1);
+    } else {
+      return '';
+    }
+  } else if (aNumb == -2) {
+    return '';
+  } else if (aNumb != null && aNumb >= 0 && aNumb <= 9) {
+    // Adiciona o número ao final
+    return valorAtual + aNumb.toString();
+  }
+
+  // Retorna sem alterações
 }

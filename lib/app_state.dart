@@ -166,6 +166,9 @@ class FFAppState extends ChangeNotifier {
               .toList() ??
           _paymmentsConfirmed;
     });
+    _safeInit(() {
+      _vDesconto = prefs.getDouble('ff_vDesconto') ?? _vDesconto;
+    });
   }
 
   void update(VoidCallback callback) {
@@ -447,14 +450,17 @@ class FFAppState extends ChangeNotifier {
         _CondPagamentoList.map((x) => x.serialize()).toList());
   }
 
-  FiltrosAbastecimentoStruct _aFiltros = FiltrosAbastecimentoStruct();
-  FiltrosAbastecimentoStruct get aFiltros => _aFiltros;
-  set aFiltros(FiltrosAbastecimentoStruct value) {
-    _aFiltros = value;
+  FiltrosAbastecimentoStruct _aFiltrosAbastecimento =
+      FiltrosAbastecimentoStruct();
+  FiltrosAbastecimentoStruct get aFiltrosAbastecimento =>
+      _aFiltrosAbastecimento;
+  set aFiltrosAbastecimento(FiltrosAbastecimentoStruct value) {
+    _aFiltrosAbastecimento = value;
   }
 
-  void updateAFiltrosStruct(Function(FiltrosAbastecimentoStruct) updateFn) {
-    updateFn(_aFiltros);
+  void updateAFiltrosAbastecimentoStruct(
+      Function(FiltrosAbastecimentoStruct) updateFn) {
+    updateFn(_aFiltrosAbastecimento);
   }
 
   VendaDTObjStruct _VendaObj = VendaDTObjStruct();
@@ -515,6 +521,13 @@ class FFAppState extends ChangeNotifier {
   bool get AsConnectPersisted => _AsConnectPersisted;
   set AsConnectPersisted(bool value) {
     _AsConnectPersisted = value;
+  }
+
+  double _vDesconto = 0.0;
+  double get vDesconto => _vDesconto;
+  set vDesconto(double value) {
+    _vDesconto = value;
+    prefs.setDouble('ff_vDesconto', value);
   }
 
   final _grupoDataManager = FutureRequestManager<ApiCallResponse>();

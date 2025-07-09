@@ -61,6 +61,7 @@ abstract class FlutterFlowTheme {
   late Color border;
   late Color cardSelection;
   late Color cardTotalizacao;
+  late Color cardTotalizacao2;
 
   @Deprecated('Use displaySmallFamily instead')
   String get title1Family => displaySmallFamily;
@@ -170,6 +171,7 @@ class LightModeTheme extends FlutterFlowTheme {
   late Color border = const Color(0x001B0CB9);
   late Color cardSelection = const Color(0xFFC8B2FF);
   late Color cardTotalizacao = const Color(0xFF1B1D27);
+  late Color cardTotalizacao2 = const Color(0xFF40435D);
 }
 
 abstract class Typography {
@@ -362,6 +364,7 @@ class DarkModeTheme extends FlutterFlowTheme {
   late Color border = const Color(0x42797979);
   late Color cardSelection = const Color(0xFF621A6D);
   late Color cardTotalizacao = const Color(0xFFE8E8E8);
+  late Color cardTotalizacao2 = const Color(0xFFE8E8E8);
 }
 
 extension TextStyleHelper on TextStyle {

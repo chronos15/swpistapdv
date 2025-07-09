@@ -13,7 +13,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>SOFTWORK</string>
+	<string>SOFTWORK Pista</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 
@@ -26,10 +26,10 @@
         <key>CFBundleTypeRole</key>
         <string>Editor</string>
         <key>CFBundleURLName</key>
-        <string>softwork.com</string>
+        <string>softworkpista.com</string>
         <key>CFBundleURLSchemes</key>
         <array>
-        <string>softwork</string>
+        <string>softworkpista</string>
         </array>
         </dict>
     </array>

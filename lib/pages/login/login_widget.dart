@@ -6,6 +6,8 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import 'dart:async';
 import 'dart:ui';
 import '/actions/actions.dart' as action_blocks;
+import '/custom_code/widgets/index.dart' as custom_widgets;
+import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
 import 'package:m_s_framework_flutter_p5iajh/app_state.dart'
     as m_s_framework_flutter_p5iajh_app_state;
@@ -35,7 +37,7 @@ class LoginWidget extends StatefulWidget {
   const LoginWidget({super.key});
 
   static String routeName = 'Login';
-  static String routePath = 'login';
+  static String routePath = '/login';
 
   @override
   State<LoginWidget> createState() => _LoginWidgetState();
@@ -195,6 +197,18 @@ class _LoginWidgetState extends State<LoginWidget>
 
     animationsMap.addAll({
       'lottieAnimationOnPageLoadAnimation': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          ShimmerEffect(
+            curve: Curves.easeInOut,
+            delay: 50.0.ms,
+            duration: 830.0.ms,
+            color: Colors.white,
+            angle: 1.292,
+          ),
+        ],
+      ),
+      'containerOnPageLoadAnimation': AnimationInfo(
         trigger: AnimationTrigger.onPageLoad,
         effectsBuilder: () => [
           ShimmerEffect(
@@ -380,23 +394,49 @@ class _LoginWidgetState extends State<LoginWidget>
                                                         .alternate,
                                               ),
                                             ),
-                                            child: Align(
-                                              alignment: AlignmentDirectional(
-                                                  0.0, 0.0),
-                                              child: Lottie.asset(
-                                                'assets/jsons/Animation_-_1706711829998.json',
-                                                width:
-                                                    MediaQuery.sizeOf(context)
-                                                            .width *
-                                                        1.0,
-                                                height:
-                                                    MediaQuery.sizeOf(context)
-                                                            .height *
-                                                        1.0,
-                                                fit: BoxFit.cover,
-                                                animate: true,
-                                              ).animateOnPageLoad(animationsMap[
-                                                  'lottieAnimationOnPageLoadAnimation']!),
+                                            child: Stack(
+                                              children: [
+                                                if (!functions.isBase64(
+                                                    FFAppState().Empresa.logo)!)
+                                                  Align(
+                                                    alignment:
+                                                        AlignmentDirectional(
+                                                            0.0, 0.0),
+                                                    child: Lottie.asset(
+                                                      'assets/jsons/Animation_-_1706711829998.json',
+                                                      width: MediaQuery.sizeOf(
+                                                                  context)
+                                                              .width *
+                                                          1.0,
+                                                      height: MediaQuery.sizeOf(
+                                                                  context)
+                                                              .height *
+                                                          1.0,
+                                                      fit: BoxFit.cover,
+                                                      animate: true,
+                                                    ).animateOnPageLoad(
+                                                        animationsMap[
+                                                            'lottieAnimationOnPageLoadAnimation']!),
+                                                  ),
+                                                if (functions.isBase64(
+                                                        FFAppState()
+                                                            .Empresa
+                                                            .logo) ??
+                                                    true)
+                                                  Container(
+                                                    width: double.infinity,
+                                                    height: double.infinity,
+                                                    child: custom_widgets
+                                                        .ImageFromBase64(
+                                                      width: double.infinity,
+                                                      height: double.infinity,
+                                                      base64: FFAppState()
+                                                          .Empresa
+                                                          .logo,
+                                                    ),
+                                                  ).animateOnPageLoad(animationsMap[
+                                                      'containerOnPageLoadAnimation']!),
+                                              ],
                                             ),
                                           ),
                                         ),
@@ -433,7 +473,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                                     4.0, 12.0, 4.0, 0.0),
                                             child: SelectionArea(
                                                 child: Text(
-                                              'Porfavor, Insira seu usuário e senha para acessar o sistema.',
+                                              'Por favor, Insira seu usuário e senha para acessar o sistema.',
                                               style: FlutterFlowTheme.of(
                                                       context)
                                                   .bodySmall

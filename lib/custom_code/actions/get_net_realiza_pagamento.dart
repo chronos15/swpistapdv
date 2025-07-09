@@ -14,13 +14,19 @@ import 'package:flutter/material.dart';
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
+import 'index.dart'; // Imports other custom actions
+
 import 'package:getnet_payments/getnet_payments.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
+import 'package:m_s_framework_flutter_p5iajh/custom_code/actions/index.dart'
+    as m_s_framework_flutter_p5iajh_actions;
 
-Future<dynamic> getNetRealizaPagamento(
-    double amountValue, TpPagamento enumTypePay, int parcelas) async {
+Future<dynamic> getNetRealizaPagamento(BuildContext context, double amountValue,
+    TpPagamento enumTypePay, int parcelas) async {
   PaymentTypeEnum? paymentType;
+  String? creditType;
 
   // Printando o tipo de pagamento escolhido para depuração
   debugPrint("Iniciando pagamento. Tipo: $enumTypePay");
@@ -28,6 +34,7 @@ Future<dynamic> getNetRealizaPagamento(
   switch (enumTypePay) {
     case TpPagamento.CARTAO_CREDITO:
       paymentType = PaymentTypeEnum.credit;
+      creditType = 'creditMerchant';
       break;
     case TpPagamento.CARTAO_DEBITO:
       paymentType = PaymentTypeEnum.debit;
@@ -53,6 +60,7 @@ Future<dynamic> getNetRealizaPagamento(
       paymentType: paymentType,
       callerId: Uuid().v4(),
       installments: parcelas,
+      creditType: creditType,
     );
 
     if (transaction == null) {
@@ -68,13 +76,35 @@ Future<dynamic> getNetRealizaPagamento(
     //debugPrint(transaction.toJson());
 
     return jsonDecode(transaction.toJson());
+  } on PlatformException catch (e) {
+    debugPrint("Erro de plataforma: ${e.code} - ${e.message}");
+
+    await m_s_framework_flutter_p5iajh_actions.elegantNotificationCustom(
+      context,
+      'Erro',
+      'Falha ao abrir plugin/deeplink, verifique seu terminal e tente novamente!',
+      FlutterFlowTheme.of(context).primaryText,
+      FlutterFlowTheme.of(context).secondaryBackground,
+      350.0,
+      'topcenter',
+      'fromtop',
+      FlutterFlowTheme.of(context).error,
+      'https://upload.wikimedia.org/wikipedia/commons/3/34/ErrorMessage.png',
+    );
+
+    final jsonReturnError = {
+      'result': "99",
+      'error':
+          'Aplicativo Getnet não encontrado. Por favor, instale o app e tente novamente.'
+    };
+
+    print(jsonReturnError);
+
+    return jsonReturnError;
   } catch (e, stack) {
-    // Tratamento de exceção aprimorado com detalhes
-    debugPrint("Erro ao processar pagamento: $e");
+    debugPrint("Erro inesperado ao processar pagamento: $e");
     debugPrint("Stack Trace: $stack");
 
-    // Aqui você pode salvar o erro em um arquivo, enviar para um servidor de log, etc.
-
-    return false;
+    return {'result': "99", 'error': 'Erro inesperado: $e'};
   }
 }

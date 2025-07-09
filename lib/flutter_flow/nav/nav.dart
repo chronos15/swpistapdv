@@ -27,8 +27,8 @@ class AppStateNotifier extends ChangeNotifier {
   static AppStateNotifier? _instance;
   static AppStateNotifier get instance => _instance ??= AppStateNotifier._();
 
-  SoftworkAuthUser? initialUser;
-  SoftworkAuthUser? user;
+  SOFTWORKPistaAuthUser? initialUser;
+  SOFTWORKPistaAuthUser? user;
   bool showSplashImage = true;
   String? _redirectLocation;
 
@@ -53,7 +53,7 @@ class AppStateNotifier extends ChangeNotifier {
   /// to perform subsequent actions (such as navigation) afterwards.
   void updateNotifyOnAuthChange(bool notify) => notifyOnAuthChange = notify;
 
-  void update(SoftworkAuthUser newUser) {
+  void update(SOFTWORKPistaAuthUser newUser) {
     final shouldUpdate =
         user?.uid == null || newUser.uid == null || user?.uid != newUser.uid;
     initialUser ??= newUser;
@@ -77,7 +77,7 @@ class AppStateNotifier extends ChangeNotifier {
 GoRouter createRouter(AppStateNotifier appStateNotifier) {
   $m_s_framework_flutter_p5iajh.initializeRoutes(
     homeWidgetName: 'm_s_framework_flutter_p5iajh.Home',
-    homeWidgetPath: 'home',
+    homeWidgetPath: '/home',
   );
 
   return GoRouter(
@@ -93,104 +93,106 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
         path: '/',
         builder: (context, _) =>
             appStateNotifier.loggedIn ? TelaInicialWidget() : LoginWidget(),
-        routes: [
-          FFRoute(
-            name: TelaInicialWidget.routeName,
-            path: TelaInicialWidget.routePath,
-            requireAuth: true,
-            builder: (context, params) => TelaInicialWidget(
-              bLogin: params.getParam(
-                'bLogin',
-                ParamType.bool,
-              ),
-            ),
-          ),
-          FFRoute(
-            name: LoginWidget.routeName,
-            path: LoginWidget.routePath,
-            builder: (context, params) => LoginWidget(),
-          ),
-          FFRoute(
-            name: CheckoutWidget.routeName,
-            path: CheckoutWidget.routePath,
-            builder: (context, params) => CheckoutWidget(),
-          ),
-          FFRoute(
-            name: ConfiguracaoWidget.routeName,
-            path: ConfiguracaoWidget.routePath,
-            builder: (context, params) => ConfiguracaoWidget(
-              adminPass: params.getParam(
-                'adminPass',
-                ParamType.bool,
-              ),
-            ),
-          ),
-          FFRoute(
-            name: ProdutosWidget.routeName,
-            path: ProdutosWidget.routePath,
-            requireAuth: true,
-            builder: (context, params) => ProdutosWidget(
-              bLancamentoDiversos: params.getParam(
-                'bLancamentoDiversos',
-                ParamType.bool,
-              ),
-            ),
-          ),
-          FFRoute(
-            name: ListaClientesWidget.routeName,
-            path: ListaClientesWidget.routePath,
-            builder: (context, params) => ListaClientesWidget(),
-          ),
-          FFRoute(
-            name: VendasWidget.routeName,
-            path: VendasWidget.routePath,
-            builder: (context, params) => VendasWidget(),
-          ),
-          FFRoute(
-            name: PerfilWidget.routeName,
-            path: PerfilWidget.routePath,
-            builder: (context, params) => PerfilWidget(),
-          ),
-          FFRoute(
-            name: HistoricoPageWidget.routeName,
-            path: HistoricoPageWidget.routePath,
-            builder: (context, params) => HistoricoPageWidget(),
-          ),
-          FFRoute(
-            name: TanqueMonitorWidget.routeName,
-            path: TanqueMonitorWidget.routePath,
-            builder: (context, params) => TanqueMonitorWidget(),
-          ),
-          FFRoute(
-            name: SobrePageWidget.routeName,
-            path: SobrePageWidget.routePath,
-            builder: (context, params) => SobrePageWidget(),
-          ),
-          FFRoute(
-            name: DetalheHistoricoWidget.routeName,
-            path: DetalheHistoricoWidget.routePath,
-            builder: (context, params) => DetalheHistoricoWidget(
-              dtVenda: params.getParam(
-                'dtVenda',
-                ParamType.DataStruct,
-                isList: false,
-                structBuilder: VendasStruct.fromSerializableMap,
-              ),
-            ),
-          ),
-          FFRoute(
-            name: LoggerViewWidget.routeName,
-            path: LoggerViewWidget.routePath,
-            builder: (context, params) => LoggerViewWidget(),
-          ),
-          FFRoute(
-            name: $m_s_framework_flutter_p5iajh.HomeWidget.routeName,
-            path: $m_s_framework_flutter_p5iajh.HomeWidget.routePath,
-            builder: (context, params) =>
-                $m_s_framework_flutter_p5iajh.HomeWidget(),
-          )
-        ].map((r) => r.toRoute(appStateNotifier)).toList(),
       ),
+      FFRoute(
+        name: TelaInicialWidget.routeName,
+        path: TelaInicialWidget.routePath,
+        requireAuth: true,
+        builder: (context, params) => TelaInicialWidget(
+          bLogin: params.getParam(
+            'bLogin',
+            ParamType.bool,
+          ),
+          bReloadListView: params.getParam(
+            'bReloadListView',
+            ParamType.bool,
+          ),
+        ),
+      ),
+      FFRoute(
+        name: LoginWidget.routeName,
+        path: LoginWidget.routePath,
+        builder: (context, params) => LoginWidget(),
+      ),
+      FFRoute(
+        name: CheckoutWidget.routeName,
+        path: CheckoutWidget.routePath,
+        builder: (context, params) => CheckoutWidget(),
+      ),
+      FFRoute(
+        name: ConfiguracaoWidget.routeName,
+        path: ConfiguracaoWidget.routePath,
+        builder: (context, params) => ConfiguracaoWidget(
+          adminPass: params.getParam(
+            'adminPass',
+            ParamType.bool,
+          ),
+        ),
+      ),
+      FFRoute(
+        name: ProdutosWidget.routeName,
+        path: ProdutosWidget.routePath,
+        requireAuth: true,
+        builder: (context, params) => ProdutosWidget(
+          bLancamentoDiversos: params.getParam(
+            'bLancamentoDiversos',
+            ParamType.bool,
+          ),
+        ),
+      ),
+      FFRoute(
+        name: ListaClientesWidget.routeName,
+        path: ListaClientesWidget.routePath,
+        builder: (context, params) => ListaClientesWidget(),
+      ),
+      FFRoute(
+        name: VendasWidget.routeName,
+        path: VendasWidget.routePath,
+        builder: (context, params) => VendasWidget(),
+      ),
+      FFRoute(
+        name: PerfilWidget.routeName,
+        path: PerfilWidget.routePath,
+        builder: (context, params) => PerfilWidget(),
+      ),
+      FFRoute(
+        name: HistoricoPageWidget.routeName,
+        path: HistoricoPageWidget.routePath,
+        builder: (context, params) => HistoricoPageWidget(),
+      ),
+      FFRoute(
+        name: TanqueMonitorWidget.routeName,
+        path: TanqueMonitorWidget.routePath,
+        builder: (context, params) => TanqueMonitorWidget(),
+      ),
+      FFRoute(
+        name: SobrePageWidget.routeName,
+        path: SobrePageWidget.routePath,
+        builder: (context, params) => SobrePageWidget(),
+      ),
+      FFRoute(
+        name: DetalheHistoricoWidget.routeName,
+        path: DetalheHistoricoWidget.routePath,
+        builder: (context, params) => DetalheHistoricoWidget(
+          dtVenda: params.getParam(
+            'dtVenda',
+            ParamType.DataStruct,
+            isList: false,
+            structBuilder: VendasStruct.fromSerializableMap,
+          ),
+        ),
+      ),
+      FFRoute(
+        name: LoggerViewWidget.routeName,
+        path: LoggerViewWidget.routePath,
+        builder: (context, params) => LoggerViewWidget(),
+      ),
+      FFRoute(
+        name: $m_s_framework_flutter_p5iajh.HomeWidget.routeName,
+        path: $m_s_framework_flutter_p5iajh.HomeWidget.routePath,
+        builder: (context, params) =>
+            $m_s_framework_flutter_p5iajh.HomeWidget(),
+      )
     ].map((r) => r.toRoute(appStateNotifier)).toList(),
   );
 }

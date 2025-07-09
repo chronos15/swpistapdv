@@ -1,5 +1,6 @@
 export '/backend/schema/util/schema_util.dart';
 
+export 'a_param_c_t_reg_struct.dart';
 export 'bicos_data_type_struct.dart';
 export 'cidades_data_type_struct.dart';
 export 'cliente_lista_data_type_struct.dart';

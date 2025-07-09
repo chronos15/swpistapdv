@@ -93,6 +93,7 @@ class _UnViewMSConfiguracaoWidgetState extends State<UnViewMSConfiguracaoWidget>
             : '');
     _model.edtTerminalSimpleFocusNode ??= FocusNode();
 
+    _model.edtTerminalSimpleMask = MaskTextInputFormatter(mask: '###');
     _model.chaveAcessoTextController ??= TextEditingController(
         text: FFAppState().ConfigGlobaisServer.chaveacesso);
     _model.chaveAcessoFocusNode ??= FocusNode();
@@ -105,6 +106,7 @@ class _UnViewMSConfiguracaoWidgetState extends State<UnViewMSConfiguracaoWidget>
         TextEditingController(text: FFAppState().ConfigGlobaisServer.cnpj);
     _model.edtCNPJFocusNode ??= FocusNode();
 
+    _model.edtCNPJMask = MaskTextInputFormatter(mask: '##.###.###/####-##');
     _model.edtHost1TextController ??= TextEditingController(
         text: FFAppState().ConfigGlobaisServer.hostPrimario);
     _model.edtHost1FocusNode ??= FocusNode();
@@ -119,6 +121,7 @@ class _UnViewMSConfiguracaoWidgetState extends State<UnViewMSConfiguracaoWidget>
             : '');
     _model.edtPortaFocusNode ??= FocusNode();
 
+    _model.edtPortaMask = MaskTextInputFormatter(mask: '######');
     _model.edtHost3TextController ??= TextEditingController();
     _model.edtHost3FocusNode ??= FocusNode();
 

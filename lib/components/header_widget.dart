@@ -167,7 +167,7 @@ class _HeaderWidgetState extends State<HeaderWidget> {
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
-                                              font: GoogleFonts.outfit(
+                                              font: GoogleFonts.manrope(
                                                 fontWeight: FontWeight.w300,
                                                 fontStyle:
                                                     FlutterFlowTheme.of(context)
@@ -175,7 +175,7 @@ class _HeaderWidgetState extends State<HeaderWidget> {
                                                         .fontStyle,
                                               ),
                                               color: Color(0xFFC3C3C3),
-                                              fontSize: 16.0,
+                                              fontSize: 14.0,
                                               letterSpacing: 0.0,
                                               fontWeight: FontWeight.w300,
                                               fontStyle:

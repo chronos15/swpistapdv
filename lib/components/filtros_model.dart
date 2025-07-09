@@ -6,9 +6,20 @@ import 'package:flutter/material.dart';
 class FiltrosModel extends FlutterFlowModel<FiltrosWidget> {
   ///  Local state fields for this component.
 
-  FiltrosAbastecimentoStruct? aFiltros;
-  void updateAFiltrosStruct(Function(FiltrosAbastecimentoStruct) updateFn) {
-    updateFn(aFiltros ??= FiltrosAbastecimentoStruct());
+  FrentistasDataTypeStruct? frentistaSelected;
+  void updateFrentistaSelectedStruct(
+      Function(FrentistasDataTypeStruct) updateFn) {
+    updateFn(frentistaSelected ??= FrentistasDataTypeStruct());
+  }
+
+  DateTime? dataInicial;
+
+  DateTime? dataFinal;
+
+  CombustiveisDataTypeStruct? combustivelSelected;
+  void updateCombustivelSelectedStruct(
+      Function(CombustiveisDataTypeStruct) updateFn) {
+    updateFn(combustivelSelected ??= CombustiveisDataTypeStruct());
   }
 
   ///  State fields for stateful widgets in this component.

@@ -50,7 +50,7 @@ class ProdutosWidget extends StatefulWidget {
   final bool bLancamentoDiversos;
 
   static String routeName = 'Produtos';
-  static String routePath = 'produtos';
+  static String routePath = '/produtos';
 
   @override
   State<ProdutosWidget> createState() => _ProdutosWidgetState();
@@ -260,7 +260,7 @@ class _ProdutosWidgetState extends State<ProdutosWidget>
                     buttonSize: 40.0,
                     icon: Icon(
                       FFIcons.kkqrcode,
-                      color: FlutterFlowTheme.of(context).secondaryText,
+                      color: FlutterFlowTheme.of(context).primary,
                       size: 24.0,
                     ),
                     onPressed: () async {
@@ -296,6 +296,9 @@ class _ProdutosWidgetState extends State<ProdutosWidget>
                                       await _model
                                           .waitForOnePageForStaggeredView(
                                               maxWait: 1500);
+                                      await actions.hideKeyboard(
+                                        context,
+                                      );
                                     } else {
                                       return;
                                     }
@@ -693,6 +696,9 @@ class _ProdutosWidgetState extends State<ProdutosWidget>
                                         safeSetState(() => _model
                                             .staggeredViewPagingController
                                             ?.refresh());
+                                        await actions.hideKeyboard(
+                                          context,
+                                        );
                                       },
                                     ),
                                   ),
@@ -2838,6 +2844,9 @@ class _ProdutosWidgetState extends State<ProdutosWidget>
                                                           1.0,
                                                   width: 350.0,
                                                   child: ComAutorizacaoWidget(
+                                                    tpSelecao:
+                                                        TpSelecaoFrentista
+                                                            .seNone,
                                                     cancelAction: () async {},
                                                     confirmAction: () async {},
                                                   ),

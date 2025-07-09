@@ -15,7 +15,7 @@ class SobrePageWidget extends StatefulWidget {
   const SobrePageWidget({super.key});
 
   static String routeName = 'SobrePage';
-  static String routePath = 'sobrePage';
+  static String routePath = '/sobrePage';
 
   @override
   State<SobrePageWidget> createState() => _SobrePageWidgetState();

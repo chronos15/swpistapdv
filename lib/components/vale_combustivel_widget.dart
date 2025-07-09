@@ -702,7 +702,7 @@ class _ValeCombustivelWidgetState extends State<ValeCombustivelWidget>
                                                                     .elegantNotificationCustom(
                                                                   context,
                                                                   'Atenção',
-                                                                  'Não foi encontrado voucher com esse ID informado!',
+                                                                  'Não foi encontrado vale combustível com esse ID informado!',
                                                                   FlutterFlowTheme.of(
                                                                           context)
                                                                       .primaryText,
